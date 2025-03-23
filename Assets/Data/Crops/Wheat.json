@@ -1,0 +1,40 @@
+{
+    "Ghost": {
+        "name": "Wheat__Ghost",
+        "meshCollider": "",
+        "materials": []
+    },
+    "Seed": {
+        "name": "Wheat__Seed",
+        "meshCollider": "",
+        "materials": [
+            "Wheat__Props__Sacks01",
+            "Wheat__Props__Sacks02",
+            "Wheat__Seed__Ground"
+        ]
+    },
+    "Growing": {
+        "name": "Wheat__Growing",
+        "meshCollider": "",
+        "materials": [
+            "Wheat__Props__Sprout01",
+            "Wheat__Props__Sprout02",
+            "Wheat__Props__Sprout03",
+            "Wheat__Growing__Ground"
+        ]
+    },
+    "Ready": {
+        "name": "Wheat__Ready",
+        "meshCollider": "",
+        "materials": [
+            "Wheat__Props__Sacks02",
+            "Wheat__Props__Plant02",
+            "Wheat__Ready__Ground"
+        ]
+    },
+    "Dead": {
+        "name": "Wheat__Dead",
+        "meshCollider": "",
+        "materials": []
+    }
+}
