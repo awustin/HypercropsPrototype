@@ -1,16 +1,58 @@
+using TMPro;
 using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int id;
+    public CardType cardType;
+    public CardStatus cardStatus;
+    public int order;
+    public int number;
+
+    public Card(string name, int id, CardType type, int order, int number)
     {
-        
+        this.name = name;
+        this.id = id;
+        cardType = type;
+        this.order = order;
+        this.number = number;
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        cardStatus = CardStatus.FaceDown;
+        transform.localPosition = DeckUtils.MapOrderToPosition(order);
+        RectTransform CanvasRT = transform.Find("CardCanvas").GetComponent<RectTransform>();
+
+        CanvasRT.localScale = Vector3.one;
+        CanvasRT.sizeDelta = new Vector2(150, 200);
+
+        SetName();
+        SetNumber();
+    }
+
+    public void TurnUpInHand(Vector3 position)
+    {
+        cardStatus = CardStatus.TurnUp;
+        // Todo: animate and set idle on completion
+    }
+
+    public void ChangePositionInHand(Vector3 position)
+    {
+        // Todo: animate and set idle on completion
+    }
+
+    private void SetName()
+    {
+        TMP_Text NameLabel = transform.Find("CardCanvas/Traits/Name/Label").gameObject.GetComponent<TMP_Text>();
+
+        NameLabel.text = name;
+    }
+
+    private void SetNumber()
+    {
+        TMP_Text NumberLabel = transform.Find("CardCanvas/Traits/Number/Label").gameObject.GetComponent<TMP_Text>();
+
+        NumberLabel.text = number.ToString();
     }
 }

@@ -125,7 +125,7 @@ public class CropStageData
 public class CardData
 {
     public int id;
-    public int type;
+    public CardType type;
     public string name;
 
     public override string ToString()

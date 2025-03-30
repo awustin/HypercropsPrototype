@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class CardsManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class CardsManager : MonoBehaviour
 
                 if (_instance == null)
                 {
-                    GameObject singletonObject = new GameObject("CardsManager");
+                    GameObject singletonObject = new("CardsManager");
                     _instance = singletonObject.AddComponent<CardsManager>();
                 }
             }
@@ -28,7 +29,7 @@ public class CardsManager : MonoBehaviour
     public List<int> CropCardIdsList = new() { 100 };
     public List<int> InfrastructureCardIdsList = new() { 600 };
     public List<int> TechCardIdsList = new() { 1000 };
-    public List<GameObject> CardsInHand = new();
+    public Dictionary<int, GameObject> CardsInHand = new();
 
     void Awake()
     {
@@ -45,18 +46,46 @@ public class CardsManager : MonoBehaviour
     void Start()
     {
         State = GameState.Instance;
-        State.SetNumberOfCardsInHand(MaxNumberOfCards);
-        DrawCardsForPlayer();
+        State.SetNumberOfCardsInHand(CardsInHand.Count);
+        CreateCardDebug(100, "Recovered Generic Wheat", CardType.Crop, 3);
+        CreateCardDebug(600, "Irrigation Pipe", CardType.Infrastructure, 1);
+        CreateCardDebug(1000, "Random Mutagenesis", CardType.Tech, 1);
+        // RestartHand();
     }
 
-    private void DrawCardsForPlayer()
+    public void CreateCardDebug(int id, string name, CardType type, int number)
     {
-        // Todo: Read cards data and any other param to calculate draw
+        GameObject CardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + type.ToString());
+        GameObject Deck = GameObject.Find("CardsPanel");
+        GameObject CardInstance = Instantiate(CardPrefab, Deck.transform);
+        Card CardScript = CardInstance.GetComponent<Card>();
+
+        CardScript.id = id;
+        CardScript.name = name;
+        CardScript.cardType = type;
+        CardScript.order = CardsInHand.Count;
+        CardScript.number = number;
+        CardScript.enabled = true;
+
+        CardsInHand.Add(CardInstance.GetInstanceID(), CardInstance);
+    }
+
+    public void RestartHand()
+    {
+        // Read cards data and any other param to calculate draw
         DestroyCurrentCards();
-        PickRandomCards(CropCardIdsList, 2);
-        PickRandomCards(InfrastructureCardIdsList, 1);
-        PickRandomCards(TechCardIdsList, 1);
-        InstantiateCards();
+        DrawCardRandom(CropCardIdsList);
+        DrawCardRandom(CropCardIdsList);
+        DrawCardRandom(InfrastructureCardIdsList);
+        DrawCardRandom(TechCardIdsList);
+    }
+
+    public void UseCardAndDiscard(GameObject selected)
+    {
+        // Apply effect/trigger event
+        // Find card in dictionary and remove
+        // Re order and animate
+        // Destroy instance
     }
 
     private void DestroyCurrentCards()
@@ -69,19 +98,47 @@ public class CardsManager : MonoBehaviour
         // Todo: destroy instances
     }
 
-    private void PickRandomCards(List<int> cardIds, int value)
+    private void DrawCardRandom(List<int> cardIds)
     {
-        if (State.NumberOfCardsInHand == MaxNumberOfCards || value <= 0)
+        if (CardsInHand.Count == MaxNumberOfCards)
         {
             return;
         }
 
-        // Todo: add cards to hand
-    }
+        // Select random value from cardIds
 
-    private void InstantiateCards()
-    {
-        // Todo: Instantiate 2D game objects to be added to the scene
-        return;
+        // Instantiate card based on JSON data
+        GameObject instantiated = new("Card Placeholder");
+        instantiated.SetActive(true);
+
+        // Add card to CardsInHand dictionary with InstanceID
+        CardsInHand.Add(instantiated.GetInstanceID(), instantiated);
+
+        // Calculate order in hand (integer number to indicate position)
+        // instantiated.TurnUpInHand(DeckUtils.MapHandOrderToPosition(integer))
+
+        // Update global state
+        State.IncreaseNumberOfCardsInHand();
     }
+}
+
+public enum CardType
+{
+    [EnumMember(Value = "0")]
+    Crop,
+    [EnumMember(Value = "1")]
+    Infrastructure,
+    [EnumMember(Value = "2")]
+    Tech,
+    [EnumMember(Value = "3")]
+    None,
+}
+
+public enum CardStatus
+{
+    FaceDown,
+    TurnUp,
+    Move,
+    Idle,
+    Discard,
 }
