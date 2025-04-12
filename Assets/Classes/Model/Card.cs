@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
+    public string label;
     public int id;
     public CardType cardType;
     public CardStatus cardStatus;
     public int order;
     public int number;
 
-    public Card(string name, int id, CardType type, int order, int number)
+    public Card(string name, string label, int id, CardType type, int order, int number)
     {
         this.name = name;
+        this.label = label;
         this.id = id;
         cardType = type;
         this.order = order;
@@ -34,19 +36,19 @@ public class Card : MonoBehaviour
     public void TurnUpInHand(Vector3 position)
     {
         cardStatus = CardStatus.TurnUp;
-        // Todo: animate and set idle on completion
+        // TODO: animate and set idle on completion
     }
 
     public void ChangePositionInHand(Vector3 position)
     {
-        // Todo: animate and set idle on completion
+        // TODO: animate and set idle on completion
     }
 
     private void SetName()
     {
         TMP_Text NameLabel = transform.Find("CardCanvas/Traits/Name/Label").gameObject.GetComponent<TMP_Text>();
 
-        NameLabel.text = name;
+        NameLabel.text = this.label;
     }
 
     private void SetNumber()

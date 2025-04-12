@@ -47,13 +47,13 @@ public class CardsManager : MonoBehaviour
     {
         State = GameState.Instance;
         State.SetNumberOfCardsInHand(CardsInHand.Count);
-        CreateCardDebug(100, "Recovered Generic Wheat", CardType.Crop, 3);
-        CreateCardDebug(600, "Irrigation Pipe", CardType.Infrastructure, 1);
-        CreateCardDebug(1000, "Random Mutagenesis", CardType.Tech, 1);
+        CreateCardDebug(100, "Wheat", "Recovered Generic Wheat", CardType.Crop, 3);
+        CreateCardDebug(600, "IrrigationPipe", "Irrigation Pipe", CardType.Infrastructure, 1);
+        CreateCardDebug(1000, "RandomMutagenesis", "Random Mutagenesis", CardType.Tech, 1);
         // RestartHand();
     }
 
-    public void CreateCardDebug(int id, string name, CardType type, int number)
+    public void CreateCardDebug(int id, string name, string label, CardType type, int number)
     {
         GameObject CardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + type.ToString());
         GameObject Deck = GameObject.Find("CardsPanel");
@@ -62,6 +62,7 @@ public class CardsManager : MonoBehaviour
 
         CardScript.id = id;
         CardScript.name = name;
+        CardScript.label = label;
         CardScript.cardType = type;
         CardScript.order = CardsInHand.Count;
         CardScript.number = number;
@@ -95,7 +96,7 @@ public class CardsManager : MonoBehaviour
             return;
         }
 
-        // Todo: destroy instances
+        // TODO: destroy instances
     }
 
     private void DrawCardRandom(List<int> cardIds)

@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5849098370309894325, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: ActionName
+      value: CropCard
+      objectReference: {fileID: 0}
     - target: {fileID: 135495932844362727, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -12,18 +12,6 @@ public class WalkEventArguments : EventArgs
     }
 }
 
-public class ButtonEventArguments : EventArgs
-{
-    public GameObject Target { get; set; }
-    public string ActionName { get; set; }
-
-    public ButtonEventArguments(GameObject target, string actionName)
-    {
-        Target = target;
-        ActionName = actionName;
-    }
-}
-
 public class FarmingModeEventArguments : EventArgs
 {
     public Vector3 Point { get; set; }

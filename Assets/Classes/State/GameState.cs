@@ -25,6 +25,7 @@ public class GameState : ScriptableObject
     public bool IsWalking;
     public bool IsUIInteraction;
     public int NumberOfCardsInHand;
+    public GameObject LastSelected;
 
     void Awake()
     {
@@ -79,6 +80,11 @@ public class GameState : ScriptableObject
     public void IncreaseNumberOfCardsInHand()
     {
         NumberOfCardsInHand ++;
+    }
+
+    public void SetLastSelected(GameObject target)
+    {
+        LastSelected = target;
     }
 }
 

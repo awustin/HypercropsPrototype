@@ -23,7 +23,6 @@ public class GameEventSender : MonoBehaviour
         }
     }
     public event EventHandler<WalkEventArguments> WalkEvent;
-    public event EventHandler<ButtonEventArguments> ButtonEvent;
     public event Action TryPlantEvent;
     public event EventHandler<FarmingModeEventArguments> FarmingModeEvent;
     public event Action AdvanceTimeEvent;
@@ -31,11 +30,6 @@ public class GameEventSender : MonoBehaviour
     public void BroadcastWalkEvent(Vector3 target)
     {
         WalkEvent?.Invoke(this, new WalkEventArguments(target));
-    }
-
-    public void BroadcastButtonEvent(GameObject target, string actionName)
-    {
-        ButtonEvent?.Invoke(this, new ButtonEventArguments(target, actionName));
     }
 
     public void BroadcastTryPlantEvent()
