@@ -13,7 +13,7 @@ public class GameState : ScriptableObject
 
             if (_instance == null)
             {
-                _instance = ScriptableObject.CreateInstance<GameState>();
+                _instance = CreateInstance<GameState>();
                 DontDestroyOnLoad(_instance);
             }
 
@@ -86,11 +86,4 @@ public class GameState : ScriptableObject
     {
         LastSelected = target;
     }
-}
-
-public enum GameMode
-{
-    Default,
-    Farming,
-    Building,
 }

@@ -1,15 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum CropPhase
-{
-    Ghost,
-    Seed,
-    Growing,
-    Ready,
-    Dead
-}
-
 public class Crop : MonoBehaviour
 {
     [HideInInspector] public GameEventSender Sender;

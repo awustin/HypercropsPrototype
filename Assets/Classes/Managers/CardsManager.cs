@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using UnityEngine;
 
 public class CardsManager : MonoBehaviour
@@ -121,25 +120,4 @@ public class CardsManager : MonoBehaviour
         // Update global state
         State.IncreaseNumberOfCardsInHand();
     }
-}
-
-public enum CardType
-{
-    [EnumMember(Value = "0")]
-    Crop,
-    [EnumMember(Value = "1")]
-    Infrastructure,
-    [EnumMember(Value = "2")]
-    Tech,
-    [EnumMember(Value = "3")]
-    None,
-}
-
-public enum CardStatus
-{
-    FaceDown,
-    TurnUp,
-    Move,
-    Idle,
-    Discard,
 }
