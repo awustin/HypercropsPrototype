@@ -29,6 +29,7 @@ public class DataLoader : MonoBehaviour
     public string CardsTechPath = "/Data/Cards/Tech";
     public Dictionary<string, CropData> CropsData = new();
     public Dictionary<int, CardData> CardsData = new();
+    public DeckData InitialDeckData = new();
 
     void Awake()
     {
@@ -82,6 +83,17 @@ public class DataLoader : MonoBehaviour
     {
         return CardsData[id];
     }
+
+    public List<CardWeight> GetInitialCardWeights()
+    {
+        if (!InitialDeckData.IsLoaded)
+        {
+            InitialDeckData = FileUtils.ReadJsonFromFile<DeckData>("Data/InitialDeck.json");
+            InitialDeckData.IsLoaded = true;
+        }
+
+        return InitialDeckData.cardWeights;
+    }
 }
 
 [System.Serializable]
@@ -97,11 +109,11 @@ public class CropData
     {
         return stageName switch
         {
-            ("Ghost") => Ghost,
-            ("Seed") => Seed,
-            ("Growing") => Growing,
-            ("Ready") => Ready,
-            ("Dead") => Dead,
+            "Ghost" => Ghost,
+            "Seed" => Seed,
+            "Growing" => Growing,
+            "Ready" => Ready,
+            "Dead" => Dead,
             _ => new CropStageData(),
         };
     }
@@ -134,5 +146,38 @@ public class CardData
     public override string ToString()
     {
         return name;
+    }
+}
+
+[System.Serializable]
+public class DeckData
+{
+    public List<CardWeight> cardWeights;
+    public bool IsLoaded = false;
+
+    public override string ToString()
+    {
+        string msg = "";
+
+        foreach (CardWeight cardWeight in cardWeights)
+        {
+            msg = $"{msg}; {cardWeight}";
+        }
+
+        return msg;
+    }
+}
+
+[System.Serializable]
+public class CardWeight
+{
+    public int id;
+
+    [Range(0f, 1f)]
+    public float weight;
+
+    public override string ToString()
+    {
+        return $"{id}-${weight}";
     }
 }

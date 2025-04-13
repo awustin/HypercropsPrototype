@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 public static class FileUtils
 {
@@ -20,9 +19,9 @@ public static class FileUtils
         return str[..^5];
     }
 
-    public static T ReadJsonFromFile<T>(string root, string filePath) where T : class
+    public static T ReadJsonFromFile<T>(string assetsRelativePath) where T : class
     {
-        string fullPath = PrependAssetsDir("/" + root + "/" + filePath + ".json");
+        string fullPath = PrependAssetsDir(assetsRelativePath);
         string jsonString = File.ReadAllText(fullPath);
 
         return JsonUtility.FromJson<T>(jsonString);

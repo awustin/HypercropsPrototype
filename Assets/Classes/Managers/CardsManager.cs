@@ -23,13 +23,11 @@ public class CardsManager : MonoBehaviour
         }
     }
 
-    public GameState State;
     public int MaxNumberOfCards = 4;
-    public List<int> CropCardIdsList = new() { 100 };
-    public List<int> InfrastructureCardIdsList = new() { 600 };
-    public List<int> TechCardIdsList = new() { 1000 };
     public Dictionary<int, GameObject> CardsInHand = new();
-    [HideInInspector] public ObjectFactory Factory;
+    public GameState State;
+    public CardsDeck Deck;
+    public ObjectFactory Factory;
 
     void Awake()
     {
@@ -47,33 +45,24 @@ public class CardsManager : MonoBehaviour
     {
         State = GameState.Instance;
         Factory = ObjectFactory.Instance;
+        Deck = CardsDeck.Instance;
+
         State.SetNumberOfCardsInHand(CardsInHand.Count);
-        // RestartHand();
+        Deck.InitialiseDeck();
+        InitialiseHand();
 
-        CreateCardDebug(100);
-        CreateCardDebug(101);
-        CreateCardDebug(600);
-        CreateCardDebug(1000);
-
-        // TODO: Create data files to hold the initial card list
         // TODO: Add card to advance time
-        // TODO: Create system to shuffle cards
     }
 
-    public void CreateCardDebug(int id)
-    {
-        GameObject cardInstance = Factory.MakeCard(id, CardsInHand.Count, GameObject.Find("CardsPanel").transform);
-        CardsInHand.Add(cardInstance.GetInstanceID(), cardInstance);
-    }
-
-    public void RestartHand()
+    public void InitialiseHand()
     {
         // Read cards data and any other param to calculate draw
         DestroyCurrentCards();
-        DrawCardRandom(CropCardIdsList);
-        DrawCardRandom(CropCardIdsList);
-        DrawCardRandom(InfrastructureCardIdsList);
-        DrawCardRandom(TechCardIdsList);
+
+        for (int i = 0; i < MaxNumberOfCards; i++)
+        {
+            DrawFromTopOfDeck();
+        }
     }
 
     public void UseCardAndDiscard(GameObject selected)
@@ -82,6 +71,12 @@ public class CardsManager : MonoBehaviour
         // Find card in dictionary and remove
         // Re order and animate
         // Destroy instance
+    }
+
+    public void CreateCardDebug(int id)
+    {
+        GameObject cardInstance = Factory.MakeCard(id, GameObject.Find("CardsPanel").transform);
+        CardsInHand.Add(cardInstance.GetInstanceID(), cardInstance);
     }
 
     private void DestroyCurrentCards()
@@ -94,7 +89,7 @@ public class CardsManager : MonoBehaviour
         // TODO: destroy instances
     }
 
-    private void DrawCardRandom(List<int> cardIds)
+    private void DrawFromTopOfDeck()
     {
         if (CardsInHand.Count == MaxNumberOfCards)
         {
@@ -102,18 +97,11 @@ public class CardsManager : MonoBehaviour
         }
 
         // Select random value from cardIds
+        GameObject card = Deck.GetFromTop();
+        Card CardScript = card.GetComponent<Card>();
 
-        // Instantiate card based on JSON data
-        GameObject instantiated = new("Card Placeholder");
-        instantiated.SetActive(true);
-
-        // Add card to CardsInHand dictionary with InstanceID
-        CardsInHand.Add(instantiated.GetInstanceID(), instantiated);
-
-        // Calculate order in hand (integer number to indicate position)
-        // instantiated.TurnUpInHand(order)
-
-        // Update global state
+        CardScript.TurnUpInHand(CardsInHand.Count);
+        CardsInHand.Add(card.GetInstanceID(), card);
         State.IncreaseNumberOfCardsInHand();
     }
 }

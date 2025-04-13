@@ -88,11 +88,11 @@ public class ObjectFactory : MonoBehaviour
         return Make(stage.name, pos, materialsToAdd, parent);
     }
 
-    public GameObject? MakeCard(int id, int order, Transform? parent)
+    public GameObject? MakeCard(int id, Transform? parent)
     {
         CreateUniqueCard(id);
 
-        return MakeCardInstance(id, order, parent);
+        return MakeCardInstance(id, parent);
     }
 
     // *** Private methods
@@ -171,7 +171,7 @@ public class ObjectFactory : MonoBehaviour
         CardsLoaded.Add(id, cardPrefab);
     }
 
-    private GameObject? MakeCardInstance(int id, int order, Transform? parent)
+    private GameObject? MakeCardInstance(int id, Transform? parent)
     {
         if (!CardsLoaded.ContainsKey(id))
         {
@@ -179,8 +179,6 @@ public class ObjectFactory : MonoBehaviour
         }
 
         GameObject prefab = CardsLoaded[id];
-        Card CardScript = prefab.GetComponent<Card>();
-        CardScript.TurnUpInHand(order);
 
         return Instantiate(prefab, parent ? parent : transform);
     }
