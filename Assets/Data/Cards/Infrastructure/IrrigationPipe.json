@@ -1,5 +1,7 @@
 {
     "id": 600,
     "type": 1,
-    "name": "Irrigation Pipe"
+    "name": "IrrigationPipe",
+    "label": "Irrigation Pipe",
+    "prefabName": "IrrigationPipe"
 }

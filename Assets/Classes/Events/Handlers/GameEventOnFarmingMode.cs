@@ -29,6 +29,8 @@ public class GameEventOnFarmingMode : MonoBehaviour
         MainCamera = Camera.main;
         ScreenPoint = InputSystem.actions.FindActionMap("Player").FindAction("ScreenPoint");
         FarmableLayer = LayerMask.GetMask("Default");
+
+        // TODO: Press ESC to cancel farming mode
     }
 
     void Update()

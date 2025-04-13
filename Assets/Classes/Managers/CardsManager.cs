@@ -29,6 +29,7 @@ public class CardsManager : MonoBehaviour
     public List<int> InfrastructureCardIdsList = new() { 600 };
     public List<int> TechCardIdsList = new() { 1000 };
     public Dictionary<int, GameObject> CardsInHand = new();
+    [HideInInspector] public ObjectFactory Factory;
 
     void Awake()
     {
@@ -45,29 +46,24 @@ public class CardsManager : MonoBehaviour
     void Start()
     {
         State = GameState.Instance;
+        Factory = ObjectFactory.Instance;
         State.SetNumberOfCardsInHand(CardsInHand.Count);
-        CreateCardDebug(100, "Wheat", "Recovered Generic Wheat", CardType.Crop, 3);
-        CreateCardDebug(600, "IrrigationPipe", "Irrigation Pipe", CardType.Infrastructure, 1);
-        CreateCardDebug(1000, "RandomMutagenesis", "Random Mutagenesis", CardType.Tech, 1);
         // RestartHand();
+
+        CreateCardDebug(100);
+        CreateCardDebug(101);
+        CreateCardDebug(600);
+        CreateCardDebug(1000);
+
+        // TODO: Create data files to hold the initial card list
+        // TODO: Add card to advance time
+        // TODO: Create system to shuffle cards
     }
 
-    public void CreateCardDebug(int id, string name, string label, CardType type, int number)
+    public void CreateCardDebug(int id)
     {
-        GameObject CardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + type.ToString());
-        GameObject Deck = GameObject.Find("CardsPanel");
-        GameObject CardInstance = Instantiate(CardPrefab, Deck.transform);
-        Card CardScript = CardInstance.GetComponent<Card>();
-
-        CardScript.id = id;
-        CardScript.name = name;
-        CardScript.label = label;
-        CardScript.cardType = type;
-        CardScript.order = CardsInHand.Count;
-        CardScript.number = number;
-        CardScript.enabled = true;
-
-        CardsInHand.Add(CardInstance.GetInstanceID(), CardInstance);
+        GameObject cardInstance = Factory.MakeCard(id, CardsInHand.Count, GameObject.Find("CardsPanel").transform);
+        CardsInHand.Add(cardInstance.GetInstanceID(), cardInstance);
     }
 
     public void RestartHand()
@@ -115,7 +111,7 @@ public class CardsManager : MonoBehaviour
         CardsInHand.Add(instantiated.GetInstanceID(), instantiated);
 
         // Calculate order in hand (integer number to indicate position)
-        // instantiated.TurnUpInHand(DeckUtils.MapHandOrderToPosition(integer))
+        // instantiated.TurnUpInHand(order)
 
         // Update global state
         State.IncreaseNumberOfCardsInHand();

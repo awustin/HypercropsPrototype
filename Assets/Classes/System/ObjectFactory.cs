@@ -1,7 +1,6 @@
 
 using UnityEngine;
 using UnityEngine.Rendering;
-using System;
 using System.Collections.Generic;
 
 public class ObjectFactory : MonoBehaviour
@@ -17,7 +16,7 @@ public class ObjectFactory : MonoBehaviour
 
                 if (_instance == null)
                 {
-                    GameObject singletonObject = new GameObject("ObjectFactory");
+                    GameObject singletonObject = new("ObjectFactory");
                     _instance = singletonObject.AddComponent<ObjectFactory>();
                 }
             }
@@ -27,8 +26,9 @@ public class ObjectFactory : MonoBehaviour
     }
 
     [HideInInspector] public DataLoader Loader;
-    public Dictionary<string, GameObject> ObjectsLoaded = new Dictionary<string, GameObject>();
-    public Dictionary<string, Material> MaterialsLoaded = new Dictionary<string, Material>();
+    public Dictionary<string, GameObject> ObjectsLoaded = new();
+    public Dictionary<string, Material> MaterialsLoaded = new();
+    public Dictionary<int, GameObject> CardsLoaded = new(); 
     
     void Awake()
     {
@@ -46,6 +46,7 @@ public class ObjectFactory : MonoBehaviour
 
     #nullable enable
 
+    // *** Public methods
     public GameObject? MakeCrop(Vector3 pos, Transform? parent)
     {
         CreateUniqueObject("Crop");
@@ -87,6 +88,14 @@ public class ObjectFactory : MonoBehaviour
         return Make(stage.name, pos, materialsToAdd, parent);
     }
 
+    public GameObject? MakeCard(int id, int order, Transform? parent)
+    {
+        CreateUniqueCard(id);
+
+        return MakeCardInstance(id, order, parent);
+    }
+
+    // *** Private methods
     private GameObject? Make(string name, Vector3 position, List<string> materials, Transform? parent)
     {
         CreateUniqueObject(name);
@@ -115,7 +124,7 @@ public class ObjectFactory : MonoBehaviour
 
         GameObject baseObject = ObjectsLoaded[name];
         MeshRenderer renderer = baseObject.GetComponent<MeshRenderer>();
-        List<Material> materialsToAdd = new List<Material>();
+        List<Material> materialsToAdd = new();
 
         foreach (string materialName in materials)
         {
@@ -144,5 +153,35 @@ public class ObjectFactory : MonoBehaviour
         return Instantiate(prefab, position, Quaternion.identity, parent ? parent : transform);
     }
 
-    #nullable disable
+    private void CreateUniqueCard(int id)
+    {
+        if (CardsLoaded.ContainsKey(id))
+        {
+            return;
+        }
+
+        CardData cardData = Loader.GetCardData(id);
+        GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + cardData.type.ToString());
+        Card CardScript = cardPrefab.GetComponent<Card>();
+        CardScript.enabled = true;
+        CardScript.InitialiseCard(cardData);
+
+        // TODO: When game ends, reset card script in the original prefab to default values
+
+        CardsLoaded.Add(id, cardPrefab);
+    }
+
+    private GameObject? MakeCardInstance(int id, int order, Transform? parent)
+    {
+        if (!CardsLoaded.ContainsKey(id))
+        {
+            return null;
+        }
+
+        GameObject prefab = CardsLoaded[id];
+        Card CardScript = prefab.GetComponent<Card>();
+        CardScript.TurnUpInHand(order);
+
+        return Instantiate(prefab, parent ? parent : transform);
+    }
 }

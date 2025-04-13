@@ -77,6 +77,11 @@ public class DataLoader : MonoBehaviour
     {
         return CropsData[name];
     }
+
+    public CardData GetCardData(int id)
+    {
+        return CardsData[id];
+    }
 }
 
 [System.Serializable]
@@ -90,21 +95,15 @@ public class CropData
 
     public CropStageData GetStage(string stageName)
     {
-        switch (stageName)
+        return stageName switch
         {
-            case ("Ghost"):
-                return this.Ghost;
-            case ("Seed"):
-                return this.Seed;
-            case ("Growing"):
-                return this.Growing;
-            case ("Ready"):
-                return this.Ready;
-            case ("Dead"):
-                return this.Dead;
-            default:
-                return new CropStageData();
-        }
+            ("Ghost") => Ghost,
+            ("Seed") => Seed,
+            ("Growing") => Growing,
+            ("Ready") => Ready,
+            ("Dead") => Dead,
+            _ => new CropStageData(),
+        };
     }
 
     public override string ToString()
@@ -127,6 +126,10 @@ public class CardData
     public int id;
     public CardType type;
     public string name;
+    public string label;
+    #nullable enable
+    public string? prefabName;
+    #nullable disable
 
     public override string ToString()
     {

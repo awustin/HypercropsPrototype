@@ -3,43 +3,52 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public string label;
-    public int id;
-    public CardType cardType;
-    public CardStatus cardStatus;
-    public int order;
-    public int number;
+    public string Label;
+    public int Id;
+    public CardType Type;
+    public CardStatus Status;
+    public int Order;
+    public int Number;
 
-    public Card(string name, string label, int id, CardType type, int order, int number)
-    {
-        this.name = name;
-        this.label = label;
-        this.id = id;
-        cardType = type;
-        this.order = order;
-        this.number = number;
-    }
+    #nullable enable
+    public string? PrefabName;
+    #nullable disable
 
     void Start()
     {
-        cardStatus = CardStatus.FaceDown;
-        transform.localPosition = DeckUtils.MapOrderToPosition(order);
         RectTransform CanvasRT = transform.Find("CardCanvas").GetComponent<RectTransform>();
 
         CanvasRT.localScale = Vector3.one;
         CanvasRT.sizeDelta = new Vector2(150, 200);
 
+        // TODO: Card has to be drag and drop
+    }
+
+    public void InitialiseCard(CardData cardData)
+    {
+        name = cardData.name;
+        Id = cardData.id;
+        Type = cardData.type;
+        Label = cardData.label;
+        PrefabName = cardData.prefabName;
+        Number = Id;
+        Status = CardStatus.FaceDown;
+
         SetName();
         SetNumber();
     }
 
-    public void TurnUpInHand(Vector3 position)
+    public void TurnUpInHand(int order)
     {
-        cardStatus = CardStatus.TurnUp;
-        // TODO: animate and set idle on completion
+        Status = CardStatus.TurnUp;
+        Order = order;
+
+        // TODO: animate
+        transform.localPosition = DeckUtils.MapOrderToPosition(Order);
+        Status = CardStatus.Idle;
     }
 
-    public void ChangePositionInHand(Vector3 position)
+    public void ChangePositionInHand(int order)
     {
         // TODO: animate and set idle on completion
     }
@@ -48,13 +57,13 @@ public class Card : MonoBehaviour
     {
         TMP_Text NameLabel = transform.Find("CardCanvas/Traits/Name/Label").gameObject.GetComponent<TMP_Text>();
 
-        NameLabel.text = this.label;
+        NameLabel.text = Label;
     }
 
     private void SetNumber()
     {
         TMP_Text NumberLabel = transform.Find("CardCanvas/Traits/Number/Label").gameObject.GetComponent<TMP_Text>();
 
-        NumberLabel.text = number.ToString();
+        NumberLabel.text = Number.ToString();
     }
 }

@@ -13,13 +13,13 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
     {
         GameObject card = data.pointerPress;
         Card CardScript = card.GetComponent<Card>();
-        CardType type = CardScript.cardType;
+        CardType type = CardScript.Type;
 
         State.SetLastSelected(card);
 
         if (type == CardType.Crop)
         {
-            string cropName = CardScript.name;
+            string cropName = CardScript.PrefabName;
             GameEventSender.Instance.BroadcastFarmingModeEvent(new Vector3(0, 0, 0), cropName);
 
             return;
