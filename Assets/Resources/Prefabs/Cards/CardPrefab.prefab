@@ -945,12 +945,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fccf05689a02046ec875b55ffe957c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: 
-  id: 0
-  cardType: 0
-  cardStatus: 0
-  order: 0
-  number: 0
+  Label: 
+  Id: 0
+  Type: 0
+  Status: 0
+  Order: 0
+  Number: 0
+  PrefabName: 
 --- !u!114 &4580583172810894422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,7 +965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: {fileID: 0}
-  Sender: {fileID: 0}
 --- !u!1 &6311982173088947255
 GameObject:
   m_ObjectHideFlags: 0

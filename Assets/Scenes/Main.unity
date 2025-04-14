@@ -266,6 +266,10 @@ MonoBehaviour:
   CardsCropsPath: /Data/Cards/Crops
   CardsInfrastructurePath: /Data/Cards/Infrastructure
   CardsTechPath: /Data/Cards/Tech
+  CardsOtherPath: /Data/Cards/Other
+  InitialDeckData:
+    cardWeights: []
+    IsLoaded: 0
 --- !u!1 &202109801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,11 +1267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce33e17affa6f494d8bb1d71e31a71e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxNumberOfCards: 4
   State: {fileID: 0}
-  MaxNumberOfCards: 3
-  CropCardIdsList: 64000000
-  InfrastructureCardIdsList: 58020000
-  TechCardIdsList: e8030000
+  Deck: {fileID: 0}
+  Factory: {fileID: 0}
 --- !u!1 &1273661087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1505,7 @@ Camera:
   far clip plane: 50
   field of view: 43
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 12
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1983,7 +1986,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.73
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2026,7 +2029,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
-  m_ColorTemperature: 3168
+  m_ColorTemperature: 2769
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0

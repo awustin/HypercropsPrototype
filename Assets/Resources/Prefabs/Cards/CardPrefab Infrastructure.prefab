@@ -53,8 +53,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: Id
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: Label
+      value: Irrigation Pipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: Number
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: cardType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: PrefabName
+      value: IrrigationPipe
       objectReference: {fileID: 0}
     - target: {fileID: 1528394115325767858, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_IsActive
@@ -62,11 +82,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3092013353329827500, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_text
-      value: 
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 3161402023115747825, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_text
-      value: 
+      value: Irrigation Pipe
       objectReference: {fileID: 0}
     - target: {fileID: 6248820853482347742, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_Name

@@ -52,6 +52,7 @@ public class CardsManager : MonoBehaviour
         InitialiseHand();
 
         // TODO: Add card to advance time
+        // TODO: Destroy card on use
     }
 
     public void InitialiseHand()
@@ -96,7 +97,6 @@ public class CardsManager : MonoBehaviour
             return;
         }
 
-        // Select random value from cardIds
         GameObject card = Deck.GetFromTop();
         Card CardScript = card.GetComponent<Card>();
 
