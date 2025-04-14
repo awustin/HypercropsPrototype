@@ -51,8 +51,8 @@ public class CardsManager : MonoBehaviour
         Deck.InitialiseDeck();
         InitialiseHand();
 
-        // TODO: Add card to advance time
         // TODO: Destroy card on use
+        // TODO: Add capacity to DISCARD a card
     }
 
     public void InitialiseHand()

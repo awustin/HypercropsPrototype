@@ -30,6 +30,7 @@ public class CardsDeck : ScriptableObject
     void Awake()
     {
         // TODO: Move this to MonoBehaviour in a GameObject that represents the deck in the UI
+        // TODO: Create an interactable deck
         name = "CardsDeck Singleton";
         Factory = ObjectFactory.Instance;
         Loader = DataLoader.Instance;
