@@ -4,6 +4,6 @@ public static class DeckUtils
 {
     public static Vector3 MapOrderToPosition(int order)
     {
-        return new Vector3(order * 200f + 25f, 25f, 0);
+        return new Vector3(order * 180f + 200f, 25f, 0);
     }
 }

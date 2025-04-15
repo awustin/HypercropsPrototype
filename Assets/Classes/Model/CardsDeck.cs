@@ -2,25 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-[CreateAssetMenu(fileName = "CardsDeck", menuName = "Scriptable Objects/CardsDeck")]
-public class CardsDeck : ScriptableObject
+public class CardsDeck : MonoBehaviour
 {
-    private static CardsDeck _instance;
-    public static CardsDeck Instance
-    {
-        get
-        {
-            _instance = _instance != null ? _instance : FindFirstObjectByType<CardsDeck>();
-
-            if (_instance == null)
-            {
-                _instance = CreateInstance<CardsDeck>();
-                DontDestroyOnLoad(_instance);
-            }
-
-            return _instance;
-        }
-    }
     public ObjectFactory Factory;
     public DataLoader Loader;
     public int NumberOfCardsInDeck = 10;
@@ -31,7 +14,7 @@ public class CardsDeck : ScriptableObject
     {
         // TODO: Move this to MonoBehaviour in a GameObject that represents the deck in the UI
         // TODO: Create an interactable deck
-        name = "CardsDeck Singleton";
+        name = "CardsDeck";
         Factory = ObjectFactory.Instance;
         Loader = DataLoader.Instance;
         _currentCardWeights = Loader.GetInitialCardWeights();

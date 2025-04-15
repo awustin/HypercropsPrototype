@@ -24,10 +24,11 @@ public class CardsManager : MonoBehaviour
     }
 
     public int MaxNumberOfCards = 4;
+    public GameObject CardsDeckObject;
     public Dictionary<int, GameObject> CardsInHand = new();
     public GameState State;
-    public CardsDeck Deck;
     public ObjectFactory Factory;
+    [HideInInspector] public CardsDeck Deck;
 
     void Awake()
     {
@@ -45,7 +46,7 @@ public class CardsManager : MonoBehaviour
     {
         State = GameState.Instance;
         Factory = ObjectFactory.Instance;
-        Deck = CardsDeck.Instance;
+        Deck = CardsDeckObject.GetComponent<CardsDeck>();
 
         State.SetNumberOfCardsInHand(CardsInHand.Count);
         Deck.InitialiseDeck();
