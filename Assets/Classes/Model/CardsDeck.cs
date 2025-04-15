@@ -6,18 +6,19 @@ public class CardsDeck : MonoBehaviour
 {
     public ObjectFactory Factory;
     public DataLoader Loader;
-    public int NumberOfCardsInDeck = 10;
+    public int NumberTotalCards = 10;
+    public int NumberLeftCards;
     private List<CardWeight> _currentCardWeights;
     private List<int> _deck = new();
 
     void Awake()
     {
-        // TODO: Move this to MonoBehaviour in a GameObject that represents the deck in the UI
-        // TODO: Create an interactable deck
+        // TODO: Click on deck to draw a new card from top
         name = "CardsDeck";
         Factory = ObjectFactory.Instance;
         Loader = DataLoader.Instance;
         _currentCardWeights = Loader.GetInitialCardWeights();
+        NumberLeftCards = NumberTotalCards;
     }
 
     public void InitialiseDeck()
@@ -29,7 +30,7 @@ public class CardsDeck : MonoBehaviour
 
         foreach (CardWeight cardWeight in _currentCardWeights)
         {
-            int count = Mathf.RoundToInt(cardWeight.weight / totalWeight * NumberOfCardsInDeck);
+            int count = Mathf.RoundToInt(cardWeight.weight / totalWeight * NumberTotalCards);
 
             for (int i = 0; i < count; i++)
             {
@@ -37,9 +38,9 @@ public class CardsDeck : MonoBehaviour
             }
         }
 
-        if (allCards.Count < NumberOfCardsInDeck)
+        if (allCards.Count < NumberTotalCards)
         {
-            int diff = NumberOfCardsInDeck - allCards.Count;
+            int diff = NumberTotalCards - allCards.Count;
             for (int i = 0; i < diff; i++)
             {
                 int cardChosen = _currentCardWeights.OrderBy(x => Random.value).First().id;
@@ -74,9 +75,16 @@ public class CardsDeck : MonoBehaviour
         if (_deck.Count > 0)
         {
             int chosenId = _deck[0];
+            int deckId = _deck.Count;
             _deck.RemoveAt(0);
+            NumberLeftCards --;
 
-            return Factory.MakeCard(chosenId, GameObject.Find("CardsPanel").transform);
+            GameObject created = Factory.MakeCard(chosenId, GameObject.Find("CardsPanel").transform);
+            Card CardScript = created.GetComponent<Card>();
+
+            CardScript.SetDeckId(deckId);
+
+            return created;
         }
         else
         {

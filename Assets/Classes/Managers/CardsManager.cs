@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardsManager : MonoBehaviour
@@ -25,7 +26,7 @@ public class CardsManager : MonoBehaviour
 
     public int MaxNumberOfCards = 4;
     public GameObject CardsDeckObject;
-    public Dictionary<int, GameObject> CardsInHand = new();
+    public List<GameObject> CurrentCards = new();
     public GameState State;
     public ObjectFactory Factory;
     [HideInInspector] public CardsDeck Deck;
@@ -48,11 +49,10 @@ public class CardsManager : MonoBehaviour
         Factory = ObjectFactory.Instance;
         Deck = CardsDeckObject.GetComponent<CardsDeck>();
 
-        State.SetNumberOfCardsInHand(CardsInHand.Count);
+        State.SetNumberOfCardsInHand(CurrentCards.Count);
         Deck.InitialiseDeck();
         InitialiseHand();
 
-        // TODO: Destroy card on use
         // TODO: Add capacity to DISCARD a card
     }
 
@@ -67,23 +67,57 @@ public class CardsManager : MonoBehaviour
         }
     }
 
-    public void UseCardAndDiscard(GameObject selected)
+    public void DiscardLastSelected()
     {
-        // Apply effect/trigger event
-        // Find card in dictionary and remove
-        // Re order and animate
-        // Destroy instance
+        GameObject target = State.LastSelected;
+
+        if (target.GetComponent<Card>() == null)
+        {
+            return;
+        }
+
+        GameObject currentCard = FindCurrentCard(target);
+
+        if (currentCard == null)
+        {
+            return;
+        }
+
+        State.SetLastSelected(null);
+        RemoveCurrentCardAnReindex(currentCard);
+        Destroy(currentCard);
+
+        // TODO: Animate
     }
 
     public void CreateCardDebug(int id)
     {
         GameObject cardInstance = Factory.MakeCard(id, GameObject.Find("CardsPanel").transform);
-        CardsInHand.Add(cardInstance.GetInstanceID(), cardInstance);
+        CurrentCards.Add(cardInstance);
+    }
+
+    private GameObject FindCurrentCard(GameObject cardTarget)
+    {
+        return CurrentCards.SingleOrDefault(_card =>
+            _card.GetComponent<Card>().Equals(cardTarget.GetComponent<Card>())
+        );
+    }
+
+    private void RemoveCurrentCardAnReindex(GameObject target)
+    {
+        CurrentCards.Remove(target);
+
+        for (int index = 0; index < CurrentCards.Count; index++)
+        {
+            Card CardScript = CurrentCards[index].GetComponent<Card>();
+
+            CardScript.SetOrder(index);
+        }
     }
 
     private void DestroyCurrentCards()
     {
-        if (CardsInHand.Count == 0)
+        if (CurrentCards.Count == 0)
         {
             return;
         }
@@ -93,7 +127,7 @@ public class CardsManager : MonoBehaviour
 
     private void DrawFromTopOfDeck()
     {
-        if (CardsInHand.Count == MaxNumberOfCards)
+        if (CurrentCards.Count == MaxNumberOfCards)
         {
             return;
         }
@@ -101,8 +135,8 @@ public class CardsManager : MonoBehaviour
         GameObject card = Deck.GetFromTop();
         Card CardScript = card.GetComponent<Card>();
 
-        CardScript.TurnUpInHand(CardsInHand.Count);
-        CardsInHand.Add(card.GetInstanceID(), card);
+        CardScript.TurnUpInHand(CurrentCards.Count);
+        CurrentCards.Add(card);
         State.IncreaseNumberOfCardsInHand();
     }
 }

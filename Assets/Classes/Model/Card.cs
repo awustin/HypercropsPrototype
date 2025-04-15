@@ -1,10 +1,12 @@
+using System;
 using TMPro;
 using UnityEngine;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviour, IEquatable<Card>
 {
     public string Label;
     public int Id;
+    public int DeckId;
     public CardType Type;
     public CardStatus Status;
     public int Order;
@@ -26,7 +28,7 @@ public class Card : MonoBehaviour
 
     public void InitialiseCard(CardData cardData)
     {
-        name = cardData.name;
+        name = $"Card/{cardData.name}";
         Id = cardData.id;
         Type = cardData.type;
         Label = cardData.label;
@@ -41,16 +43,30 @@ public class Card : MonoBehaviour
     public void TurnUpInHand(int order)
     {
         Status = CardStatus.TurnUp;
-        Order = order;
-
-        // TODO: animate
-        transform.localPosition = DeckUtils.MapOrderToPosition(Order);
+        SetOrder(order);
         Status = CardStatus.Idle;
     }
 
     public void ChangePositionInHand(int order)
     {
         // TODO: animate and set idle on completion
+    }
+
+    public void SetDeckId(int value)
+    {
+        DeckId = value;
+    }
+
+    public void SetOrder(int value)
+    {
+        // TODO: animate
+        Order = value;
+        transform.localPosition = DeckUtils.MapOrderToPosition(Order);
+    }
+
+    public bool Equals(Card other)
+    {
+        return DeckId == other.DeckId;
     }
 
     private void SetName()

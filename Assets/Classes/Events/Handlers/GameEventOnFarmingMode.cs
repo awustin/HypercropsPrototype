@@ -15,6 +15,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
     [HideInInspector] public FarmManager Farm;
     [HideInInspector] public LayerMask FarmableLayer;
     [HideInInspector] public GameState State;
+    [HideInInspector] public CardsManager Cards;
 
     [Header("Settings")]
     [SerializeField] public float PlantRadius = 3f;
@@ -29,6 +30,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
         MainCamera = Camera.main;
         ScreenPoint = InputSystem.actions.FindActionMap("Player").FindAction("ScreenPoint");
         FarmableLayer = LayerMask.GetMask("Default");
+        Cards = CardsManager.Instance;
 
         // TODO: Press ESC to cancel farming mode
     }
@@ -57,11 +59,17 @@ public class GameEventOnFarmingMode : MonoBehaviour
 
     void OnTryPlantEvent()
     {
+        _ghostFollowEnabled = false;
+        State.SetDefaultGameMode();
+
         if (_plantable)
         {
-            _ghostFollowEnabled = false;
             Farm.PlaceAndStartSeed(PlantPoint);
-            State.SetDefaultGameMode();
+            Cards.DiscardLastSelected();
+        }
+        else
+        {
+            Farm.DiscardCurrentCrop();
         }
     }
 

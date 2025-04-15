@@ -34,6 +34,11 @@ public class FarmManager : MonoBehaviour
         }
     }
 
+    public void DiscardCurrentCrop()
+    {
+        Destroy(SingleCrop);
+    }
+
     public GameObject GetCrop(string key)
     {
         if (CropsPlanted.ContainsKey(key))
