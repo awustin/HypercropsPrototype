@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "618eafdc-e784-4a1c-a185-63af4a30af3b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Plant",
                     "type": "Button",
                     "id": "42231368-23a3-4d0f-92ef-11dc7d81197b",
@@ -358,6 +367,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch;Gamepad;Joystick",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ffc42868-ee8b-46c8-a26d-bf070b8fcb52",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

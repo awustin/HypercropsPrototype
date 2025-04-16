@@ -8,7 +8,7 @@ public class PrintGameState : MonoBehaviour
     public bool IsWalking;
     public bool IsUIInteraction;
     public int NumberOfCardsInHand;
-    public GameObject LastSelected;
+    public GameObject LastCardSelected;
 
     void Start()
     {
@@ -21,6 +21,6 @@ public class PrintGameState : MonoBehaviour
         IsWalking = State.IsWalking;
         IsUIInteraction = State.IsUIInteraction;
         NumberOfCardsInHand = State.NumberOfCardsInHand;
-        LastSelected = State.LastSelected;
+        LastCardSelected = State.LastCardSelected;
     }
 }

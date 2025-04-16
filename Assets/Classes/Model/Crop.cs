@@ -19,6 +19,7 @@ public class Crop : MonoBehaviour
         CurrentPhase = PhaseSequence[CurrentSequenceIndex];
         IsAllowed = false;
 
+        // TODO: Smaller sizexw
         // TODO: Add dead phase to crop
         // TODO: Add life counter to calculate its damage
         // TODO: Add on click to make it interactable

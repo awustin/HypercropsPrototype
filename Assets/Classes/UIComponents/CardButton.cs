@@ -15,7 +15,7 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
         Card CardScript = card.GetComponent<Card>();
         CardType type = CardScript.Type;
 
-        State.SetLastSelected(card);
+        State.SetLastCardSelected(card);
 
         if (type == CardType.Crop)
         {

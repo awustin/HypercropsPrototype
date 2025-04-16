@@ -29,8 +29,6 @@ public class GameEventOnFarmingMode : MonoBehaviour
         ScreenPoint = InputSystem.actions.FindActionMap("Player").FindAction("ScreenPoint");
         FarmableLayer = LayerMask.GetMask("Default");
         Cards = CardsManager.Instance;
-
-        // TODO: Press ESC to cancel farming mode
     }
 
     void Update()
@@ -63,11 +61,22 @@ public class GameEventOnFarmingMode : MonoBehaviour
         if (_plantable)
         {
             Farm.PlaceAndStartSeed(PlantPoint);
-            Cards.DiscardLastSelected();
+            Cards.DiscardLastUsed();
         }
         else
         {
             Farm.DiscardCurrentCrop();
+        }
+    }
+
+    void OnCancelFarmMode()
+    {
+        if (State.IsFarmingGameMode())
+        {
+            _ghostFollowEnabled = false;
+            Farm.DiscardCurrentCrop();
+            State.SetDefaultGameMode();
+            State.SetLastCardSelected(null);
         }
     }
 
@@ -110,6 +119,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
         {
             Sender.TryPlantEvent += OnTryPlantEvent;
             Sender.FarmingModeEvent += OnFarmingModeEvent;
+            Sender.CancelFarmModeEvent += OnCancelFarmMode;
         }
         else
         {
@@ -121,5 +131,6 @@ public class GameEventOnFarmingMode : MonoBehaviour
     {
         Sender.TryPlantEvent -= OnTryPlantEvent;
         Sender.FarmingModeEvent -= OnFarmingModeEvent;
+        Sender.CancelFarmModeEvent -= OnCancelFarmMode;
     }
 }

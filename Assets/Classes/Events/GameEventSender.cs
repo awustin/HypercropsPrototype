@@ -26,6 +26,7 @@ public class GameEventSender : MonoBehaviour
     public event Action TryPlantEvent;
     public event EventHandler<FarmingModeEventArguments> FarmingModeEvent;
     public event Action AdvanceTimeEvent;
+    public event Action CancelFarmModeEvent;
 
     public void BroadcastWalkEvent(Vector3 target)
     {
@@ -45,6 +46,11 @@ public class GameEventSender : MonoBehaviour
     public void BroadcastAdvanceTimeEvent()
     {
         AdvanceTimeEvent?.Invoke();
+    }
+
+    public void BroadcastCancelFarmModeEvent()
+    {
+        CancelFarmModeEvent?.Invoke();
     }
 
     void Awake()

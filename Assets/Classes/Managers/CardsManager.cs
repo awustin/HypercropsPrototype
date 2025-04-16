@@ -72,9 +72,9 @@ public class CardsManager : MonoBehaviour
         DrawFromTopOfDeck();
     }
 
-    public void DiscardLastSelected()
+    public void DiscardLastUsed()
     {
-        GameObject target = State.LastSelected;
+        GameObject target = State.LastCardSelected;
 
         if (target.GetComponent<Card>() == null)
         {
@@ -88,7 +88,7 @@ public class CardsManager : MonoBehaviour
             return;
         }
 
-        State.SetLastSelected(null);
+        State.SetLastCardSelected(null);
         RemoveCurrentCardAnReindex(currentCard);
         Destroy(currentCard);
 
@@ -148,6 +148,12 @@ public class CardsManager : MonoBehaviour
         }
 
         GameObject card = Deck.GetFromTop();
+
+        if (card == null)
+        {
+            return;
+        }
+
         Card CardScript = card.GetComponent<Card>();
 
         CardScript.TurnUpInHand(CurrentCards.Count);
