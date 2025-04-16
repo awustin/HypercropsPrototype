@@ -163,11 +163,9 @@ public class ObjectFactory : MonoBehaviour
         CardData cardData = Loader.GetCardData(id);
         GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + cardData.type.ToString());
         Card CardScript = cardPrefab.GetComponent<Card>();
+
         CardScript.enabled = true;
         CardScript.InitialiseCard(cardData);
-
-        // TODO: When game ends, reset card script in the original prefab to default values
-
         CardsLoaded.Add(id, cardPrefab);
     }
 

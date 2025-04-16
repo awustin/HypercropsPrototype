@@ -59,7 +59,7 @@ public class CardsManager : MonoBehaviour
     public void InitialiseHand()
     {
         // Read cards data and any other param to calculate draw
-        DestroyCurrentCards();
+        ResetHand();
 
         for (int i = 0; i < MaxNumberOfCards; i++)
         {
@@ -121,14 +121,23 @@ public class CardsManager : MonoBehaviour
         }
     }
 
-    private void DestroyCurrentCards()
+    private void ResetHand()
     {
         if (CurrentCards.Count == 0)
         {
             return;
         }
+        
+        for (int index = 0; index < CurrentCards.Count; index++)
+        {
+            GameObject card = CurrentCards[index];
 
-        // TODO: destroy instances
+            CurrentCards.Remove(card);
+            Destroy(card);
+            State.DecreaseNumberOfCardsInHand();
+        }
+
+        Deck.ShuffleDeck();
     }
 
     private void DrawFromTopOfDeck()

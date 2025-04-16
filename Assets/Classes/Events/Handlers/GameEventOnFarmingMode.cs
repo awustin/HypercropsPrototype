@@ -2,11 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 
-/*
-    IMPROVEMENTS:
-    - Add precision to plant position
-    - Add collision detection between ghosts, crops and the rest of the objects
-*/
+
+// TODO: Add precision to plant position
+// TODO: Add collision detection between ghosts, crops and the rest of the objects
 public class GameEventOnFarmingMode : MonoBehaviour
 {
     [HideInInspector] public InputAction ScreenPoint;
