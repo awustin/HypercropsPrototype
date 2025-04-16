@@ -69,6 +69,17 @@ public class Card : MonoBehaviour, IEquatable<Card>
         return DeckId == other.DeckId;
     }
 
+    public void Reset()
+    {
+        enabled = false;
+        name = null;
+        Id = 0;
+        Label = null;
+        PrefabName = null;
+        Number = 0;
+        Status = CardStatus.FaceDown;
+    }
+
     private void SetName()
     {
         TMP_Text NameLabel = transform.Find("CardCanvas/Traits/Name/Label").gameObject.GetComponent<TMP_Text>();

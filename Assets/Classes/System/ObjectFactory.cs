@@ -182,4 +182,18 @@ public class ObjectFactory : MonoBehaviour
 
         return Instantiate(prefab, parent ? parent : transform);
     }
+
+    void OnApplicationQuit()
+    {
+        // Reset prefabs
+        List<string> cardPrefabNames = new() { "Crop", "Infrastructure", "Tech" };
+
+        cardPrefabNames.ForEach(cardName =>
+        {
+            GameObject cardPrefab = Resources.Load<GameObject>($"Prefabs/Cards/CardPrefab {cardName}");
+            Card CardScript = cardPrefab.GetComponent<Card>();
+
+            CardScript.Reset();
+        });
+    }
 }
