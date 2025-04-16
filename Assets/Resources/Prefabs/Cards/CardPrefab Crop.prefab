@@ -54,19 +54,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Id
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Label
-      value: Recovered Generic Wheat
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Number
-      value: 100
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: PrefabName
-      value: Wheat
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2194585124429592312, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_IsActive

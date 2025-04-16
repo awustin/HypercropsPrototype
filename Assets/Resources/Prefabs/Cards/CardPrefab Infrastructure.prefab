@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Id
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Type
@@ -62,19 +62,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Label
-      value: Irrigation Pipe
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Number
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: cardType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: PrefabName
-      value: IrrigationPipe
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1528394115325767858, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_IsActive

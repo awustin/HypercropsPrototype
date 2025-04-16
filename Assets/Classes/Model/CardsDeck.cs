@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class CardsDeck : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class CardsDeck : MonoBehaviour
 
     void Awake()
     {
-        // TODO: Click on deck to draw a new card from top
         name = "CardsDeck";
         Factory = ObjectFactory.Instance;
         Loader = DataLoader.Instance;

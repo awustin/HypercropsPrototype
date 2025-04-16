@@ -67,6 +67,11 @@ public class CardsManager : MonoBehaviour
         }
     }
 
+    public void DrawCard()
+    {
+        DrawFromTopOfDeck();
+    }
+
     public void DiscardLastSelected()
     {
         GameObject target = State.LastSelected;
@@ -106,6 +111,7 @@ public class CardsManager : MonoBehaviour
     private void RemoveCurrentCardAnReindex(GameObject target)
     {
         CurrentCards.Remove(target);
+        State.DecreaseNumberOfCardsInHand();
 
         for (int index = 0; index < CurrentCards.Count; index++)
         {

@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Id
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Type
@@ -62,15 +62,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Label
-      value: Random Mutagenesis
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Number
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: cardType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926357720666341656, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_IsActive
