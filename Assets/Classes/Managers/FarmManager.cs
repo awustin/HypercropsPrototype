@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FarmManager : MonoBehaviour
 {
-    public Dictionary<string, GameObject> CropsPlanted = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> CropsPlanted = new();
     [HideInInspector] public GameObject SingleCrop;
     [HideInInspector] public ObjectFactory Factory;
 
