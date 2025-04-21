@@ -439,6 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 357104755}
   - component: {fileID: 357104756}
+  - component: {fileID: 357104757}
   m_Layer: 0
   m_Name: FarmManager
   m_TagString: Untagged
@@ -475,6 +476,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SingleCrop: {fileID: 0}
   Factory: {fileID: 0}
+--- !u!114 &357104757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357104754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9d34ad01b234c37a30cc388faf0e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Farm: {fileID: 357104756}
+  Sender: {fileID: 0}
 --- !u!1 &367402393
 GameObject:
   m_ObjectHideFlags: 0
@@ -2052,6 +2067,14 @@ PrefabInstance:
     - target: {fileID: 5350326027063317534, guid: 5ceecb8692b5c40e8a038db31c0648cf, type: 3}
       propertyPath: m_Name
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594635994706665287, guid: 5ceecb8692b5c40e8a038db31c0648cf, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594635994706665287, guid: 5ceecb8692b5c40e8a038db31c0648cf, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

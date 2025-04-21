@@ -23,3 +23,13 @@ public class FarmingModeEventArguments : EventArgs
         CropName = cropName;
     }
 }
+
+public class CropDeathArguments : EventArgs
+{
+    public GameObject Crop { get; set; }
+
+    public CropDeathArguments(GameObject crop)
+    {
+        Crop = crop;
+    }
+}

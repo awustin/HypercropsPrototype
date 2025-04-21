@@ -25,6 +25,8 @@ public class FarmManager : MonoBehaviour
 
     public void PlaceAndStartSeed(Vector3 position)
     {
+        // TODO: Redefine key for crops. Does it make sense to keep a dictionary?
+        // I could just use the children list and use a custom Equals method in Crop to find the one I need
         string key = FarmUtils.PositionToKey(position);
 
         if (!CropsPlanted.ContainsKey(key))
@@ -52,17 +54,6 @@ public class FarmManager : MonoBehaviour
         }
     }
 
-    public void RemoveCrop(string key)
-    {
-        if (CropsPlanted.ContainsKey(key))
-        {
-            GameObject crop = CropsPlanted[key];
-
-            CropsPlanted.Remove(key);
-            Destroy(crop);
-        }
-    }
-
     public bool IsPlantInPosition(string position)
     {
         return CropsPlanted.ContainsKey(position);
@@ -84,5 +75,18 @@ public class FarmManager : MonoBehaviour
         }
 
         SingleCrop.GetComponent<Crop>()?.SetAllowed(value);
+    }
+
+    public void KillCrop(GameObject cropTarget)
+    {
+        string key = FarmUtils.PositionToKey(cropTarget.transform.position);
+
+        if (CropsPlanted.ContainsKey(key))
+        {
+            GameObject crop = CropsPlanted[key];
+
+            CropsPlanted.Remove(key);
+            Destroy(crop);
+        }
     }
 }
