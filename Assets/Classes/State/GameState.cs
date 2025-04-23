@@ -4,7 +4,6 @@ using UnityEngine;
 public class GameState : ScriptableObject
 {
     private static GameState _instance;
-
     public static GameState Instance
     {
         get
@@ -26,6 +25,9 @@ public class GameState : ScriptableObject
     public bool IsUIInteraction;
     public int NumberOfCardsInHand;
     public GameObject LastCardSelected;
+    public int SecondsInScene;
+    public int DayInWorld;
+    public int YearInWorld;
 
     void Awake()
     {
@@ -85,5 +87,20 @@ public class GameState : ScriptableObject
     public void SetLastCardSelected(GameObject target)
     {
         LastCardSelected = target;
+    }
+
+    public void SetSecondsInScene(int value)
+    {
+        SecondsInScene = value;
+    }
+
+    public void SetDayInWorld(int day)
+    {
+        DayInWorld = day;
+    }
+
+    public void SetYearInWorl(int year)
+    {
+        YearInWorld = year;
     }
 }
