@@ -21,7 +21,7 @@ public class Clock : MonoBehaviour
             if (_hour == _resetValue)
             {
                 _hour = 0;
-                // New day!
+                _newDay = true;
             }
         }
     }
@@ -53,6 +53,8 @@ public class Clock : MonoBehaviour
     private int _hour;
     private int _minute;
     private int _resetValue;
+    [SerializeField] private string _time;
+    private bool _newDay;
 
     void Start()
     {
@@ -66,9 +68,12 @@ public class Clock : MonoBehaviour
         _resetValue = 12;
     }
 
-    public void Tick()
+    public void Tick(out bool isDayTick)
     {
+        _newDay = false;
         Minute ++;
+        isDayTick = _newDay;
+        _time = ToString();
     }
 
     public void SetTo(int hour, int minute)
