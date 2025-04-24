@@ -8,7 +8,7 @@ public class PrintGameState : MonoBehaviour
     public bool IsUIInteraction;
     public int NumberOfCardsInHand;
     public GameObject LastCardSelected;
-    public int SecondsInScene;
+    public string Time;
     public int DayInWorld;
     public int YearInWorld;
 
@@ -24,7 +24,7 @@ public class PrintGameState : MonoBehaviour
         IsUIInteraction = State.IsUIInteraction;
         NumberOfCardsInHand = State.NumberOfCardsInHand;
         LastCardSelected = State.LastCardSelected;
-        SecondsInScene = State.SecondsInScene;
+        Time = $"{State.HourInWorld:D2}:{State.MinuteInWorld:D2}";
         DayInWorld = State.DayInWorld;
         YearInWorld = State.YearInWorld;
     }

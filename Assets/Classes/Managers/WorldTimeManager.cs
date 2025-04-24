@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WorldTimeManager : MonoBehaviour
 {
-    // TODO: Make the clock advance
+    // TODO: New day and new year event
     // FIXME: Calibrate me
     //World has a 12 world-hour day.
     // 1 real second -> 1 world minute
@@ -11,34 +11,68 @@ public class WorldTimeManager : MonoBehaviour
 
     public GameObject uiComponent;
     public GameState State;
-    public float WorldTimeMultiplier;
+    public WorldTimeScale TimeScale = WorldTimeScale.Normal;
     public int HoursInDay;
     public int DaysInYear;
     [HideInInspector] public Clock WorldClock;
+    private WorldTimeScale _timeScaleTracker;
+    private int _tickFrequency;
+    private int _currentSecond;
 
     void Start()
     {
         State = GameState.Instance;
         WorldClock = uiComponent.GetComponent<Clock>();
-        WorldClock.Initialise(0 ,0);
+
+        State.SetTimeInWorld(0, 0);
+        WorldClock.Initialise(0, 0);
         WorldClock.HoursInDay = HoursInDay;
-        State.SetSecondsInScene(0);
+
+        SetTickFrequency();
+        _currentSecond = 0;
     }
 
     void Update()
     {
+        if (_timeScaleTracker != TimeScale)
+        {
+            _timeScaleTracker = TimeScale;
+            SetTickFrequency();
+        }
+
         WorldTimeTick();
     }
 
     public void WorldTimeTick()
     {
-        int seconds = (int) Time.timeSinceLevelLoad;
+        int currentSecond = MultiplyByPrecision(Time.timeSinceLevelLoad);
 
-        if (State.SecondsInScene == seconds) {
+        if (_currentSecond == currentSecond)
+        {
             return;
         }
 
-        State.SetSecondsInScene(seconds);
-        WorldClock.Tick();
+        if (currentSecond % _tickFrequency == 0)
+        {
+            WorldClock.Tick();
+            State.SetTimeInWorld(WorldClock.ToString());
+        }
+
+        _currentSecond = currentSecond;
+    }
+
+    public void SetTimeScale(WorldTimeScale timeScale)
+    {
+        TimeScale = timeScale;
+    }
+
+    private void SetTickFrequency()
+    {
+        _tickFrequency = MultiplyByPrecision((float) 1 / (int) TimeScale);
+    }
+
+    private int MultiplyByPrecision(float value)
+    {
+        return (int) Mathf.Round(value * (int) TimeScale);
     }
 }

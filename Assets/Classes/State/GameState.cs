@@ -25,7 +25,8 @@ public class GameState : ScriptableObject
     public bool IsUIInteraction;
     public int NumberOfCardsInHand;
     public GameObject LastCardSelected;
-    public int SecondsInScene;
+    public int HourInWorld;
+    public int MinuteInWorld;
     public int DayInWorld;
     public int YearInWorld;
 
@@ -89,9 +90,32 @@ public class GameState : ScriptableObject
         LastCardSelected = target;
     }
 
-    public void SetSecondsInScene(int value)
+    public void SetTimeInWorld(int hour, int minute)
     {
-        SecondsInScene = value;
+        HourInWorld = hour;
+        MinuteInWorld = minute;
+    }
+
+    public void SetTimeInWorld(string timeString)
+    {
+        string[] timeParts = timeString.Split(':');
+
+        if (timeParts.Length != 2)
+        {
+            HourInWorld = 0;
+            MinuteInWorld = 0;
+            return;
+        }
+
+        if (!int.TryParse(timeParts[0], out HourInWorld))
+        {
+            HourInWorld = 0;
+        }
+
+        if (!int.TryParse(timeParts[1], out MinuteInWorld))
+        {
+            MinuteInWorld = 0;
+        }
     }
 
     public void SetDayInWorld(int day)

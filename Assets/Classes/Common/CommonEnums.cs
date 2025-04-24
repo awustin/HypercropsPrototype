@@ -7,6 +7,13 @@ public enum GameMode
     Building,
 }
 
+public enum WorldTimeScale
+{
+    Normal = 1,
+    Fast = 10,
+    Fastest = 50,
+}
+
 public enum CardType
 {
     [EnumMember(Value = "0")]

@@ -163,10 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa117be73e584d78ad58711e8752b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiComponent: {fileID: 0}
+  uiComponent: {fileID: 236906398}
   State: {fileID: 0}
-  WorldTimeMultiplier: 0
-  HoursInDay: 0
+  TimeScale: 1
+  HoursInDay: 12
   DaysInYear: 0
   WorldClock: {fileID: 0}
 --- !u!1001 &164852114
@@ -340,6 +340,11 @@ Transform:
   - {fileID: 177233559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &236906398 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2273789649694162929, guid: 15c20abc32dcf4c26b76cf59a10b4763, type: 3}
+  m_PrefabInstance: {fileID: 647041912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &241729396
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +425,7 @@ MonoBehaviour:
   IsUIInteraction: 0
   NumberOfCardsInHand: 0
   LastCardSelected: {fileID: 0}
-  SecondsInScene: 0
+  Time: 
   DayInWorld: 0
   YearInWorld: 0
 --- !u!4 &345204412

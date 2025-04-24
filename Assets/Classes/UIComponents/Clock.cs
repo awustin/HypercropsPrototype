@@ -87,6 +87,11 @@ public class Clock : MonoBehaviour
         UIClock.transform.Find("MinutesValue").gameObject.GetComponent<TMP_Text>().text = Minute.ToString("D2");
     }
 
+    public override string ToString()
+    {
+        return $"{Hour:D2}:{Minute:D2}";
+    }
+
     private bool IsValidHour(int hour)
     {
         return (hour >= 0) && (hour <= HoursInDay);
