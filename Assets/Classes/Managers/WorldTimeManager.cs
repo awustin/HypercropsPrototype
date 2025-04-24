@@ -9,12 +9,10 @@ public class WorldTimeManager : MonoBehaviour
     // 1 real minute -> 1 world hour
     // 12 real minutes -> 1 world day
 
-    public GameObject uiComponent;
     public GameState State;
+    public Clock WorldClock;
     public WorldTimeScale TimeScale = WorldTimeScale.Normal;
-    public int HoursInDay;
     public int DaysInYear;
-    [HideInInspector] public Clock WorldClock;
     private WorldTimeScale _timeScaleTracker;
     private int _tickFrequency;
     private int _currentSecond;
@@ -22,11 +20,9 @@ public class WorldTimeManager : MonoBehaviour
     void Start()
     {
         State = GameState.Instance;
-        WorldClock = uiComponent.GetComponent<Clock>();
 
         State.SetTimeInWorld(0, 0);
         WorldClock.Initialise(0, 0);
-        WorldClock.HoursInDay = HoursInDay;
 
         SetTickFrequency();
         _currentSecond = 0;

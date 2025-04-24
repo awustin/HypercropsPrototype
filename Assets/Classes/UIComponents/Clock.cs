@@ -3,6 +3,9 @@ using TMPro;
 
 public class Clock : MonoBehaviour
 {
+    [Header("12 hour clock")]
+    public GameObject uiComponentHour;
+    public GameObject uiComponentMinute;
     public int Hour
     {
         get { return _hour; }
@@ -15,7 +18,7 @@ public class Clock : MonoBehaviour
 
             _hour = value;
 
-            if (_hour == HoursInDay)
+            if (_hour == _resetValue)
             {
                 _hour = 0;
                 // New day!
@@ -46,11 +49,10 @@ public class Clock : MonoBehaviour
             }
         }
     }
-    public int HoursInDay;
     public int UpdateUIPeriod = 1;
-    public GameObject UIClock;
     private int _hour;
     private int _minute;
+    private int _resetValue;
 
     void Start()
     {
@@ -61,7 +63,7 @@ public class Clock : MonoBehaviour
     {
         Hour = hour;
         Minute = minute;
-        HoursInDay = 12;
+        _resetValue = 12;
     }
 
     public void Tick()
@@ -83,8 +85,8 @@ public class Clock : MonoBehaviour
 
     public void UpdateUI()
     {
-        UIClock.transform.Find("HoursValue").gameObject.GetComponent<TMP_Text>().text = Hour.ToString("D2");
-        UIClock.transform.Find("MinutesValue").gameObject.GetComponent<TMP_Text>().text = Minute.ToString("D2");
+        uiComponentHour.GetComponent<TMP_Text>().text = Hour.ToString("D2");
+        uiComponentMinute.GetComponent<TMP_Text>().text = Minute.ToString("D2");
     }
 
     public override string ToString()
@@ -94,7 +96,7 @@ public class Clock : MonoBehaviour
 
     private bool IsValidHour(int hour)
     {
-        return (hour >= 0) && (hour <= HoursInDay);
+        return (hour >= 0) && (hour <= _resetValue);
     }
 
     private bool IsValidMinute(int minute)
