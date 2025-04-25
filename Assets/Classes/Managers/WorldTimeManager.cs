@@ -3,21 +3,22 @@ using TMPro;
 
 public class WorldTimeManager : MonoBehaviour
 {
-    // TODO: New year event
-    // FIXME: Calibrate me
-    //World has a 12 world-hour day.
-    // 1 real second -> 1 world minute
-    // 1 real minute -> 1 world hour
-    // 12 real minutes -> 1 world day
 
+    public const int StartDay = 1;
+    public const int StartYear = 1;
+    public const int DaysInYear = 100;
+
+    [Header("100 day year")]
     public GameState State;
     public Clock WorldClock;
     public GameObject uiComponentDay;
-    public int Day = 1;
-    public int Year = 1;
+    public GameObject uiComponentYear;
+    public int Day = StartDay;
+    public int Year = StartYear;
     public WorldTimeScale TimeScale = WorldTimeScale.Normal;
     private WorldTimeScale _timeScaleTracker;
     private int _dayTracker;
+    private int _yearTracker;
     private int _tickFrequency;
     private int _currentSecond;
     private bool _isDayTick;
@@ -41,9 +42,10 @@ public class WorldTimeManager : MonoBehaviour
             SetTickFrequency();
         }
 
-        if (_dayTracker != Day)
+        if (_dayTracker != Day || _yearTracker != Year)
         {
             _dayTracker = Day;
+            _yearTracker = Year;
             UpdateUI();
         }
 
@@ -52,6 +54,11 @@ public class WorldTimeManager : MonoBehaviour
         if (_isDayTick)
         {
             TriggerNewDay();
+
+            if (Day > DaysInYear)
+            {
+                TriggerNewYear();
+            }
         }
     }
 
@@ -80,6 +87,14 @@ public class WorldTimeManager : MonoBehaviour
         _isDayTick = false;
     }
 
+    public void TriggerNewYear()
+    {
+        Year ++;
+        Day = 1;
+        State.SetDayInWorld(Day);
+        State.SetYearInWorld(Year);
+    }
+
     public void SetTimeScale(WorldTimeScale timeScale)
     {
         TimeScale = timeScale;
@@ -98,5 +113,6 @@ public class WorldTimeManager : MonoBehaviour
     private void UpdateUI()
     {
         uiComponentDay.GetComponent<TMP_Text>().text = Day.ToString();
+        uiComponentYear.GetComponent<TMP_Text>().text = Year.ToString();
     }
 }

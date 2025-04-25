@@ -10,8 +10,8 @@ public enum GameMode
 public enum WorldTimeScale
 {
     Normal = 1,
-    Fast = 10,
-    Fastest = 50,
+    Fast = 100,
+    Fastest = 500,
 }
 
 public enum CardType

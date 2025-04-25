@@ -167,6 +167,7 @@ MonoBehaviour:
   State: {fileID: 0}
   WorldClock: {fileID: 39209839}
   uiComponentDay: {fileID: 497678245}
+  uiComponentYear: {fileID: 414906171}
   Day: 1
   Year: 1
   TimeScale: 1
@@ -677,6 +678,11 @@ Transform:
   - {fileID: 1786243726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &414906171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 591867000845788914, guid: 15c20abc32dcf4c26b76cf59a10b4763, type: 3}
+  m_PrefabInstance: {fileID: 647041912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &497678245 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 675153245577778270, guid: 15c20abc32dcf4c26b76cf59a10b4763, type: 3}

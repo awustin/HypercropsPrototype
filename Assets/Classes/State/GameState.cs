@@ -123,7 +123,7 @@ public class GameState : ScriptableObject
         DayInWorld = day;
     }
 
-    public void SetYearInWorl(int year)
+    public void SetYearInWorld(int year)
     {
         YearInWorld = year;
     }
