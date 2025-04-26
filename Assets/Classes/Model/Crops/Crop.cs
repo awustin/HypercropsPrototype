@@ -6,41 +6,29 @@ public class Crop : MonoBehaviour
     [HideInInspector] public GameEventSender Sender;
     [HideInInspector] public ObjectFactory Factory;
     public CropHealth Health;
+    public CropCollider Collider;
+    public CropPhases Phases;
     public string Name;
+    public CropSize Size = CropSize.Normal;
     public bool IsAllowed;
-    public CropPhase CurrentPhase;
-    public int CurrentSequenceIndex;
-    public List<CropPhase> PhaseSequence = new();
     public GameObject CropPhaseInstance;
-
-    public Crop(string name)
-    {
-        Name = name;
-        CurrentSequenceIndex = 0;
-        CurrentPhase = PhaseSequence[CurrentSequenceIndex];
-        IsAllowed = false;
-
-        // TODO: Smaller sizexw
-        // TODO: Add dead phase to crop
-        // TODO: Add on click to make it interactable
-        // TODO: Stop using constructors
-    }
 
     void Start()
     {
+        // TODO: Smaller size
+        // TODO: Add dead phase to crop
+        // TODO: Add on click to make it interactable
         Factory = ObjectFactory.Instance;
-        PhaseSequence.Add(CropPhase.Ghost);
-        PhaseSequence.Add(CropPhase.Seed);
-        PhaseSequence.Add(CropPhase.Growing);
-        PhaseSequence.Add(CropPhase.Ready);
-        // PhaseSequence.Add(CropPhase.Dead);
 
+        Name = name;
+        IsAllowed = false;
         CropPhaseInstance = Factory.MakeCropPhase(Name, "Ghost", transform.position, transform);
+        Collider.Initialise(Size);
     }
 
     public void SetAllowed(bool value)
     {
-        if (CurrentPhase != CropPhase.Ghost)
+        if (Phases.Current != CropPhase.Ghost)
         {
             return;
         }
@@ -62,18 +50,16 @@ public class Crop : MonoBehaviour
 
     public void IncrementCropPhase(Vector3? pos)
     {
-        if (CurrentSequenceIndex + 1 >= PhaseSequence.Count)
+        if (Phases.IsLast())
         {
             return;
         }
 
         Vector3 position = (pos != null) ? pos.Value : transform.position;
-
-        CurrentSequenceIndex++;
-        CurrentPhase = PhaseSequence[CurrentSequenceIndex];
+        Phases.NextPhase();
 
         Destroy(CropPhaseInstance);
-        CropPhaseInstance = Factory.MakeCropPhase(Name, CurrentPhase.ToString(), position, transform);
+        CropPhaseInstance = Factory.MakeCropPhase(Name, Phases.Current.ToString(), position, transform);
     }
 
     public void WaterCrop()

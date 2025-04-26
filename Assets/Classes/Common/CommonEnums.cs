@@ -34,12 +34,3 @@ public enum CardStatus
     Idle,
     Discard,
 }
-
-public enum CropPhase
-{
-    Ghost,
-    Seed,
-    Growing,
-    Ready,
-    Dead
-}
