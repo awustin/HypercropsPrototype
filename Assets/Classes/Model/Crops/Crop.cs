@@ -5,11 +5,12 @@ public class Crop : MonoBehaviour
 {
     [HideInInspector] public GameEventSender Sender;
     [HideInInspector] public ObjectFactory Factory;
+    public CropHealth CropHealthScript;
     public string Name;
     public bool IsAllowed;
     public CropPhase CurrentPhase;
     public int CurrentSequenceIndex;
-    public List<CropPhase> PhaseSequence = new List<CropPhase>();
+    public List<CropPhase> PhaseSequence = new();
     public GameObject CropPhaseInstance;
 
     public Crop(string name)
@@ -19,9 +20,9 @@ public class Crop : MonoBehaviour
         CurrentPhase = PhaseSequence[CurrentSequenceIndex];
         IsAllowed = false;
 
+        // TODO: Water status. Reset water after every day
         // TODO: Smaller sizexw
         // TODO: Add dead phase to crop
-        // TODO: Add life counter to calculate its damage
         // TODO: Add on click to make it interactable
         // TODO: Stop using constructors
     }
@@ -74,6 +75,11 @@ public class Crop : MonoBehaviour
 
         Destroy(CropPhaseInstance);
         CropPhaseInstance = Factory.MakeCropPhase(Name, CurrentPhase.ToString(), position, transform);
+    }
+
+    public void WaterCrop()
+    {
+        CropHealthScript.IsWatered = true;
     }
 
     public void OnAdvanceTimeEvent()
