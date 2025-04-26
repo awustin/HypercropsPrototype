@@ -28,8 +28,8 @@ public class ObjectFactory : MonoBehaviour
     [HideInInspector] public DataLoader Loader;
     public Dictionary<string, GameObject> ObjectsLoaded = new();
     public Dictionary<string, Material> MaterialsLoaded = new();
-    public Dictionary<int, GameObject> CardsLoaded = new(); 
-    
+    public Dictionary<int, GameObject> CardsLoaded = new();
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -44,12 +44,12 @@ public class ObjectFactory : MonoBehaviour
         }
     }
 
-    #nullable enable
+#nullable enable
 
     // *** Public methods
     public GameObject? MakeCrop(Vector3 pos, Transform? parent)
     {
-        CreateUniqueObject("Crop");
+        CreateUniqueObject("Crop", "Prefabs/Crop/");
 
         return MakeInstance("Crop", pos, parent);
     }
@@ -64,7 +64,7 @@ public class ObjectFactory : MonoBehaviour
             return;
         }
 
-        string colorHex = isGreen ?  "#00FF65" : "#FF5000";
+        string colorHex = isGreen ? "#00FF65" : "#FF5000";
 
         if (ColorUtility.TryParseHtmlString(colorHex, out Color color))
         {
@@ -83,9 +83,15 @@ public class ObjectFactory : MonoBehaviour
             return null;
         }
 
-        List<string> materialsToAdd = (cropStage == "Ghost") ? new List<string>() { "MaterialGhost" } : stage.materials;
-
-        return Make(stage.name, pos, materialsToAdd, parent);
+        MakePrefabArguments args = new(
+            stage.name,
+            "Prefabs/Crop/Variants/",
+            pos,
+            cropStage == "Ghost" ? new List<string>() { "MaterialGhost" } : stage.materials,
+            parent
+        );
+        
+        return MakePrefab(args);
     }
 
     public GameObject? MakeCard(int id, Transform? parent)
@@ -96,22 +102,22 @@ public class ObjectFactory : MonoBehaviour
     }
 
     // *** Private methods
-    private GameObject? Make(string name, Vector3 position, List<string> materials, Transform? parent)
+    private GameObject? MakePrefab(MakePrefabArguments args)
     {
-        CreateUniqueObject(name);
-        AddSharedMaterials(name, materials);
+        CreateUniqueObject(args.Name, args.Path);
+        AddSharedMaterials(args.Name, args.Materials);
 
-        return MakeInstance(name, position, parent);
+        return MakeInstance(args.Name, args.Position, args.Parent);
     }
 
-    private void CreateUniqueObject(string name)
+    private void CreateUniqueObject(string name, string folder)
     {
         if (ObjectsLoaded.ContainsKey(name))
         {
             return;
         }
 
-        GameObject created = Resources.Load<GameObject>("Prefabs/" + name);
+        GameObject created = Resources.Load<GameObject>($"{folder}{name}");
         ObjectsLoaded.Add(name, created);
     }
 
@@ -193,5 +199,29 @@ public class ObjectFactory : MonoBehaviour
 
             CardScript.Reset();
         });
+    }
+
+    protected struct MakePrefabArguments
+    {
+        public string Name;
+        public string Path;
+        public Vector3 Position;
+        public List<string> Materials;
+        public Transform? Parent;
+    
+        public MakePrefabArguments(
+            string name,
+            string path,
+            Vector3 position,
+            List<string> materials,
+            Transform? parent
+        )
+        {
+            Name = name;
+            Path = path;
+            Position = position;
+            Materials = materials;
+            Parent = parent;
+        }
     }
 }
