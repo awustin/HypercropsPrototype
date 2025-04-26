@@ -5,7 +5,6 @@ public class CropHealth : MonoBehaviour
     public const float FactorScale = 1000f;
     public const float WaterFactor = 20f;
     public GameEventSender Sender;
-    public Crop CropScript;
     [Range(0f, 1f)] public float Life;
     public DamageSpeed DamageSpeedFactor = DamageSpeed.Normal;
 
@@ -24,11 +23,6 @@ public class CropHealth : MonoBehaviour
     void Start()
     {
         Sender = GameEventSender.Instance;
-
-        if (CropScript == null)
-        {
-            CropScript = GetComponentInParent<Crop>();
-        }
 
         SetDamageFactor();
         SetWaterFactor();

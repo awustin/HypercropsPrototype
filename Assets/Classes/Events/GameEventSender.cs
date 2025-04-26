@@ -28,6 +28,7 @@ public class GameEventSender : MonoBehaviour
     public event Action AdvanceTimeEvent;
     public event Action CancelFarmModeEvent;
     public event EventHandler<CropDeathArguments> CropDeathEvent;
+    public event Action NewDayEvent;
 
     public void BroadcastWalkEvent(Vector3 target)
     {
@@ -57,6 +58,11 @@ public class GameEventSender : MonoBehaviour
     public void BroadcastCropDeathEvent(GameObject cropObject)
     {
         CropDeathEvent?.Invoke(this, new CropDeathArguments(cropObject));
+    }
+
+    public void BroadcastNewDayEvent()
+    {
+        NewDayEvent?.Invoke();
     }
 
     void Awake()

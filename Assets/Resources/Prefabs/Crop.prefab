@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sender: {fileID: 0}
   Factory: {fileID: 0}
+  Health: {fileID: -6527080098393642581}
   Name: 
   IsAllowed: 0
   CurrentPhase: 0
@@ -65,6 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d507f0e564964a92a6bb361884b0a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sender: {fileID: 0}
   CropScript: {fileID: 7189626490953672930}
   Life: 1
-  LifeReductionType: 1
+  DamageSpeedFactor: 10
+  IsDead: 0
+  IsWatered: 0

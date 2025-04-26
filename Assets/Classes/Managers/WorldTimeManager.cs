@@ -7,6 +7,7 @@ public class WorldTimeManager : MonoBehaviour
     public const int StartDay = 1;
     public const int StartYear = 1;
     public const int DaysInYear = 100;
+    public GameEventSender Sender;
 
     [Header("100 day year")]
     public GameState State;
@@ -26,6 +27,7 @@ public class WorldTimeManager : MonoBehaviour
     void Start()
     {
         State = GameState.Instance;
+        Sender = GameEventSender.Instance;
 
         State.SetTimeInWorld(0, 0);
         WorldClock.Initialise(0, 0);
@@ -85,6 +87,8 @@ public class WorldTimeManager : MonoBehaviour
         Day ++;
         State.SetDayInWorld(Day);
         _isDayTick = false;
+
+        Sender.BroadcastNewDayEvent();
     }
 
     public void TriggerNewYear()
