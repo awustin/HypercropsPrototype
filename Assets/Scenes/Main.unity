@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa117be73e584d78ad58711e8752b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sender: {fileID: 0}
   State: {fileID: 0}
   WorldClock: {fileID: 39209839}
   uiComponentDay: {fileID: 497678245}
@@ -501,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a32314f952174d96869d6dade2a2a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SingleCrop: {fileID: 0}
+  CurrentCrop: {fileID: 0}
   Factory: {fileID: 0}
 --- !u!114 &357104757
 MonoBehaviour:

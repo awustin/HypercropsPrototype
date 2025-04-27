@@ -4,7 +4,7 @@ using UnityEngine;
 public class FarmManager : MonoBehaviour
 {
     public Dictionary<string, GameObject> CropsPlanted = new();
-    [HideInInspector] public GameObject SingleCrop;
+    [HideInInspector] public GameObject CurrentCrop;
     [HideInInspector] public ObjectFactory Factory;
 
     void Awake()
@@ -13,14 +13,12 @@ public class FarmManager : MonoBehaviour
         Factory = ObjectFactory.Instance;
     }
 
-    public void InstantiateFromGhost(string cropName, Vector3 point)
+    public void NewCrop(string cropName, Vector3 point)
     {
-        SingleCrop = Factory.MakeCrop(point, transform);
-        Crop cropScript = SingleCrop.GetComponent<Crop>();
+        CurrentCrop = Factory.MakeCrop(point, transform);
 
-        cropScript.Name = cropName;
-
-        SingleCrop.SetActive(true);
+        CurrentCrop.GetComponent<Crop>().Name = cropName;
+        CurrentCrop.SetActive(true);
     }
 
     public void PlaceAndStartSeed(Vector3 position)
@@ -31,14 +29,14 @@ public class FarmManager : MonoBehaviour
 
         if (!CropsPlanted.ContainsKey(key))
         {
-            SingleCrop.GetComponent<Crop>().IncrementCropPhase(position);
-            CropsPlanted.Add(key, SingleCrop);
+            CurrentCrop.GetComponent<Crop>().IncrementCropPhase(position);
+            CropsPlanted.Add(key, CurrentCrop);
         }
     }
 
     public void DiscardCurrentCrop()
     {
-        Destroy(SingleCrop);
+        Destroy(CurrentCrop);
     }
 
     public GameObject GetCrop(string key)
@@ -61,20 +59,20 @@ public class FarmManager : MonoBehaviour
 
     public void SetPosition(Vector3 position)
     {
-        if (SingleCrop != null)
+        if (CurrentCrop != null)
         {
-            SingleCrop.transform.position = position;
+            CurrentCrop.transform.position = position;
         }
     }
 
     public void TrySetGhostAllowed(bool value)
     {
-        if (SingleCrop == null)
+        if (CurrentCrop == null)
         {
             return;
         }
 
-        SingleCrop.GetComponent<Crop>()?.SetAllowed(value);
+        CurrentCrop.GetComponent<Crop>()?.SetAllowed(value);
     }
 
     public void KillCrop(GameObject cropTarget)

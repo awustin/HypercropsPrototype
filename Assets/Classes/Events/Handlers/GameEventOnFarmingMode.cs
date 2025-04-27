@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
 
 
 // TODO: Add precision to plant position
@@ -16,7 +15,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
     [HideInInspector] public CardsManager Cards;
 
     [Header("Settings")]
-    [SerializeField] public float PlantRadius = 3f;
+    [SerializeField] public float PlantRadius = 10f;
     [SerializeField] public Vector3 PlantPoint;
     private bool _ghostFollowEnabled = false;
     private bool _plantable = false;
@@ -29,6 +28,29 @@ public class GameEventOnFarmingMode : MonoBehaviour
         ScreenPoint = InputSystem.actions.FindActionMap("Player").FindAction("ScreenPoint");
         FarmableLayer = LayerMask.GetMask("Default");
         Cards = CardsManager.Instance;
+    }
+
+    void OnEnable()
+    {
+        Sender = GameEventSender.Instance;
+
+        if (Sender != null)
+        {
+            Sender.TryPlantEvent += OnTryPlantEvent;
+            Sender.FarmingModeEvent += OnFarmingModeEvent;
+            Sender.CancelFarmModeEvent += OnCancelFarmMode;
+        }
+        else
+        {
+            Debug.LogWarning("No GameEventSender detected");
+        }
+    }
+
+    void OnDisable()
+    {
+        Sender.TryPlantEvent -= OnTryPlantEvent;
+        Sender.FarmingModeEvent -= OnFarmingModeEvent;
+        Sender.CancelFarmModeEvent -= OnCancelFarmMode;
     }
 
     void Update()
@@ -49,7 +71,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
         string cropName = e.CropName;
 
         State.SetFarmingGameMode();
-        Farm.InstantiateFromGhost(cropName, new Vector3(0, 0, 0));
+        Farm.NewCrop(cropName, new Vector3(0, 0, 0));
         _ghostFollowEnabled = true;
     }
 
@@ -109,28 +131,5 @@ public class GameEventOnFarmingMode : MonoBehaviour
             PlantPoint = snapped;
             _plantable = true;
         }
-    }
-
-    void OnEnable()
-    {
-        Sender = GameEventSender.Instance;
-
-        if (Sender != null)
-        {
-            Sender.TryPlantEvent += OnTryPlantEvent;
-            Sender.FarmingModeEvent += OnFarmingModeEvent;
-            Sender.CancelFarmModeEvent += OnCancelFarmMode;
-        }
-        else
-        {
-            Debug.LogWarning("No GameEventSender detected");
-        }
-    }
-
-    void OnDisable()
-    {
-        Sender.TryPlantEvent -= OnTryPlantEvent;
-        Sender.FarmingModeEvent -= OnFarmingModeEvent;
-        Sender.CancelFarmModeEvent -= OnCancelFarmMode;
     }
 }

@@ -55,11 +55,15 @@ public class Crop : MonoBehaviour
             return;
         }
 
-        Vector3 position = (pos != null) ? pos.Value : transform.position;
+        Destroy(CropPhaseInstance);
         Phases.NextPhase();
 
-        Destroy(CropPhaseInstance);
-        CropPhaseInstance = Factory.MakeCropPhase(Name, Phases.Current.ToString(), position, transform);
+        CropPhaseInstance = Factory.MakeCropPhase(
+            Name,
+            Phases.Current.ToString(),
+            pos != null ? pos.Value : transform.position,
+            transform
+        );
     }
 
     public void WaterCrop()
