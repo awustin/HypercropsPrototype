@@ -1,9 +1,4 @@
 {
-    "Ghost": {
-        "name": "Wheat__Ghost",
-        "meshCollider": "",
-        "materials": []
-    },
     "Seed": {
         "name": "Wheat__Seed",
         "meshCollider": "",

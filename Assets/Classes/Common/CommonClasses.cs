@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class CropData
 {
-    public CropStageData Ghost;
     public CropStageData Seed;
     public CropStageData Growing;
     public CropStageData Ready;
@@ -15,7 +14,6 @@ public class CropData
     {
         return stageName switch
         {
-            "Ghost" => Ghost,
             "Seed" => Seed,
             "Growing" => Growing,
             "Ready" => Ready,
@@ -26,7 +24,7 @@ public class CropData
 
     public override string ToString()
     {
-        return Ghost.name + "-" + Seed.name + "-" + Growing.name + "-" + Ready.name + "-" + Dead.name + "";
+        return Seed.name + "-" + Growing.name + "-" + Ready.name + "-" + Dead.name + "";
     }
 }
 

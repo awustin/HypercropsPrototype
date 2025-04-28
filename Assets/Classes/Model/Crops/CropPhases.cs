@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CropPhases : MonoBehaviour
 {
-    public CropPhase Current = CropPhase.Ghost;
+    public CropPhase Current = CropPhase.Seed;
     private CropPhase _currentTracker;
 
     void Update()
