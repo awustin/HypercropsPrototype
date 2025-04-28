@@ -57,24 +57,6 @@ public class FarmManager : MonoBehaviour
         return CropsPlanted.ContainsKey(position);
     }
 
-    public void SetPosition(Vector3 position)
-    {
-        if (CurrentCrop != null)
-        {
-            CurrentCrop.transform.position = position;
-        }
-    }
-
-    public void TrySetGhostAllowed(bool value)
-    {
-        if (CurrentCrop == null)
-        {
-            return;
-        }
-
-        CurrentCrop.GetComponent<Crop>()?.SetAllowed(value);
-    }
-
     public void KillCrop(GameObject cropTarget)
     {
         string key = FarmUtils.PositionToKey(cropTarget.transform.position);

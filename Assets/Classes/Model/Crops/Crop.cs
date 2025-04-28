@@ -22,30 +22,20 @@ public class Crop : MonoBehaviour
 
         Name = name;
         IsAllowed = false;
-        CropPhaseInstance = Factory.MakeCropPhase(Name, "Ghost", transform.position, transform);
         Collider.Initialise(Size);
     }
 
-    public void SetAllowed(bool value)
+    void OnEnable()
     {
-        if (Phases.Current != CropPhase.Ghost)
-        {
-            return;
-        }
+        Sender = GameEventSender.Instance;
+        Sender.AdvanceTimeEvent += OnAdvanceTimeEvent;
+        Sender.NewDayEvent += OnNewDay;
+    }
 
-        if (IsAllowed && !value)
-        {
-            Factory.SetGhostMaterial(CropPhaseInstance, false);
-            IsAllowed = false;
-            return;
-        }
-
-        if (!IsAllowed && value)
-        {
-            Factory.SetGhostMaterial(CropPhaseInstance, true);
-            IsAllowed = true;
-            return;
-        }
+    void OnDisable()
+    {
+        Sender.AdvanceTimeEvent -= OnAdvanceTimeEvent;
+        Sender.NewDayEvent -= OnNewDay;
     }
 
     public void IncrementCropPhase(Vector3? pos)
@@ -81,18 +71,5 @@ public class Crop : MonoBehaviour
     {
         IncrementCropPhase(transform.position);
         Health.IsWatered = false;
-    }
-
-    void OnEnable()
-    {
-        Sender = GameEventSender.Instance;
-        Sender.AdvanceTimeEvent += OnAdvanceTimeEvent;
-        Sender.NewDayEvent += OnNewDay;
-    }
-
-    void OnDisable()
-    {
-        Sender.AdvanceTimeEvent -= OnAdvanceTimeEvent;
-        Sender.NewDayEvent -= OnNewDay;
     }
 }

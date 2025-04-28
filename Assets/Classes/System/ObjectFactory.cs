@@ -47,30 +47,18 @@ public class ObjectFactory : MonoBehaviour
 #nullable enable
 
     // *** Public methods
-    public GameObject? MakeCrop(Vector3 pos, Transform? parent)
+    public GameObject? MakeCropGhost(Vector3 pos, CropSize? size, Transform? parent)
     {
-        CreateUniqueObject("Crop", "Prefabs/Crop/");
+        CreateUniqueObject($"CropGhost{size}", "Prefabs/Crop/Ghosts/");
 
-        return MakeInstance("Crop", pos, parent);
+        return MakeInstance($"CropGhost{size}", pos, parent);
     }
 
-    public void SetGhostMaterial(GameObject gameObject, bool isGreen)
+    public GameObject? MakeCrop(Vector3 pos, Transform? parent)
     {
-        MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+        CreateUniqueObject("CropNormal", "Prefabs/Crop/");
 
-        if (renderer.material == null)
-        {
-            Debug.Log("no material");
-            return;
-        }
-
-        string colorHex = isGreen ? "#00FF65" : "#FF5000";
-
-        if (ColorUtility.TryParseHtmlString(colorHex, out Color color))
-        {
-            color.a = 0.3f;
-            renderer.material.color = color;
-        }
+        return MakeInstance("CropNormal", pos, parent);
     }
 
     public GameObject? MakeCropPhase(string cropName, string cropStage, Vector3 pos, Transform? parent)
