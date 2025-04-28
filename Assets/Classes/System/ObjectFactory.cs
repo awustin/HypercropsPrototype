@@ -54,17 +54,17 @@ public class ObjectFactory : MonoBehaviour
         return MakeInstance($"CropGhost{size}", pos, parent);
     }
 
-    public GameObject? MakeCrop(Vector3 pos, Transform? parent)
+    public GameObject? MakeGenericCrop(Vector3 pos, Transform? parent)
     {
         CreateUniqueObject("CropNormal", "Prefabs/Crop/");
 
         return MakeInstance("CropNormal", pos, parent);
     }
 
-    public GameObject? MakeCropPhase(string cropName, string cropStage, Vector3 pos, Transform? parent)
+    public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
     {
         CropData crop = Loader.GetCropData(cropName);
-        CropStageData stage = crop.GetStage(cropStage);
+        CropStageData stage = crop.GetStage(cropPhase.ToString());
 
         if (stage == null)
         {

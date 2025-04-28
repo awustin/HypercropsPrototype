@@ -21,11 +21,12 @@ public class FarmManager : MonoBehaviour
 
         if (!CropsPlanted.ContainsKey(key))
         {
-            CurrentCrop = Factory.MakeCrop(position, transform);
+            CurrentCrop = Factory.MakeGenericCrop(position, transform);
             Crop cropScript = CurrentCrop.GetComponent<Crop>();
 
-            cropScript.CropName = cropName;
+            CurrentCrop.name = cropName;
             CurrentCrop.SetActive(true);
+            cropScript.CropName = cropName;
             CropsPlanted.Add(key, CurrentCrop);
         }
         else

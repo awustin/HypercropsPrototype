@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CropPhases : MonoBehaviour
@@ -47,18 +46,44 @@ public class CropPhases : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        GameObject phaseVisuals = GetPhaseVisuals();
+        GameObject currentPhaseVisuals = GetPhaseVisuals(Current);
+        GameObject currentInstance = GameObjectExtensions.GetFirstChild(currentPhaseVisuals);
+        DestroyPrevious();
+
+        if (currentInstance != null)
+        {
+            return;
+        }
 
         GameObject instance = Factory.MakeCropPhase(
             CropScript.CropName,
-            Current.ToString(),
+            Current,
             transform.position,
-            phaseVisuals.transform
+            currentPhaseVisuals.transform
         );
+
+        instance.SetActive(true);
     }
 
-    private GameObject GetPhaseVisuals()
+    private void DestroyPrevious()
     {
-        return PhaseVisuals.transform.Find(Current.ToString()).gameObject;
+        if (Current == CropPhase.Seed)
+        {
+            return;
+        }
+
+        GameObject previousPhaseVisuals = GetPhaseVisuals(Current - 1);
+
+        GameObject previousInstance = GameObjectExtensions.GetFirstChild(previousPhaseVisuals);
+
+        if (previousInstance != null)
+        {
+            Destroy(previousInstance);
+        }
+    }
+
+    private GameObject GetPhaseVisuals(CropPhase phase)
+    {
+        return PhaseVisuals.transform.Find(phase.ToString()).gameObject;
     }
 }
