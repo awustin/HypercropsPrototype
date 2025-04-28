@@ -75,7 +75,7 @@ public class ObjectFactory : MonoBehaviour
             stage.name,
             "Prefabs/Crop/Variants/",
             pos,
-            cropStage == "Ghost" ? new List<string>() { "MaterialGhost" } : stage.materials,
+            stage.materials,
             parent
         );
         

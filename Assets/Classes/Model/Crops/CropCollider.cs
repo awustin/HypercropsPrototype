@@ -4,19 +4,19 @@ public class CropCollider : MonoBehaviour
 {
     // TODO: Implement collider functionality. Try capsule collider based on CropSize.
     public GameObject ColliderObject;
-    private CapsuleCollider _capsuleCollider;
+    private BoxCollider _current;
 
     public void Initialise(CropSize size)
     {
-        _capsuleCollider = ColliderObject.GetComponent<CapsuleCollider>();
+        _current = ColliderObject.GetComponent<BoxCollider>();
 
         UpdateColliderSize(size);
     }
 
     public void UpdateColliderSize(CropSize size)
     {
-        float radius = (int) size;
+        float l = (int) size;
 
-        _capsuleCollider.radius = radius;
+        _current.size = new Vector3(l, 0.25f, l);
     }
 }

@@ -333,8 +333,6 @@ MonoBehaviour:
   Phases: {fileID: 2390726584557335559}
   Name: 
   Size: 3
-  IsAllowed: 0
-  CropPhaseInstance: {fileID: 0}
 --- !u!114 &-6527080098393642581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,7 +375,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3c2750892774bf68c4bd219ab184c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Factory: {fileID: 0}
+  CropScript: {fileID: 7189626490953672930}
   Current: 0
+  PhaseVisuals: {fileID: 7582044159114674112}
 --- !u!1001 &4153440810089641013
 PrefabInstance:
   m_ObjectHideFlags: 0

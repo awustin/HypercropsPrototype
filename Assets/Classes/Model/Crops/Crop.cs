@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Crop : MonoBehaviour
 {
@@ -8,20 +7,14 @@ public class Crop : MonoBehaviour
     public CropHealth Health;
     public CropCollider Collider;
     public CropPhases Phases;
-    public string Name;
+    public string CropName;
     public CropSize Size = CropSize.Normal;
-    public bool IsAllowed;
-    public GameObject CropPhaseInstance;
 
     void Start()
     {
-        // TODO: Smaller size
         // TODO: Add dead phase to crop
         // TODO: Add on click to make it interactable
         Factory = ObjectFactory.Instance;
-
-        Name = name;
-        IsAllowed = false;
         Collider.Initialise(Size);
     }
 
@@ -38,22 +31,14 @@ public class Crop : MonoBehaviour
         Sender.NewDayEvent -= OnNewDay;
     }
 
-    public void IncrementCropPhase(Vector3? pos)
+    public void IncrementCropPhase()
     {
         if (Phases.IsLast())
         {
             return;
         }
-
-        Destroy(CropPhaseInstance);
+    
         Phases.NextPhase();
-
-        CropPhaseInstance = Factory.MakeCropPhase(
-            Name,
-            Phases.Current.ToString(),
-            pos != null ? pos.Value : transform.position,
-            transform
-        );
     }
 
     public void WaterCrop()
@@ -63,13 +48,12 @@ public class Crop : MonoBehaviour
 
     public void OnAdvanceTimeEvent()
     {
-        // Next stage of crops
-        IncrementCropPhase(transform.position);
+        IncrementCropPhase();
     }
 
     public void OnNewDay()
     {
-        IncrementCropPhase(transform.position);
+        IncrementCropPhase();
         Health.IsWatered = false;
     }
 }

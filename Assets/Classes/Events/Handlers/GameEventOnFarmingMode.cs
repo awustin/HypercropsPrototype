@@ -10,6 +10,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
     public CardsManager Cards;
     public ObjectFactory Factory;
     public CropGhost CurrentGhost;
+    public string CurrentCropName;
 
     private GameObject _currentGhostObject;
 
@@ -47,6 +48,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
 
     public void OnFarmingModeEvent(object sender, FarmingModeEventArguments e)
     {
+        CurrentCropName = e.CropName;
         _currentGhostObject = Factory.MakeCropGhost(transform.position, CropSize.Normal, transform);
         CurrentGhost = _currentGhostObject.GetComponent<CropGhost>();
 
@@ -58,15 +60,18 @@ public class GameEventOnFarmingMode : MonoBehaviour
         State.SetDefaultGameMode();
         Destroy(_currentGhostObject);
 
-        if (CurrentGhost.IsAllowed)
+        if (CurrentGhost.IsAllowed && CurrentCropName != null)
         {
-            Farm.PlaceAndStartSeed(CurrentGhost.PlantPoint);
+            Farm.StartCrop(CurrentCropName, CurrentGhost.PlantPoint);
             Cards.DiscardLastUsed();
         }
         else
         {
             Farm.DiscardCurrentCrop();
         }
+
+        CurrentCropName = null;
+        CurrentGhost = null;
     }
 
     public void OnCancelFarmMode()
@@ -77,6 +82,8 @@ public class GameEventOnFarmingMode : MonoBehaviour
             Farm.DiscardCurrentCrop();
             State.SetDefaultGameMode();
             State.SetLastCardSelected(null);
+            CurrentCropName = null;
+            CurrentGhost = null;
         }
     }
 }
