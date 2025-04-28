@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
+using System;
 
 public class ObjectFactory : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class ObjectFactory : MonoBehaviour
         {
             _instance = this;
             Loader = DataLoader.Instance;
-            Loader.LoadGameData();
+            Loader.LoadGameDescriptors();
         }
     }
 
@@ -49,33 +50,34 @@ public class ObjectFactory : MonoBehaviour
     // *** Public methods
     public GameObject? MakeCropGhost(Vector3 pos, CropSize? size, Transform? parent)
     {
-        CreateUniqueObject($"CropGhost{size}", "Prefabs/Crop/Ghosts/");
+        CreateUniqueObject($"CropGhost{size}", $"Prefabs/Crop/Ghosts/CropGhost{size}");
 
         return MakeInstance($"CropGhost{size}", pos, parent);
     }
 
     public GameObject? MakeGenericCrop(Vector3 pos, Transform? parent)
     {
-        CreateUniqueObject("CropNormal", "Prefabs/Crop/");
+        CreateUniqueObject("CropNormal", $"Prefabs/Crop/CropNormal");
 
         return MakeInstance("CropNormal", pos, parent);
     }
 
     public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
     {
-        CropData crop = Loader.GetCropData(cropName);
-        CropStageData stage = crop.GetStage(cropPhase.ToString());
+        CropDescriptor cropDescriptor = Loader.GetCropDescriptor(cropName);
+        Enum.TryParse(cropName, out Species species);
 
-        if (stage == null)
+        if (cropDescriptor == null)
         {
             return null;
         }
 
         MakePrefabArguments args = new(
-            stage.name,
-            "Prefabs/Crop/Variants/",
+            $"{species}:{cropPhase}", // Wheat:Seed
+            cropPhase.ToString(), // Seed
+            $"Prefabs/Crop/Species/{species}/{cropPhase}", // Prefabs/Crop/Species/Wheat/Seed
             pos,
-            stage.materials,
+            cropDescriptor.GetMaterials(cropPhase),
             parent
         );
         
@@ -92,31 +94,38 @@ public class ObjectFactory : MonoBehaviour
     // *** Private methods
     private GameObject? MakePrefab(MakePrefabArguments args)
     {
-        CreateUniqueObject(args.Name, args.Path);
-        AddSharedMaterials(args.Name, args.Materials);
+        CreateUniqueObject(args.Key, args.Path);
+        AddSharedMaterials(args.Key, args.Materials);
 
-        return MakeInstance(args.Name, args.Position, args.Parent);
+        GameObject? instanced = MakeInstance(args.Key, args.Position, args.Parent);
+
+        if (instanced != null)
+        {
+            instanced.name = args.Key;
+        }
+
+        return instanced;
     }
 
-    private void CreateUniqueObject(string name, string folder)
+    private void CreateUniqueObject(string key, string loadPath)
     {
-        if (ObjectsLoaded.ContainsKey(name))
+        if (ObjectsLoaded.ContainsKey(key))
         {
             return;
         }
 
-        GameObject created = Resources.Load<GameObject>($"{folder}{name}");
-        ObjectsLoaded.Add(name, created);
+        GameObject created = Resources.Load<GameObject>(loadPath);
+        ObjectsLoaded.Add(key, created);
     }
 
-    private void AddSharedMaterials(string name, List<string> materials)
+    private void AddSharedMaterials(string key, List<string> materials)
     {
-        if (materials.Count == 0 || !ObjectsLoaded.ContainsKey(name))
+        if (materials.Count == 0 || !ObjectsLoaded.ContainsKey(key))
         {
             return;
         }
 
-        GameObject baseObject = ObjectsLoaded[name];
+        GameObject baseObject = ObjectsLoaded[key];
         MeshRenderer renderer = baseObject.GetComponent<MeshRenderer>();
         List<Material> materialsToAdd = new();
 
@@ -135,14 +144,14 @@ public class ObjectFactory : MonoBehaviour
         renderer.shadowCastingMode = ShadowCastingMode.Off;
     }
 
-    private GameObject? MakeInstance(string name, Vector3 position, Transform? parent)
+    private GameObject? MakeInstance(string key, Vector3 position, Transform? parent)
     {
-        if (!ObjectsLoaded.ContainsKey(name))
+        if (!ObjectsLoaded.ContainsKey(key))
         {
             return null;
         }
 
-        GameObject prefab = ObjectsLoaded[name];
+        GameObject prefab = ObjectsLoaded[key];
 
         return Instantiate(prefab, position, Quaternion.identity, parent ? parent : transform);
     }
@@ -191,6 +200,7 @@ public class ObjectFactory : MonoBehaviour
 
     protected struct MakePrefabArguments
     {
+        public string Key;
         public string Name;
         public string Path;
         public Vector3 Position;
@@ -198,6 +208,7 @@ public class ObjectFactory : MonoBehaviour
         public Transform? Parent;
     
         public MakePrefabArguments(
+            string key,
             string name,
             string path,
             Vector3 position,
@@ -205,6 +216,7 @@ public class ObjectFactory : MonoBehaviour
             Transform? parent
         )
         {
+            Key = key;
             Name = name;
             Path = path;
             Position = position;

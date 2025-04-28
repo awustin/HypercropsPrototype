@@ -1,42 +1,53 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class CropData
+[Serializable]
+public class CropDescriptor
 {
-    public CropStageData Seed;
-    public CropStageData Growing;
-    public CropStageData Ready;
-    public CropStageData Dead;
+    public Species Species;
+    public CropPhaseDescriptor Seed;
+    public CropPhaseDescriptor Growing;
+    public CropPhaseDescriptor Ready;
+    public CropPhaseDescriptor Dead;
 
-    public CropStageData GetStage(string stageName)
+    public List<string> GetMaterials(CropPhase cropPhase)
     {
-        return stageName switch
-        {
-            "Seed" => Seed,
-            "Growing" => Growing,
-            "Ready" => Ready,
-            "Dead" => Dead,
-            _ => new CropStageData(),
-        };
+        return GetPhaseDescriptor(cropPhase).materials;
     }
 
     public override string ToString()
     {
-        return Seed.name + "-" + Growing.name + "-" + Ready.name + "-" + Dead.name + "";
+        return $"Crop descriptor for {Species}. Seed {Seed}, Growing {Growing}, Ready {Ready}, Dead {Dead}";
+    }
+
+    private CropPhaseDescriptor GetPhaseDescriptor(CropPhase copPhase)
+    {
+        return copPhase switch
+        {
+            CropPhase.Seed => Seed,
+            CropPhase.Growing => Growing,
+            CropPhase.Ready => Ready,
+            CropPhase.Dead => Dead,
+            _ => new CropPhaseDescriptor(),
+        };
     }
 }
 
-[System.Serializable]
-public class CropStageData
+[Serializable]
+public class CropPhaseDescriptor
 {
-    public string name;
     public string meshCollider;
     public List<string> materials;
+
+    public override string ToString()
+    {
+        return $"Materials loaded: {materials.Count}";
+    }
 }
 
-[System.Serializable]
+[Serializable]
 public class CardData
 {
     public int id;
@@ -53,7 +64,7 @@ public class CardData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class DeckData
 {
     public List<CardWeight> cardWeights;
@@ -72,7 +83,7 @@ public class DeckData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class CardWeight
 {
     public int id;

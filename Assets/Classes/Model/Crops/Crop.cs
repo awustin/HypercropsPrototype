@@ -12,6 +12,7 @@ public class Crop : MonoBehaviour
 
     void Start()
     {
+        // TOOD: REPLACE EVERY CropName by new Enum Species
         // TODO: Add dead phase to crop
         // TODO: Add on click to make it interactable
         Factory = ObjectFactory.Instance;

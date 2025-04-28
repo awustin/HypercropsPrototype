@@ -1,6 +1,6 @@
 {
+    "Species": "Wheat",
     "Seed": {
-        "name": "Wheat__Seed",
         "meshCollider": "",
         "materials": [
             "Wheat__Props__Sacks01",
@@ -9,7 +9,6 @@
         ]
     },
     "Growing": {
-        "name": "Wheat__Growing",
         "meshCollider": "",
         "materials": [
             "Wheat__Props__Sprout01",
@@ -19,7 +18,6 @@
         ]
     },
     "Ready": {
-        "name": "Wheat__Ready",
         "meshCollider": "",
         "materials": [
             "Wheat__Props__Sacks02",
@@ -28,7 +26,6 @@
         ]
     },
     "Dead": {
-        "name": "Wheat__Dead",
         "meshCollider": "",
         "materials": []
     }

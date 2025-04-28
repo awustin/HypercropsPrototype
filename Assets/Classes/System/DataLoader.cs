@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class DataLoader : MonoBehaviour
 {
+    // TODO: Rename CardData and DeckData with Descriptor. Rename class
     private static DataLoader _instance;
     public static DataLoader Instance
     {
@@ -27,7 +29,7 @@ public class DataLoader : MonoBehaviour
     public string CardsCropsPath = "/Data/Cards/Crops";
     public string CardsInfrastructurePath = "/Data/Cards/Infrastructure";
     public string CardsTechPath = "/Data/Cards/Tech";
-    public Dictionary<string, CropData> CropsData = new();
+    public Dictionary<Species, CropDescriptor> CropDescriptors = new();
     public Dictionary<int, CardData> CardsData = new();
     public DeckData InitialDeckData = new();
 
@@ -43,20 +45,10 @@ public class DataLoader : MonoBehaviour
         }
     }
 
-    public void LoadGameData()
+    public void LoadGameDescriptors()
     {
         // Each type (crops, buildings, cards, etc) should be stored in a folder under Data/
-
-        // Load crops
-        List<string> cropFiles = FileUtils.ListJSONFiles(CropsPath);
-
-        foreach (string cropFile in cropFiles)
-        {
-            CropData data = FileUtils.ReadJSON<CropData>(cropFile);
-            string name = FileUtils.RemoveJSONExtension(cropFile);
-
-            CropsData.Add(name, data);
-        }
+        LoadCropDescriptors();
 
         // Load cards
         List<string> cards = FileUtils.ListJSONFiles(CardsCropsPath);
@@ -74,9 +66,11 @@ public class DataLoader : MonoBehaviour
         }
     }
 
-    public CropData GetCropData(string name)
+    public CropDescriptor GetCropDescriptor(string name)
     {
-        return CropsData[name];
+        Enum.TryParse(name, out Species nameToEnum);
+
+        return CropDescriptors[nameToEnum];
     }
 
     public CardData GetCardData(int id)
@@ -93,5 +87,19 @@ public class DataLoader : MonoBehaviour
         }
 
         return InitialDeckData.cardWeights;
+    }
+
+    private void LoadCropDescriptors()
+    {
+        List<string> cropFiles = FileUtils.ListJSONFiles(CropsPath);
+
+        foreach (string cropFile in cropFiles)
+        {
+            CropDescriptor data = FileUtils.ReadJSON<CropDescriptor>(cropFile);
+            string name = FileUtils.RemoveJSONExtension(cropFile);
+            Enum.TryParse(name, out Species nameToEnum);
+
+            CropDescriptors.Add(nameToEnum, data);
+        }
     }
 }
