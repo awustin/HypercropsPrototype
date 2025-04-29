@@ -151,9 +151,7 @@ public class ObjectFactory : MonoBehaviour
             return null;
         }
 
-        GameObject prefab = ObjectsLoaded[key];
-
-        return Instantiate(prefab, position, Quaternion.identity, parent ? parent : transform);
+        return Instantiate(ObjectsLoaded[key], position, Quaternion.identity, parent ? parent : transform);
     }
 
     private void CreateUniqueCard(int id)
@@ -163,12 +161,19 @@ public class ObjectFactory : MonoBehaviour
             return;
         }
 
-        CardData cardData = Loader.GetCardData(id);
+        CardDescriptor cardData = Loader.GetCardDescriptor(id);
         GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + cardData.type.ToString());
         Card CardScript = cardPrefab.GetComponent<Card>();
 
         CardScript.enabled = true;
-        CardScript.InitialiseCard(cardData);
+        CardScript.InitialiseCard(
+            cardData.id,
+            cardData.type,
+            cardData.name,
+            cardData.label,
+            cardData.prefabName
+        );
+
         CardsLoaded.Add(id, cardPrefab);
     }
 
@@ -179,9 +184,14 @@ public class ObjectFactory : MonoBehaviour
             return null;
         }
 
-        GameObject prefab = CardsLoaded[id];
+        GameObject? instance = Instantiate(CardsLoaded[id], parent ? parent : transform);
 
-        return Instantiate(prefab, parent ? parent : transform);
+        if (instance != null)
+        {
+            instance.name = instance.GetComponent<Card>().CardName;
+        }
+
+        return instance;
     }
 
     void OnApplicationQuit()
@@ -198,7 +208,7 @@ public class ObjectFactory : MonoBehaviour
         });
     }
 
-    protected struct MakePrefabArguments
+    private struct MakePrefabArguments
     {
         public string Key;
         public string Name;

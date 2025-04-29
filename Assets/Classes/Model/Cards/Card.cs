@@ -5,6 +5,7 @@ using UnityEngine;
 public class Card : MonoBehaviour, IEquatable<Card>
 {
     public string Label;
+    public string CardName;
     public int Id;
     public int DeckId;
     public CardType Type;
@@ -26,13 +27,19 @@ public class Card : MonoBehaviour, IEquatable<Card>
         // TODO: Card has to be drag and drop
     }
 
-    public void InitialiseCard(CardData cardData)
+    public void InitialiseCard(
+        int id,
+        CardType type,
+        string cardName,
+        string label,
+        string prefabName
+    )
     {
-        name = $"Card/{cardData.name}";
-        Id = cardData.id;
-        Type = cardData.type;
-        Label = cardData.label;
-        PrefabName = cardData.prefabName;
+        CardName = $"Card:{cardName}";
+        Id = id;
+        Type = type;
+        Label = label;
+        PrefabName = prefabName;
         Number = Id;
         Status = CardStatus.FaceDown;
 
@@ -78,6 +85,7 @@ public class Card : MonoBehaviour, IEquatable<Card>
         PrefabName = null;
         Number = 0;
         Status = CardStatus.FaceDown;
+        CardName = null;
     }
 
     private void SetName()

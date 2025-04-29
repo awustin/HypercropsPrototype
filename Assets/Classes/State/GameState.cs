@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameState", menuName = "Scriptable Objects/GameState")]
 public class GameState : ScriptableObject
 {
+    // TODO: Divide project in NAMESPACES
     private static GameState _instance;
     public static GameState Instance
     {

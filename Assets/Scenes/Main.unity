@@ -319,13 +319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77387ca8b3f48bb948e7ffedb0a429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CropsPath: /Data/Crops
-  CardsCropsPath: /Data/Cards/Crops
-  CardsInfrastructurePath: /Data/Cards/Infrastructure
-  CardsTechPath: /Data/Cards/Tech
-  InitialDeckData:
-    cardWeights: []
-    IsLoaded: 0
+  CropDescriptorsPath: /Data/Crops/Descriptors
+  CardDescriptorsPath: /Data/Cards/Descriptors
+  InitialDeckPath: Data/InitialDeck.json
 --- !u!1 &202109801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,25 +1032,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c74490e89c347989bcdff6a1c4b60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenPoint:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4fb210d4-dc5f-4a7b-86e5-e1f163007395
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  MainCamera: {fileID: 0}
   Sender: {fileID: 0}
   Farm: {fileID: 0}
-  FarmableLayer:
-    serializedVersion: 2
-    m_Bits: 0
   State: {fileID: 0}
   Cards: {fileID: 0}
-  PlantRadius: 10
-  PlantPoint: {x: 0, y: 0, z: 0}
+  Factory: {fileID: 0}
+  CurrentGhost: {fileID: 0}
+  CurrentCropName: 
 --- !u!1 &862304439
 GameObject:
   m_ObjectHideFlags: 0

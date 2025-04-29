@@ -4,7 +4,6 @@ using System;
 
 public class DataLoader : MonoBehaviour
 {
-    // TODO: Rename CardData and DeckData with Descriptor. Rename class
     private static DataLoader _instance;
     public static DataLoader Instance
     {
@@ -25,13 +24,13 @@ public class DataLoader : MonoBehaviour
         }
     }
 
-    public string CropsPath = "/Data/Crops";
-    public string CardsCropsPath = "/Data/Cards/Crops";
-    public string CardsInfrastructurePath = "/Data/Cards/Infrastructure";
-    public string CardsTechPath = "/Data/Cards/Tech";
-    public Dictionary<Species, CropDescriptor> CropDescriptors = new();
-    public Dictionary<int, CardData> CardsData = new();
-    public DeckData InitialDeckData = new();
+    public string CropDescriptorsPath = "/Data/Crops/Descriptors";
+    public string CardDescriptorsPath = "/Data/Cards/Descriptors";
+    public string InitialDeckPath = "Data/InitialDeck.json";
+
+    private readonly Dictionary<Species, CropDescriptor> _cropDescriptorsLoaded = new();
+    private readonly Dictionary<int, CardDescriptor> _cardDescriptorsLoaded = new();
+    private DeckData _initialDeckData = new();
 
     void Awake()
     {
@@ -49,49 +48,35 @@ public class DataLoader : MonoBehaviour
     {
         // Each type (crops, buildings, cards, etc) should be stored in a folder under Data/
         LoadCropDescriptors();
-
-        // Load cards
-        List<string> cards = FileUtils.ListJSONFiles(CardsCropsPath);
-        List<string> cardInfrastructureFiles = FileUtils.ListJSONFiles(CardsInfrastructurePath);
-        List<string> cardTechFiles = FileUtils.ListJSONFiles(CardsTechPath);
-
-        cards.AddRange(cardInfrastructureFiles);
-        cards.AddRange(cardTechFiles);
-
-        foreach (string cardFile in cards)
-        {
-            CardData data = FileUtils.ReadJSON<CardData>(cardFile);
-
-            CardsData.Add(data.id, data);
-        }
+        LoadCardDescriptors();
     }
 
     public CropDescriptor GetCropDescriptor(string name)
     {
         Enum.TryParse(name, out Species nameToEnum);
 
-        return CropDescriptors[nameToEnum];
+        return _cropDescriptorsLoaded[nameToEnum];
     }
 
-    public CardData GetCardData(int id)
+    public CardDescriptor GetCardDescriptor(int id)
     {
-        return CardsData[id];
+        return _cardDescriptorsLoaded[id];
     }
 
     public List<CardWeight> GetInitialCardWeights()
     {
-        if (!InitialDeckData.IsLoaded)
+        if (!_initialDeckData.IsLoaded)
         {
-            InitialDeckData = FileUtils.ReadJsonFromFile<DeckData>("Data/InitialDeck.json");
-            InitialDeckData.IsLoaded = true;
+            _initialDeckData = FileUtils.ReadJsonFromFile<DeckData>(InitialDeckPath);
+            _initialDeckData.IsLoaded = true;
         }
 
-        return InitialDeckData.cardWeights;
+        return _initialDeckData.cardWeights;
     }
 
     private void LoadCropDescriptors()
     {
-        List<string> cropFiles = FileUtils.ListJSONFiles(CropsPath);
+        List<string> cropFiles = FileUtils.ListJSONFiles(CropDescriptorsPath);
 
         foreach (string cropFile in cropFiles)
         {
@@ -99,7 +84,24 @@ public class DataLoader : MonoBehaviour
             string name = FileUtils.RemoveJSONExtension(cropFile);
             Enum.TryParse(name, out Species nameToEnum);
 
-            CropDescriptors.Add(nameToEnum, data);
+            _cropDescriptorsLoaded.Add(nameToEnum, data);
+        }
+    }
+
+    private void LoadCardDescriptors()
+    {
+        List<string> cards = FileUtils.ListJSONFiles($"{CardDescriptorsPath}/Crops");
+        List<string> cardInfrastructureFiles = FileUtils.ListJSONFiles($"{CardDescriptorsPath}/Infrastructure");
+        List<string> cardTechFiles = FileUtils.ListJSONFiles($"{CardDescriptorsPath}/Tech");
+
+        cards.AddRange(cardInfrastructureFiles);
+        cards.AddRange(cardTechFiles);
+
+        foreach (string cardFile in cards)
+        {
+            CardDescriptor data = FileUtils.ReadJSON<CardDescriptor>(cardFile);
+
+            _cardDescriptorsLoaded.Add(data.id, data);
         }
     }
 }
