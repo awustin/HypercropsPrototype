@@ -2,6 +2,7 @@ using UnityEngine;
 
 // TODO: Add precision to plant position
 // TODO: Add collision detection between ghosts, crops and the rest of the objects
+// TODO: BUG when canceling one crop. The last added gets deleted as well
 public class GameEventOnFarmingMode : MonoBehaviour
 {
     public GameEventSender Sender;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using Assets.Classes.System;
 
+// TODO: Add MaterialsLoaded to ObjectCache
 public class ObjectFactory : MonoBehaviour
 {
     private static ObjectFactory _instance;
@@ -28,15 +29,13 @@ public class ObjectFactory : MonoBehaviour
     }
 
     [HideInInspector] public DataLoader Loader;
-    public Dictionary<string, GameObject> ObjectsLoaded = new();
     public Dictionary<string, Material> MaterialsLoaded = new();
-    public Dictionary<int, GameObject> CardsLoaded = new();
-    public ObjectCache CropsCache;
+
+    private ObjectCache _cropsCache;
+    private ObjectCache _cardsCache;
 
     void Awake()
     {
-        // TODO: Destroy CreateUniqueObject
-        // TODO: Separate AddSharedMaterials from MakePrefab
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -47,170 +46,9 @@ public class ObjectFactory : MonoBehaviour
             Loader = DataLoader.Instance;
             Loader.LoadGameDescriptors();
 
-            CropsCache = new();
+            _cropsCache = new();
+            _cardsCache = new();
         }
-    }
-
-#nullable enable
-
-    // *** Public methods
-    public GameObject? MakeCropGhost(Vector3 pos, CropSize? size, Transform? parent)
-    {
-        GameObject prefab = CropsCache
-            .Entry($"CropGhost{size}")
-            .LoadOnMiss
-            (
-                () => Resources.Load<GameObject>($"Prefabs/Crop/Ghosts/CropGhost{size}")
-            );
-
-        return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
-    }
-
-    public GameObject? MakeGenericCrop(Vector3 pos, Transform? parent)
-    {
-        GameObject prefab = CropsCache
-            .Entry("CropNormal")
-            .LoadOnMiss
-            (
-                () => Resources.Load<GameObject>($"Prefabs/Crop/CropNormal")
-            );
-
-        return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
-    }
-
-    public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
-    {
-        CropDescriptor cropDescriptor = Loader.GetCropDescriptor(cropName);
-        Enum.TryParse(cropName, out Species species);
-
-        if (cropDescriptor == null)
-        {
-            return null;
-        }
-
-        MakePrefabArguments args = new(
-            $"{species}:{cropPhase}", // Wheat:Seed
-            cropPhase.ToString(), // Seed
-            $"Prefabs/Crop/Species/{species}/{cropPhase}", // Prefabs/Crop/Species/Wheat/Seed
-            pos,
-            cropDescriptor.GetMaterials(cropPhase),
-            $"Prefabs/Crop/Species/{species}/Materials",
-            parent
-        );
-        
-        return MakePrefab(args);
-    }
-
-    public GameObject? MakeCard(int id, Transform? parent)
-    {
-        CreateUniqueCard(id);
-
-        return MakeCardInstance(id, parent);
-    }
-
-    // *** Private methods
-    private GameObject? MakePrefab(MakePrefabArguments args)
-    {
-        CreateUniqueObject(args.Key, args.Path);
-        AddSharedMaterials(args.Key, args.Materials, args.MaterialsPath);
-
-        GameObject? instanced = MakeInstance(args.Key, args.Position, args.Parent);
-
-        if (instanced != null)
-        {
-            instanced.name = args.Key;
-        }
-
-        return instanced;
-    }
-
-    private void CreateUniqueObject(string key, string loadPath)
-    {
-        if (ObjectsLoaded.ContainsKey(key))
-        {
-            return;
-        }
-
-        GameObject created = Resources.Load<GameObject>(loadPath);
-        ObjectsLoaded.Add(key, created);
-    }
-
-    // TOOD: Do I REALLY need to do this?
-    private void AddSharedMaterials(string key, List<string> materials, string loadPath)
-    {
-        // Materials are found in the path provided
-        if (materials.Count == 0 || !ObjectsLoaded.ContainsKey(key))
-        {
-            return;
-        }
-
-        GameObject baseObject = ObjectsLoaded[key];
-        MeshRenderer renderer = baseObject.GetComponent<MeshRenderer>();
-        List<Material> materialsToAdd = new();
-
-        foreach (string materialName in materials)
-        {
-            if (!MaterialsLoaded.ContainsKey(materialName))
-            {
-                Material loaded = Resources.Load<Material>($"{loadPath}/" + materialName);
-                MaterialsLoaded.Add(materialName, loaded);
-            }
-
-            materialsToAdd.Add(MaterialsLoaded[materialName]);
-        }
-
-        renderer.sharedMaterials = materialsToAdd.ToArray();
-        renderer.shadowCastingMode = ShadowCastingMode.Off;
-    }
-
-    private GameObject? MakeInstance(string key, Vector3 position, Transform? parent)
-    {
-        if (!ObjectsLoaded.ContainsKey(key))
-        {
-            return null;
-        }
-
-        return Instantiate(ObjectsLoaded[key], position, Quaternion.identity, parent ? parent : transform);
-    }
-
-    private void CreateUniqueCard(int id)
-    {
-        if (CardsLoaded.ContainsKey(id))
-        {
-            return;
-        }
-
-        CardDescriptor cardData = Loader.GetCardDescriptor(id);
-        GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Cards/CardPrefab " + cardData.type.ToString());
-        Card CardScript = cardPrefab.GetComponent<Card>();
-
-        CardScript.enabled = true;
-        CardScript.InitialiseCard(
-            cardData.id,
-            cardData.type,
-            cardData.name,
-            cardData.label,
-            cardData.prefabName
-        );
-
-        CardsLoaded.Add(id, cardPrefab);
-    }
-
-    private GameObject? MakeCardInstance(int id, Transform? parent)
-    {
-        if (!CardsLoaded.ContainsKey(id))
-        {
-            return null;
-        }
-
-        GameObject? instance = Instantiate(CardsLoaded[id], parent ? parent : transform);
-
-        if (instance != null)
-        {
-            instance.name = instance.GetComponent<Card>().CardName;
-        }
-
-        return instance;
     }
 
     void OnApplicationQuit()
@@ -227,33 +65,119 @@ public class ObjectFactory : MonoBehaviour
         });
     }
 
-    private struct MakePrefabArguments
+    #nullable enable
+    public GameObject MakeCropGhost(Vector3 pos, CropSize? size, Transform? parent)
     {
-        public string Key;
-        public string Name;
-        public string Path;
-        public Vector3 Position;
-        public List<string> Materials;
-        public string MaterialsPath;
-        public Transform? Parent;
-    
-        public MakePrefabArguments(
-            string key,
-            string name,
-            string path,
-            Vector3 position,
-            List<string> materials,
-            string materialsPath,
-            Transform? parent
-        )
+        GameObject prefab = _cropsCache
+            .Entry($"CropGhost{size}")
+            .LoadOnMiss
+            (
+                () => Resources.Load<GameObject>($"Prefabs/Crop/Ghosts/CropGhost{size}")
+            );
+
+        return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
+    }
+
+    public GameObject MakeGenericCrop(Vector3 pos, Transform? parent)
+    {
+        GameObject prefab = _cropsCache
+            .Entry("CropNormal")
+            .LoadOnMiss
+            (
+                () => Resources.Load<GameObject>($"Prefabs/Crop/CropNormal")
+            );
+
+        return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
+    }
+
+    public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
+    {
+        CropDescriptor cropDescriptor = Loader.GetCropDescriptor(cropName);
+
+        if (cropDescriptor == null)
         {
-            Key = key;
-            Name = name;
-            Path = path;
-            Position = position;
-            Materials = materials;
-            MaterialsPath = materialsPath;
-            Parent = parent;
+            return null;
         }
+
+        Enum.TryParse(cropName, out Species species);
+        string key = $"{species}:{cropPhase}"; // Wheat:Seed
+
+        GameObject prefab = _cropsCache
+            .Entry(key)
+            .LoadOnMiss(
+                () => Resources.Load<GameObject>($"Prefabs/Crop/Species/{species}/{cropPhase}")
+            );
+        
+        // TODO: Debug with and without this method call
+        AddSharedMaterials(
+            prefab,
+            cropDescriptor.GetMaterials(cropPhase),
+            $"Prefabs/Crop/Species/{species}/Materials"
+        );
+
+        GameObject instance = Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
+
+        if (instance != null)
+        {
+            instance.name = key;
+        }
+
+        return instance;
+    }
+
+    public GameObject MakeCard(int id, Transform? parent)
+    {
+        CardDescriptor cardDescriptor = Loader.GetCardDescriptor(id);
+        GameObject prefab = _cardsCache
+            .Entry(id.ToString())
+            .LoadOnMiss
+            (
+                () =>
+                {
+                    GameObject loaded = Resources.Load<GameObject>($"Prefabs/Cards/CardPrefab {cardDescriptor.type}");
+                    Card CardScript = loaded.GetComponent<Card>();
+
+                    CardScript.enabled = true;
+                    CardScript.InitialiseCard(
+                        cardDescriptor.id,
+                        cardDescriptor.type,
+                        cardDescriptor.name,
+                        cardDescriptor.label,
+                        cardDescriptor.prefabName
+                    );
+
+                    return loaded;
+                }
+            );
+        GameObject instance = Instantiate(prefab, parent ? parent : transform);
+        instance.name = instance.GetComponent<Card>().CardName;
+
+        return instance;
+    }
+
+    private void AddSharedMaterials(GameObject prefab, List<string> materials, string loadPath)
+    {
+        // Materials are found in the path provided
+        if (materials.Count == 0)
+        {
+            return;
+        }
+
+        MeshRenderer renderer = prefab.GetComponent<MeshRenderer>();
+        List<Material> materialsToAdd = new();
+
+        foreach (string materialName in materials)
+        {
+            if (!MaterialsLoaded.ContainsKey(materialName))
+            {
+                Material loaded = Resources.Load<Material>($"{loadPath}/" + materialName);
+                MaterialsLoaded.Add(materialName, loaded);
+            }
+
+            materialsToAdd.Add(MaterialsLoaded[materialName]);
+        }
+
+        renderer.sharedMaterials = materialsToAdd.ToArray();
+        renderer.shadowCastingMode = ShadowCastingMode.Off;
     }
 }
