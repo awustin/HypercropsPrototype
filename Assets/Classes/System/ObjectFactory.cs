@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System;
+using Assets.Classes.System;
 
 public class ObjectFactory : MonoBehaviour
 {
@@ -30,10 +31,11 @@ public class ObjectFactory : MonoBehaviour
     public Dictionary<string, GameObject> ObjectsLoaded = new();
     public Dictionary<string, Material> MaterialsLoaded = new();
     public Dictionary<int, GameObject> CardsLoaded = new();
+    public ObjectCache CropsCache;
 
     void Awake()
     {
-        // TODO: Create class ObjectCache to handle loaded objects
+        // TODO: Destroy CreateUniqueObject
         // TODO: Separate AddSharedMaterials from MakePrefab
         if (_instance != null && _instance != this)
         {
@@ -44,6 +46,8 @@ public class ObjectFactory : MonoBehaviour
             _instance = this;
             Loader = DataLoader.Instance;
             Loader.LoadGameDescriptors();
+
+            CropsCache = new();
         }
     }
 
@@ -52,16 +56,26 @@ public class ObjectFactory : MonoBehaviour
     // *** Public methods
     public GameObject? MakeCropGhost(Vector3 pos, CropSize? size, Transform? parent)
     {
-        CreateUniqueObject($"CropGhost{size}", $"Prefabs/Crop/Ghosts/CropGhost{size}");
+        GameObject prefab = CropsCache
+            .Entry($"CropGhost{size}")
+            .LoadOnMiss
+            (
+                () => Resources.Load<GameObject>($"Prefabs/Crop/Ghosts/CropGhost{size}")
+            );
 
-        return MakeInstance($"CropGhost{size}", pos, parent);
+        return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
     }
 
     public GameObject? MakeGenericCrop(Vector3 pos, Transform? parent)
     {
-        CreateUniqueObject("CropNormal", $"Prefabs/Crop/CropNormal");
+        GameObject prefab = CropsCache
+            .Entry("CropNormal")
+            .LoadOnMiss
+            (
+                () => Resources.Load<GameObject>($"Prefabs/Crop/CropNormal")
+            );
 
-        return MakeInstance("CropNormal", pos, parent);
+        return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
     }
 
     public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
