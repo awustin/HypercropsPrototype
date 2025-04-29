@@ -94,11 +94,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646f753551ab54c609050fbcab5abf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenPoint:
+  ScreenPointAction:
     m_Name: Screen Point
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 9a59591f-d45a-4a4e-91f7-fba45188ccbe
+    m_Id: c6c30e9d-9a90-468b-bd8f-4abbcd565577
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

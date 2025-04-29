@@ -33,6 +33,8 @@ public class ObjectFactory : MonoBehaviour
 
     void Awake()
     {
+        // TODO: Create class ObjectCache to handle loaded objects
+        // TODO: Separate AddSharedMaterials from MakePrefab
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -78,6 +80,7 @@ public class ObjectFactory : MonoBehaviour
             $"Prefabs/Crop/Species/{species}/{cropPhase}", // Prefabs/Crop/Species/Wheat/Seed
             pos,
             cropDescriptor.GetMaterials(cropPhase),
+            $"Prefabs/Crop/Species/{species}/Materials",
             parent
         );
         
@@ -95,7 +98,7 @@ public class ObjectFactory : MonoBehaviour
     private GameObject? MakePrefab(MakePrefabArguments args)
     {
         CreateUniqueObject(args.Key, args.Path);
-        AddSharedMaterials(args.Key, args.Materials);
+        AddSharedMaterials(args.Key, args.Materials, args.MaterialsPath);
 
         GameObject? instanced = MakeInstance(args.Key, args.Position, args.Parent);
 
@@ -118,8 +121,10 @@ public class ObjectFactory : MonoBehaviour
         ObjectsLoaded.Add(key, created);
     }
 
-    private void AddSharedMaterials(string key, List<string> materials)
+    // TOOD: Do I REALLY need to do this?
+    private void AddSharedMaterials(string key, List<string> materials, string loadPath)
     {
+        // Materials are found in the path provided
         if (materials.Count == 0 || !ObjectsLoaded.ContainsKey(key))
         {
             return;
@@ -133,7 +138,7 @@ public class ObjectFactory : MonoBehaviour
         {
             if (!MaterialsLoaded.ContainsKey(materialName))
             {
-                Material loaded = Resources.Load<Material>("Materials/" + materialName);
+                Material loaded = Resources.Load<Material>($"{loadPath}/" + materialName);
                 MaterialsLoaded.Add(materialName, loaded);
             }
 
@@ -215,6 +220,7 @@ public class ObjectFactory : MonoBehaviour
         public string Path;
         public Vector3 Position;
         public List<string> Materials;
+        public string MaterialsPath;
         public Transform? Parent;
     
         public MakePrefabArguments(
@@ -223,6 +229,7 @@ public class ObjectFactory : MonoBehaviour
             string path,
             Vector3 position,
             List<string> materials,
+            string materialsPath,
             Transform? parent
         )
         {
@@ -231,6 +238,7 @@ public class ObjectFactory : MonoBehaviour
             Path = path;
             Position = position;
             Materials = materials;
+            MaterialsPath = materialsPath;
             Parent = parent;
         }
     }
