@@ -3,26 +3,26 @@
     "Seed": {
         "meshCollider": "",
         "materials": [
-            "Wheat__Props__Sacks01",
-            "Wheat__Props__Sacks02",
-            "Wheat__Seed__Ground"
+            "MSacks01",
+            "MSacks02",
+            "MGround01"
         ]
     },
     "Growing": {
         "meshCollider": "",
         "materials": [
-            "Wheat__Props__Sprout01",
-            "Wheat__Props__Sprout02",
-            "Wheat__Props__Sprout03",
-            "Wheat__Growing__Ground"
+            "MSprout01",
+            "MSprout02",
+            "MSprout03",
+            "MGround02"
         ]
     },
     "Ready": {
         "meshCollider": "",
         "materials": [
-            "Wheat__Props__Sacks02",
-            "Wheat__Props__Plant02",
-            "Wheat__Ready__Ground"
+            "MSacks02",
+            "MPlant02",
+            "MGround03"
         ]
     },
     "Dead": {

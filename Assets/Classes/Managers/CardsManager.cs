@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Assets.Classes.System;
 
 public class CardsManager : MonoBehaviour
 {

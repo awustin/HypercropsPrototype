@@ -1,25 +1,23 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System;
 
 namespace Assets.Classes.System
 {
-    // TODO: Make generic
-    public class ObjectCache
+    public class ObjectCache<T>
     {
-        private readonly Dictionary<string, GameObject> _cache = new();
+        private readonly Dictionary<string, T> _cache = new();
 
-        public ICacheResult Entry(string key)
+        public ICacheResult<T> Entry(string key)
         {
             return new InternalCacheResult(this, key);
         }
 
-        protected Dictionary<string, GameObject> GetCache()
+        protected Dictionary<string, T> GetCache()
         {
             return _cache;
         }
 
-        protected class InternalCacheResult : ICacheResult
+        protected class InternalCacheResult : ICacheResult<T>
         {
             public string Key
             {
@@ -40,18 +38,18 @@ namespace Assets.Classes.System
                 }
             }
 
-            public GameObject Result
+            public T Result
             {
                 get => _result;
                 set => _result = value;
             }
 
             private string _key;
-            private GameObject _result;
+            private T _result;
             private bool _isHit;
-            private readonly ObjectCache _parent;
+            private readonly ObjectCache<T> _parent;
 
-            public InternalCacheResult(ObjectCache parent, string key)
+            public InternalCacheResult(ObjectCache<T> parent, string key)
             {
                 _parent = parent;
                 _key = key;
@@ -63,7 +61,7 @@ namespace Assets.Classes.System
                 }
             }
 
-            public GameObject LoadOnMiss(GameObject value)
+            public T LoadOnMiss(T value)
             {
                 if (!_isHit && _key != null)
                 {
@@ -76,11 +74,11 @@ namespace Assets.Classes.System
                 return _result;
             }
 
-            public GameObject LoadOnMiss(Func<GameObject> callback)
+            public T LoadOnMiss(Func<T> callback)
             {
                 if (!_isHit && _key != null)
                 {
-                    GameObject result = callback.Invoke();
+                    T result = callback.Invoke();
 
                     _parent.GetCache().Add(_key, result);
                     _result = result;
@@ -92,11 +90,11 @@ namespace Assets.Classes.System
         }
     }
 
-    public interface ICacheResult
+    public interface ICacheResult<T>
     {
         string Key { get; set; }
-        GameObject Result { get; set; }
-        GameObject LoadOnMiss(GameObject value);
-        GameObject LoadOnMiss(Func<GameObject> callback);
+        T Result { get; set; }
+        T LoadOnMiss(T value);
+        T LoadOnMiss(Func<T> callback);
     }
 }

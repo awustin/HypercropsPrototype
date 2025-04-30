@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Classes.System;
 
 // TODO: Add precision to plant position
 // TODO: Add collision detection between ghosts, crops and the rest of the objects
