@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Assets.Classes.System;
 
@@ -24,11 +23,10 @@ public class FarmManager : MonoBehaviour
         }
     }
 
-    public Dictionary<string, GameObject> CropsPlanted = new();
     [HideInInspector] public GameObject CurrentCrop;
     [HideInInspector] public ObjectFactory Factory;
 
-    private ObjectCache<GameObject> _plantedCache = new();
+    private readonly ObjectCache<GameObject> _plantedCache = new();
 
     void Awake()
     {
@@ -50,20 +48,23 @@ public class FarmManager : MonoBehaviour
         // I could just use the children list and use a custom Equals method in Crop to find the one I need
         string key = FarmUtils.PositionToKey(position);
 
-        if (!CropsPlanted.ContainsKey(key))
-        {
-            CurrentCrop = Factory.MakeGenericCrop(position, transform);
-            Crop cropScript = CurrentCrop.GetComponent<Crop>();
+        GameObject currentCrop = _plantedCache
+            .Entry(key)
+            .LoadOnMiss
+            (
+                () =>
+                {
+                    GameObject created = Factory.MakeGenericCrop(position, transform);
 
-            CurrentCrop.name = cropName;
-            CurrentCrop.SetActive(true);
-            cropScript.CropName = cropName;
-            CropsPlanted.Add(key, CurrentCrop);
-        }
-        else
-        {
-            Debug.LogWarning($"There is another crop at position {position}!");
-        }
+                    created.name = cropName;
+                    created.GetComponent<Crop>().CropName = cropName;
+                    created.SetActive(true);
+
+                    return created;
+                }
+            );
+
+        CurrentCrop = currentCrop;
     }
 
     public void DiscardCurrentCrop()
@@ -71,34 +72,16 @@ public class FarmManager : MonoBehaviour
         CurrentCrop = null;
     }
 
-    public GameObject GetCrop(string key)
+    public bool IsPlantInPosition(Vector3 position)
     {
-        if (CropsPlanted.ContainsKey(key))
-        {
-            return CropsPlanted[key];
-        }
-        else
-        {
-            Debug.LogWarning($"Key '{key}' not found in the dictionary.");
-            return null;
-        }
-    }
-
-    public bool IsPlantInPosition(string position)
-    {
-        return CropsPlanted.ContainsKey(position);
+        return _plantedCache.Entry(FarmUtils.PositionToKey(position)).IsHit;
     }
 
     public void KillCrop(GameObject cropTarget)
     {
         string key = FarmUtils.PositionToKey(cropTarget.transform.position);
 
-        if (CropsPlanted.ContainsKey(key))
-        {
-            GameObject crop = CropsPlanted[key];
-
-            CropsPlanted.Remove(key);
-            Destroy(crop);
-        }
+        GameObject removed = _plantedCache.Entry(key).Delete();
+        Destroy(removed);
     }
 }

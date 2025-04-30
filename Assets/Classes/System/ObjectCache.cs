@@ -41,7 +41,11 @@ namespace Assets.Classes.System
             public T Result
             {
                 get => _result;
-                set => _result = value;
+            }
+
+            public bool IsHit
+            {
+                get => _isHit;
             }
 
             private string _key;
@@ -87,14 +91,26 @@ namespace Assets.Classes.System
 
                 return _result;
             }
+
+            public T Delete()
+            {
+                if (_isHit)
+                {
+                    _parent.GetCache().Remove(_key);
+                }
+
+                return _result;
+            }
         }
     }
 
     public interface ICacheResult<T>
     {
         string Key { get; set; }
-        T Result { get; set; }
+        T Result { get; }
+        bool IsHit { get; }
         T LoadOnMiss(T value);
         T LoadOnMiss(Func<T> callback);
+        T Delete();
     }
 }

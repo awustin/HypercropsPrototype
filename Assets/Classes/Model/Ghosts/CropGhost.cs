@@ -92,7 +92,7 @@ public class CropGhost : MonoBehaviour
 
     private bool IsPlantableAtPosition(Vector3 pos, GameObject target)
     {
-        return !Farm.IsPlantInPosition(FarmUtils.PositionToKey(pos)) &&
+        return !Farm.IsPlantInPosition(pos) &&
             FarmUtils.IsPlantablePoint(pos, Player, target, PlantRadius);
     }
 
