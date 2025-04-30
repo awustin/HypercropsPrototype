@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: -6527080098393642581}
   - component: {fileID: 9071854694014031600}
   - component: {fileID: 2390726584557335559}
+  - component: {fileID: 4085149932812387667}
   m_Layer: 0
   m_Name: CropNormal
   m_TagString: Untagged
@@ -331,7 +332,7 @@ MonoBehaviour:
   Health: {fileID: -6527080098393642581}
   Collider: {fileID: 9071854694014031600}
   Phases: {fileID: 2390726584557335559}
-  Name: 
+  CropName: 
   Size: 3
 --- !u!114 &-6527080098393642581
 MonoBehaviour:
@@ -379,6 +380,20 @@ MonoBehaviour:
   CropScript: {fileID: 7189626490953672930}
   Current: 0
   PhaseVisuals: {fileID: 7582044159114674112}
+--- !u!114 &4085149932812387667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7683322754718823178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9d34ad01b234c37a30cc388faf0e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Farm: {fileID: 0}
+  Sender: {fileID: 0}
 --- !u!1001 &4153440810089641013
 PrefabInstance:
   m_ObjectHideFlags: 0

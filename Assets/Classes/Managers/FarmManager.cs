@@ -4,14 +4,44 @@ using Assets.Classes.System;
 
 public class FarmManager : MonoBehaviour
 {
+    private static FarmManager _instance;
+    public static FarmManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindFirstObjectByType<FarmManager>();
+
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new("FarmManager");
+                    _instance = singletonObject.AddComponent<FarmManager>();
+                }
+            }
+
+            return _instance;
+        }
+    }
+
     public Dictionary<string, GameObject> CropsPlanted = new();
     [HideInInspector] public GameObject CurrentCrop;
     [HideInInspector] public ObjectFactory Factory;
 
+    private ObjectCache<GameObject> _plantedCache = new();
+
     void Awake()
     {
-        name = "FarmManager";
-        Factory = ObjectFactory.Instance;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            name = "FarmManager";
+            Factory = ObjectFactory.Instance;
+        }
     }
 
     public void StartCrop(string cropName, Vector3 position)
@@ -38,7 +68,7 @@ public class FarmManager : MonoBehaviour
 
     public void DiscardCurrentCrop()
     {
-        Destroy(CurrentCrop);
+        CurrentCrop = null;
     }
 
     public GameObject GetCrop(string key)
