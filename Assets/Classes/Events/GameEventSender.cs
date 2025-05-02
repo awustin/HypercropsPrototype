@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 
+using Assets.Classes.System.Common;
+
 public class GameEventSender : MonoBehaviour
 {
     private static GameEventSender _instance;
@@ -24,7 +26,7 @@ public class GameEventSender : MonoBehaviour
     }
     public event EventHandler<WalkEventArguments> WalkEvent;
     public event Action TryPlantEvent;
-    public event EventHandler<FarmingModeEventArguments> FarmingModeEvent;
+    public event EventHandler<StartFarmModeArguments> StartFarmMode;
     public event Action AdvanceTimeEvent;
     public event Action CancelFarmModeEvent;
     public event EventHandler<CropDeathArguments> CropDeathEvent;
@@ -40,9 +42,9 @@ public class GameEventSender : MonoBehaviour
         TryPlantEvent?.Invoke();
     }
 
-    public void BroadcastFarmingModeEvent(Vector3 point, string cropName)
+    public void BroadcastStartFarmMode(Vector3 point, CropDescriptor cropDescriptor)
     {
-        FarmingModeEvent?.Invoke(this, new FarmingModeEventArguments(point, cropName));
+        StartFarmMode?.Invoke(this, new StartFarmModeArguments(point, cropDescriptor));
     }
 
     public void BroadcastAdvanceTimeEvent()

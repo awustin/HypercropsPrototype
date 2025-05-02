@@ -1,6 +1,9 @@
 using UnityEngine;
-using Assets.Classes.System;
 
+using Assets.Classes.System;
+using Assets.Classes.System.Common;
+
+// TOOD: Initialise crop with CropName, CropSpecies and CropFarmingMethod
 // TODO: Add precision to plant position
 // TODO: Add collision detection between ghosts, crops and the rest of the objects
 public class GameEventOnFarmingMode : MonoBehaviour
@@ -10,31 +13,26 @@ public class GameEventOnFarmingMode : MonoBehaviour
     public GameState State;
     public CardsManager Cards;
     public ObjectFactory Factory;
-    public CropGhost CurrentGhost;
-    public string CurrentCropName;
 
-    private GameObject _currentGhostObject;
-
-    void Start()
-    {
-        State = GameState.Instance;
-        Farm = GameObject.Find("FarmManager").GetComponent<FarmManager>();
-        Cards = CardsManager.Instance;
-        Factory = ObjectFactory.Instance;
-    }
+    public CropGhost _currentGhost;
+    private CropDescriptor _currentCropDescriptor;
 
     void OnEnable()
     {
         Sender = GameEventSender.Instance;
+        State = GameState.Instance;
+        Farm = FarmManager.Instance;
+        Cards = CardsManager.Instance;
+        Factory = ObjectFactory.Instance;
 
-        Sender.FarmingModeEvent += OnFarmingModeEvent;
+        Sender.StartFarmMode += OnStartFarmMode;
         Sender.TryPlantEvent += OnTryPlantEvent;
         Sender.CancelFarmModeEvent += OnCancelFarmMode;
     }
 
     void OnDisable()
     {
-        Sender.FarmingModeEvent -= OnFarmingModeEvent;
+        Sender.StartFarmMode -= OnStartFarmMode;
         Sender.TryPlantEvent -= OnTryPlantEvent;
         Sender.CancelFarmModeEvent -= OnCancelFarmMode;
     }
@@ -47,11 +45,10 @@ public class GameEventOnFarmingMode : MonoBehaviour
         }
     }
 
-    public void OnFarmingModeEvent(object sender, FarmingModeEventArguments e)
+    public void OnStartFarmMode(object sender, StartFarmModeArguments e)
     {
-        CurrentCropName = e.CropName;
-        _currentGhostObject = Factory.MakeCropGhost(transform.position, CropSize.Normal, transform);
-        CurrentGhost = _currentGhostObject.GetComponent<CropGhost>();
+        _currentCropDescriptor = e.CropDescripor;
+        _currentGhost = Factory.MakeCropGhost(transform.position, CropSize.Normal, transform).GetComponent<CropGhost>();
 
         State.SetFarmingGameMode();
     }
@@ -59,11 +56,10 @@ public class GameEventOnFarmingMode : MonoBehaviour
     public void OnTryPlantEvent()
     {
         State.SetDefaultGameMode();
-        Destroy(_currentGhostObject);
 
-        if (CurrentGhost.IsAllowed && CurrentCropName != null)
+        if (_currentGhost.IsAllowed && _currentCropDescriptor != null)
         {
-            Farm.StartCrop(CurrentCropName, CurrentGhost.PlantPoint);
+            Farm.StartCrop(_currentCropDescriptor, _currentGhost.PlantPoint);
             Cards.DiscardLastUsed();
         }
         else
@@ -71,21 +67,28 @@ public class GameEventOnFarmingMode : MonoBehaviour
             Farm.DiscardCurrentCrop();
         }
 
-        CurrentCropName = null;
-        CurrentGhost = null;
+        Clear();
     }
 
     public void OnCancelFarmMode()
     {
         if (State.IsFarmingGameMode())
         {
-            State.SetDefaultGameMode();
-            Destroy(_currentGhostObject);
-
             Farm.DiscardCurrentCrop();
             State.SetLastCardSelected(null);
-            CurrentCropName = null;
-            CurrentGhost = null;
+            State.SetDefaultGameMode();
+            Clear();
+        }
+    }
+
+    private void Clear()
+    {
+        _currentCropDescriptor = null;
+        _currentGhost = null;
+
+        if (_currentGhost != null)
+        {
+            Destroy(_currentGhost.gameObject);
         }
     }
 }

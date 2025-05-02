@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 
+using Assets.Classes.System.Common;
+
 public class WalkEventArguments : EventArgs
 {
     public Vector3 Target { get; set; }
@@ -12,15 +14,15 @@ public class WalkEventArguments : EventArgs
     }
 }
 
-public class FarmingModeEventArguments : EventArgs
+public class StartFarmModeArguments : EventArgs
 {
     public Vector3 Point { get; set; }
-    public string CropName { get; set; }
+    public CropDescriptor CropDescripor { get; set; }
 
-    public FarmingModeEventArguments(Vector3 point, string cropName)
+    public StartFarmModeArguments(Vector3 point, CropDescriptor cropDescriptor)
     {
         Point = point;
-        CropName = cropName;
+        CropDescripor = cropDescriptor;
     }
 }
 

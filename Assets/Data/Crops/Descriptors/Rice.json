@@ -1,7 +1,8 @@
 {
     "Species": "Rice",
     "FarmingMethod": "Normal",
-    "Ready": {
+    "Size": "Normal",
+    "ReadyPrefab": {
         "MeshCollider": "",
         "Materials": []
     }

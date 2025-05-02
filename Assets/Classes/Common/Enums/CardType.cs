@@ -1,13 +1,10 @@
-using System.Runtime.Serialization;
-
-public enum CardType
+namespace Assets.Classes.Common.Enums
 {
-    [EnumMember(Value = "0")]
-    Crop,
-    [EnumMember(Value = "1")]
-    Infrastructure,
-    [EnumMember(Value = "2")]
-    Tech,
-    [EnumMember(Value = "3")]
-    None,
+    public enum CardType
+    {
+        Crop,
+        Infrastructure,
+        Tech,
+        None,
+    }
 }

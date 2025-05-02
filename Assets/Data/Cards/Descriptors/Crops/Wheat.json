@@ -1,7 +1,7 @@
 {
-    "id": 100,
-    "type": 0,
-    "name": "Wheat",
-    "label": "Recovered Generic Wheat",
-    "prefabName": "Wheat"
+    "Id": 100,
+    "Type": "Crop",
+    "Name": "Wheat",
+    "Label": "Recovered Generic Wheat",
+    "Attribute": "Wheat"
 }

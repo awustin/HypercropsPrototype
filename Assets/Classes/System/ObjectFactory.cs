@@ -4,6 +4,9 @@ using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System;
 
+using Assets.Classes.Common.Enums;
+using Assets.Classes.System.Common;
+
 // TODO: When a card is made, instead of modifying the prefab, I can just create a prefab for each card.
 namespace Assets.Classes.System
 {
@@ -97,16 +100,32 @@ namespace Assets.Classes.System
             return Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
         }
 
+        public GameObject MakeCrop(CropDescriptor descriptor, Vector3 pos, Transform? parent)
+        {
+            GameObject prefab = _cropsCache
+                .Entry("CropNormal")
+                .LoadOnMiss
+                (
+                    () => Resources.Load<GameObject>($"{CROP_PREFABS_PATH}/CropNormal")
+                );
+
+            GameObject instance = Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
+            Crop cropScript = instance.GetComponent<Crop>();
+
+            cropScript.Initialise(descriptor.Species, descriptor.FarmingMethod, descriptor.Size);
+
+            instance.name = descriptor.Species.ToString();
+            instance.SetActive(true);
+
+            return instance;
+        }
+
         public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
         {
+            // TODO: Fix Y height of prefab
             CropDescriptor cropDescriptor = Loader.GetCropDescriptor(cropName);
+            Enum.TryParse(cropName, out CropSpecies species);
 
-            if (cropDescriptor == null)
-            {
-                return null;
-            }
-
-            Enum.TryParse(cropName, out Species species);
             string key = $"{species}:{cropPhase}"; // Wheat:Seed
 
             GameObject prefab = _cropsCache
@@ -119,7 +138,7 @@ namespace Assets.Classes.System
             AddSharedMaterials(
                 species.ToString(),
                 prefab,
-                cropDescriptor.GetMaterials(cropPhase),
+                cropDescriptor.GetMaterials(),
                 $"{SPECIES_PREFABS_PATH}/{species}/Materials"
             );
 
@@ -142,16 +161,16 @@ namespace Assets.Classes.System
                 (
                     () =>
                     {
-                        GameObject loaded = Resources.Load<GameObject>($"{CARDS_PREFABS_PATH}/CardPrefab {cardDescriptor.type}");
+                        GameObject loaded = Resources.Load<GameObject>($"{CARDS_PREFABS_PATH}/CardPrefab {cardDescriptor.Type}");
                         Card CardScript = loaded.GetComponent<Card>();
 
                         CardScript.enabled = true;
                         CardScript.InitialiseCard(
-                            cardDescriptor.id,
-                            cardDescriptor.type,
-                            cardDescriptor.name,
-                            cardDescriptor.label,
-                            cardDescriptor.prefabName
+                            cardDescriptor.Id,
+                            cardDescriptor.Type,
+                            cardDescriptor.Name,
+                            cardDescriptor.Label,
+                            cardDescriptor.Attribute
                         );
 
                         return loaded;
@@ -161,6 +180,11 @@ namespace Assets.Classes.System
             instance.name = instance.GetComponent<Card>().CardName;
 
             return instance;
+        }
+
+        public CropDescriptor GetCropDescriptorBySpeciesName(string speciesName)
+        {
+            return Loader.GetCropDescriptor(speciesName);
         }
 
         private void AddSharedMaterials(string parentKey, GameObject prefab, List<string> materials, string loadPath)

@@ -1,7 +1,7 @@
 {
-    "id": 101,
-    "type": 0,
-    "name": "Rice",
-    "label": "Resilient Rice",
-    "prefabName": "Rice"
+    "Id": 101,
+    "Type": "Crop",
+    "Name": "Rice",
+    "Label": "Resilient Rice",
+    "Attribute": "Rice"
 }

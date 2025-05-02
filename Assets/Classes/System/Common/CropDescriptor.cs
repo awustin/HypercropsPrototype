@@ -1,47 +1,40 @@
-
 using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class CropDescriptor
+using Assets.Classes.Common.Enums;
+
+namespace Assets.Classes.System.Common
 {
-    public Species Species;
-    public CropPhaseDescriptor Seed;
-    public CropPhaseDescriptor Growing;
-    public CropPhaseDescriptor Ready;
-    public CropPhaseDescriptor Dead;
-
-    public List<string> GetMaterials(CropPhase cropPhase)
+    [Serializable]
+    public class CropDescriptor
     {
-        return GetPhaseDescriptor(cropPhase).materials;
-    }
+        public CropSpecies Species;
+        public CropFarmingMethod FarmingMethod;
+        public CropSize Size;
+        public PrefabCommonDescriptor ReadyPrefab;
 
-    public override string ToString()
-    {
-        return $"Crop descriptor for {Species}. Seed {Seed}, Growing {Growing}, Ready {Ready}, Dead {Dead}";
-    }
-
-    private CropPhaseDescriptor GetPhaseDescriptor(CropPhase copPhase)
-    {
-        return copPhase switch
+        public CropDescriptor
+        (
+            CropSpecies species,
+            CropFarmingMethod farmingMethod,
+            CropSize size,
+            PrefabCommonDescriptor readyPrefab
+        )
         {
-            CropPhase.Seed => Seed,
-            CropPhase.Growing => Growing,
-            CropPhase.Ready => Ready,
-            CropPhase.Dead => Dead,
-            _ => new CropPhaseDescriptor(),
-        };
-    }
-}
+            Species = species;
+            FarmingMethod = farmingMethod;
+            Size = size;
+            ReadyPrefab = readyPrefab;
+        }
 
-[Serializable]
-public class CropPhaseDescriptor
-{
-    public string meshCollider;
-    public List<string> materials;
+        public List<string> GetMaterials()
+        {
+            return ReadyPrefab.Materials;
+        }
 
-    public override string ToString()
-    {
-        return $"Materials loaded: {materials.Count}";
+        public override string ToString()
+        {
+            return $"Crop descriptor for {Species}\n\nFarming Method: {FarmingMethod}\nSize: {Size}\n{ReadyPrefab}";
+        }
     }
 }

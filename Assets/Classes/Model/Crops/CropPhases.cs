@@ -57,7 +57,7 @@ public class CropPhases : MonoBehaviour
         }
 
         GameObject instance = Factory.MakeCropPhase(
-            CropScript.CropName,
+            CropScript.Species.ToString(),
             Current,
             transform.position,
             currentPhaseVisuals.transform

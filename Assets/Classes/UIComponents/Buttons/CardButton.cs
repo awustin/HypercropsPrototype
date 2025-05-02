@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Assets.Classes.Common.Enums;
+using Assets.Classes.System.Common;
+using Assets.Classes.System;
+
 public class CardButton : UIElementBehaviour, IPointerClickHandler
 {
     override public void OnPointerEnter(PointerEventData data)
@@ -19,8 +23,10 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
 
         if (type == CardType.Crop)
         {
-            string cropName = CardScript.PrefabName;
-            GameEventSender.Instance.BroadcastFarmingModeEvent(new Vector3(0, 0, 0), cropName);
+            string speciesName = CardScript.Attribute;
+
+            CropDescriptor cropDescriptor = ObjectFactory.Instance.GetCropDescriptorBySpeciesName(speciesName);
+            GameEventSender.Instance.BroadcastStartFarmMode(new Vector3(0, 0, 0), cropDescriptor);
 
             return;
         }

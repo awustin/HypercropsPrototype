@@ -1,24 +1,19 @@
 using UnityEngine;
-using Assets.Classes.System;
 
+using Assets.Classes.Common.Enums;
+
+// TODO: Fix phases
+// TODO: Add dead phase to crop
+// TODO: Add on click to make it interactable
 public class Crop : MonoBehaviour
 {
     [HideInInspector] public GameEventSender Sender;
-    [HideInInspector] public ObjectFactory Factory;
     public CropHealth Health;
     public CropCollider Collider;
     public CropPhases Phases;
-    public string CropName;
+    public CropSpecies Species;
+    public CropFarmingMethod FarmingMethod = CropFarmingMethod.Normal;
     public CropSize Size = CropSize.Normal;
-
-    void Start()
-    {
-        // TOOD: REPLACE EVERY CropName by new Enum Species
-        // TODO: Add dead phase to crop
-        // TODO: Add on click to make it interactable
-        Factory = ObjectFactory.Instance;
-        Collider.Initialise(Size);
-    }
 
     void OnEnable()
     {
@@ -31,6 +26,20 @@ public class Crop : MonoBehaviour
     {
         Sender.AdvanceTimeEvent -= OnAdvanceTimeEvent;
         Sender.NewDayEvent -= OnNewDay;
+    }
+
+    public void Initialise
+    (
+        CropSpecies species,
+        CropFarmingMethod farmingMethod,
+        CropSize size
+    )
+    {
+        Species = species;
+        FarmingMethod = farmingMethod;
+        Size = size;
+
+        Collider.Initialise(size);
     }
 
     public void IncrementCropPhase()

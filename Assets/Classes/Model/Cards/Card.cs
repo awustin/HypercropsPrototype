@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 
+using Assets.Classes.Common.Enums;
+
 public class Card : MonoBehaviour, IEquatable<Card>
 {
     public string Label;
@@ -14,7 +16,7 @@ public class Card : MonoBehaviour, IEquatable<Card>
     public int Number;
 
     #nullable enable
-    public string? PrefabName;
+    public string? Attribute;
     #nullable disable
 
     void Start()
@@ -39,7 +41,7 @@ public class Card : MonoBehaviour, IEquatable<Card>
         Id = id;
         Type = type;
         Label = label;
-        PrefabName = prefabName;
+        Attribute = prefabName;
         Number = Id;
         Status = CardStatus.FaceDown;
 
@@ -82,7 +84,7 @@ public class Card : MonoBehaviour, IEquatable<Card>
         name = null;
         Id = 0;
         Label = null;
-        PrefabName = null;
+        Attribute = null;
         Number = 0;
         Status = CardStatus.FaceDown;
         CardName = null;

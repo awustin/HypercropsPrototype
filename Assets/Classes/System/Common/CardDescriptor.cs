@@ -1,18 +1,24 @@
 using System;
 
-[Serializable]
-public class CardDescriptor
-{
-    public int id;
-    public CardType type;
-    public string name;
-    public string label;
-    #nullable enable
-    public string? prefabName;
-    #nullable disable
+using Assets.Classes.Common.Enums;
 
-    public override string ToString()
+namespace Assets.Classes.System.Common
+{
+    [Serializable]
+    public class CardDescriptor
     {
-        return name;
+        public int Id;
+        public CardType Type;
+        public string Name;
+        public string Label;
+
+        #nullable enable
+        public string? Attribute;
+        #nullable disable
+
+        public override string ToString()
+        {
+            return $"{Label} ({Name})";
+        }
     }
 }

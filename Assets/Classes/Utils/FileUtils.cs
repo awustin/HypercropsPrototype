@@ -19,7 +19,7 @@ public static class FileUtils
         return str[..^5];
     }
 
-    public static T ReadJsonFromFile<T>(string assetsRelativePath) where T : class
+    public static T ReadAssetJSON<T>(string assetsRelativePath) where T : class
     {
         string fullPath = PrependAssetsDir(assetsRelativePath);
         string jsonString = File.ReadAllText(fullPath);
@@ -35,6 +35,6 @@ public static class FileUtils
 
     private static string PrependAssetsDir(string path)
     {
-        return Path.Combine(Application.dataPath + "/" + path);
+        return Path.Combine($"{Application.dataPath}/{(path.StartsWith('/') ? path[1..] : path)}");
     }
 }

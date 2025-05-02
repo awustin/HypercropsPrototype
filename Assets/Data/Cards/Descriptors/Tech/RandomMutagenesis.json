@@ -1,6 +1,6 @@
 {
-    "id": 1000,
-    "type": 2,
-    "name": "RandomMutagenesis",
-    "label": "Random Mutagenesis"
+    "Id": 1000,
+    "Type": "Tech",
+    "Name": "RandomMutagenesis",
+    "Label": "Random Mutagenesis"
 }

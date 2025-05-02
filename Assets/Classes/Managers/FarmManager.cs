@@ -1,5 +1,8 @@
 using UnityEngine;
+
 using Assets.Classes.System;
+using Assets.Classes.System.Common;
+using Assets.Classes.Common.Enums;
 
 public class FarmManager : MonoBehaviour
 {
@@ -39,11 +42,17 @@ public class FarmManager : MonoBehaviour
             _instance = this;
             name = "FarmManager";
             Factory = ObjectFactory.Instance;
-            DebugCropGrid(10, 10, "Wheat");
+
+            DebugCropGrid(10, 10, new CropDescriptor(
+                CropSpecies.Wheat,
+                CropFarmingMethod.Normal,
+                CropSize.Normal,
+                new PrefabCommonDescriptor()
+            ));
         }
     }
 
-    public void StartCrop(string cropName, Vector3 position)
+    public void StartCrop(CropDescriptor cropDescriptor, Vector3 position)
     {
         // TODO: Redefine key for crops. Does it make sense to keep a dictionary?
         // I could just use the children list and use a custom Equals method in Crop to find the one I need
@@ -55,13 +64,7 @@ public class FarmManager : MonoBehaviour
             (
                 () =>
                 {
-                    GameObject created = Factory.MakeGenericCrop(position, transform);
-
-                    created.name = cropName;
-                    created.GetComponent<Crop>().CropName = cropName;
-                    created.SetActive(true);
-
-                    return created;
+                    return Factory.MakeCrop(cropDescriptor, position, transform);
                 }
             );
 
@@ -86,7 +89,7 @@ public class FarmManager : MonoBehaviour
         Destroy(removed);
     }
 
-    private void DebugCropGrid(int rows, int columns, string cropName)
+    private void DebugCropGrid(int rows, int columns, CropDescriptor cropDescriptor)
     {
         float gridSpacing = 3f;
         Vector3 offset = new(-2f, 0f, -2f);
@@ -102,7 +105,7 @@ public class FarmManager : MonoBehaviour
                 centeredPosition.z += gridSpacing / 2f - (gridSpacing * 0.5f);
                 centeredPosition += offset;
 
-                StartCrop(cropName, centeredPosition);
+                StartCrop(cropDescriptor, centeredPosition);
             }
         }
     }
