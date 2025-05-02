@@ -1,0 +1,8 @@
+{
+    "Species": "Rice",
+    "FarmingMethod": "Normal",
+    "Ready": {
+        "MeshCollider": "",
+        "Materials": []
+    }
+}

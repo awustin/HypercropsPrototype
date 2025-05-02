@@ -39,6 +39,7 @@ public class FarmManager : MonoBehaviour
             _instance = this;
             name = "FarmManager";
             Factory = ObjectFactory.Instance;
+            DebugCropGrid(10, 10, "Wheat");
         }
     }
 
@@ -83,5 +84,26 @@ public class FarmManager : MonoBehaviour
 
         GameObject removed = _plantedCache.Entry(key).Delete();
         Destroy(removed);
+    }
+
+    private void DebugCropGrid(int rows, int columns, string cropName)
+    {
+        float gridSpacing = 3f;
+        Vector3 offset = new(-2f, 0f, -2f);
+
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < columns; col++)
+            {
+                Vector3 gridPosition = new(-col * gridSpacing, 0f, -row * gridSpacing);
+                Vector3 centeredPosition = gridPosition;
+
+                centeredPosition.x += gridSpacing / 2f - (gridSpacing * 0.5f);
+                centeredPosition.z += gridSpacing / 2f - (gridSpacing * 0.5f);
+                centeredPosition += offset;
+
+                StartCrop(cropName, centeredPosition);
+            }
+        }
     }
 }

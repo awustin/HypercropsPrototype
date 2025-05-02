@@ -1,32 +1,12 @@
 {
     "Species": "Wheat",
-    "Seed": {
-        "meshCollider": "",
-        "materials": [
-            "MSacks01",
-            "MSacks02",
-            "MGround01"
-        ]
-    },
-    "Growing": {
-        "meshCollider": "",
-        "materials": [
-            "MSprout01",
-            "MSprout02",
-            "MSprout03",
-            "MGround02"
-        ]
-    },
+    "FarmingMethod": "Normal",
     "Ready": {
-        "meshCollider": "",
-        "materials": [
+        "MeshCollider": "",
+        "Materials": [
             "MSacks02",
             "MPlant02",
             "MGround03"
         ]
-    },
-    "Dead": {
-        "meshCollider": "",
-        "materials": []
     }
 }

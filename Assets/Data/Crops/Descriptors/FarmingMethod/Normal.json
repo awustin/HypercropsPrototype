@@ -1,0 +1,15 @@
+{
+    "Method": "Normal",
+    "Seed": {
+        "MeshCollider": "",
+        "Materials": []
+    },
+    "Growing": {
+        "MeshCollider": "",
+        "Materials": []
+    },
+    "Dead": {
+        "MeshCollider": "",
+        "Materials": []
+    }
+}
