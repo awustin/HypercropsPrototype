@@ -4,10 +4,6 @@
     "Size": "Normal",
     "ReadyPrefab": {
         "MeshCollider": "",
-        "Materials": [
-            "MSacks02",
-            "MPlant02",
-            "MGround03"
-        ]
+        "Materials": []
     }
 }

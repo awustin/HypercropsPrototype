@@ -1,9 +1,10 @@
 using UnityEngine;
 
 using Assets.Classes.System;
-using Assets.Classes.System.Common;
+using Assets.Classes.System.CommonSerializable;
+using Assets.Classes.System.Managers;
 
-// TOOD: Initialise crop with CropName, CropSpecies and CropFarmingMethod
+// TOOD: DONT destroy the ghost. Save it in a cache.
 // TODO: Add precision to plant position
 // TODO: Add collision detection between ghosts, crops and the rest of the objects
 public class GameEventOnFarmingMode : MonoBehaviour
@@ -14,7 +15,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
     public CardsManager Cards;
     public ObjectFactory Factory;
 
-    public CropGhost _currentGhost;
+    private CropGhost _currentGhost;
     private CropDescriptor _currentCropDescriptor;
 
     void OnEnable()
@@ -83,12 +84,12 @@ public class GameEventOnFarmingMode : MonoBehaviour
 
     private void Clear()
     {
-        _currentCropDescriptor = null;
-        _currentGhost = null;
-
         if (_currentGhost != null)
         {
             Destroy(_currentGhost.gameObject);
         }
+
+        _currentCropDescriptor = null;
+        _currentGhost = null;
     }
 }

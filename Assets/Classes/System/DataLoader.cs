@@ -1,9 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 using Assets.Classes.System;
-using Assets.Classes.System.Common;
+using Assets.Classes.System.CommonSerializable;
 
 public class DataLoader : MonoBehaviour
 {
@@ -31,10 +30,10 @@ public class DataLoader : MonoBehaviour
     public string CardDescriptorsPath = "/Data/Cards/Descriptors";
     public string InitialDeckPath = "/Data/InitialDeck.json";
 
-    // private readonly Dictionary<CropSpecies, CropDescriptor> _cropDescriptorsLoaded = new();
     private readonly Dictionary<int, CardDescriptor> _cardDescriptorsLoaded = new();
     private DeckData _initialDeckData = new();
     private readonly ObjectCache<CropDescriptor> _cropDescriptorsCache = new();
+    private readonly ObjectCache<CardDescriptor> _cardDescriptorCache = new();
 
     void Awake()
     {
@@ -48,14 +47,7 @@ public class DataLoader : MonoBehaviour
         }
     }
 
-    public void LoadGameDescriptors()
-    {
-        // Each type (crops, buildings, cards, etc) should be stored in a folder under Data/
-        // LoadCropDescriptors();
-        LoadCardDescriptors();
-    }
-
-    public CropDescriptor GetCropDescriptor(string speciesName)
+    public CropDescriptor LoadCropDescriptor(string speciesName)
     {
         return _cropDescriptorsCache
             .Entry(speciesName)
@@ -65,9 +57,14 @@ public class DataLoader : MonoBehaviour
             );
     }
 
-    public CardDescriptor GetCardDescriptor(int id)
+    public CardDescriptor LoadCardDescriptor(int cardId)
     {
-        return _cardDescriptorsLoaded[id];
+        return _cardDescriptorCache
+            .Entry(cardId.ToString())
+            .LoadOnMiss
+            (
+                () => FileUtils.ReadAssetJSON<CardDescriptor>($"{CardDescriptorsPath}/{cardId}.json")
+            );
     }
 
     public List<CardWeight> GetInitialCardWeights()
@@ -79,42 +76,5 @@ public class DataLoader : MonoBehaviour
         }
 
         return _initialDeckData.cardWeights;
-    }
-
-    // private void LoadCropDescriptors()
-    // {
-    //     List<string> speciesNamesFiles = FileUtils.ListJSONFiles(CropDescriptorsPath);
-
-    //     foreach (string speciesFilename in speciesNamesFiles)
-    //     {
-    //         string species = FileUtils.RemoveJSONExtension(speciesFilename);
-
-    //         _cropDescriptorsCache
-    //             .Entry(speciesFilename)
-    //             .LoadOnMiss
-    //             (
-    //                 () =>
-    //                 {
-    //                     return FileUtils.ReadJSON<CropDescriptor>(speciesFilename);
-    //                 }
-    //             );
-    //     }
-    // }
-
-    private void LoadCardDescriptors()
-    {
-        List<string> cards = FileUtils.ListJSONFiles($"{CardDescriptorsPath}/Crops");
-        List<string> cardInfrastructureFiles = FileUtils.ListJSONFiles($"{CardDescriptorsPath}/Infrastructure");
-        List<string> cardTechFiles = FileUtils.ListJSONFiles($"{CardDescriptorsPath}/Tech");
-
-        cards.AddRange(cardInfrastructureFiles);
-        cards.AddRange(cardTechFiles);
-
-        foreach (string cardFile in cards)
-        {
-            CardDescriptor data = FileUtils.ReadJSON<CardDescriptor>(cardFile);
-
-            _cardDescriptorsLoaded.Add(data.Id, data);
-        }
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-using Assets.Classes.System.Common;
+using Assets.Classes.System.CommonSerializable;
 
 public class GameEventSender : MonoBehaviour
 {

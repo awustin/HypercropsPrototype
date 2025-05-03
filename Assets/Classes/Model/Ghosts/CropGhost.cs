@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using Assets.Classes.System.Managers;
+
 public class CropGhost : MonoBehaviour
 {
     public InputAction ScreenPointAction;

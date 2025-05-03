@@ -1,26 +1,31 @@
 using UnityEngine;
 
+using Assets.Classes.System.Managers;
+
 // TODO: In the future, crop death will not call Farm. Instead the action killing crop will be added to a "daily task" list
-public class GameEventOnCropDeath : MonoBehaviour
+namespace Assets.Classes.Events.Handlers
 {
-    public FarmManager Farm;
-    public GameEventSender Sender;
-
-    public void OnCropDeath(object sender, CropDeathArguments e)
+    public class GameEventOnCropDeath : MonoBehaviour
     {
-        Farm.KillCrop(e.Crop);
-    }
+        public FarmManager Farm;
+        public GameEventSender Sender;
 
-    void OnEnable()
-    {
-        Farm = FarmManager.Instance;
-        Sender = GameEventSender.Instance;
+        public void OnCropDeath(object sender, CropDeathArguments e)
+        {
+            Farm.KillCrop(e.Crop);
+        }
 
-        Sender.CropDeathEvent += OnCropDeath;
-    }
+        void OnEnable()
+        {
+            Farm = FarmManager.Instance;
+            Sender = GameEventSender.Instance;
 
-    void OnDisable()
-    {
-        Sender.CropDeathEvent -= OnCropDeath;
+            Sender.CropDeathEvent += OnCropDeath;
+        }
+
+        void OnDisable()
+        {
+            Sender.CropDeathEvent -= OnCropDeath;
+        }
     }
 }

@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
-using System;
 
 using Assets.Classes.Common.Enums;
-using Assets.Classes.System.Common;
+using Assets.Classes.System.CommonSerializable;
+using Assets.Classes.Model.Crops;
 
 // TODO: When a card is made, instead of modifying the prefab, I can just create a prefab for each card.
 namespace Assets.Classes.System
@@ -38,6 +38,7 @@ namespace Assets.Classes.System
         public readonly static string CARDS_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Cards";
         public readonly static string CROP_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop";
         public readonly static string SPECIES_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop/Species";
+        public readonly static string FARMING_METHOD_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop/FarmingMethod";
 
         private ObjectCache<GameObject> _cropsCache;
         private ObjectCache<GameObject> _cardsCache;
@@ -53,7 +54,6 @@ namespace Assets.Classes.System
             {
                 _instance = this;
                 Loader = DataLoader.Instance;
-                Loader.LoadGameDescriptors();
 
                 _cropsCache = new();
                 _cardsCache = new();
@@ -120,18 +120,15 @@ namespace Assets.Classes.System
             return instance;
         }
 
-        public GameObject? MakeCropPhase(string cropName, CropPhase cropPhase, Vector3 pos, Transform? parent)
+        public GameObject? MakeCropPhaseForSpecies(CropSpecies species, CropPhase cropPhase, Vector3 pos, Transform? parent)
         {
-            // TODO: Fix Y height of prefab
-            CropDescriptor cropDescriptor = Loader.GetCropDescriptor(cropName);
-            Enum.TryParse(cropName, out CropSpecies species);
-
-            string key = $"{species}:{cropPhase}"; // Wheat:Seed
+            CropDescriptor cropDescriptor = GetCropDescriptorBySpeciesName(species.ToString());
+            string key = $"{species}:Ready"; // Wheat:Ready
 
             GameObject prefab = _cropsCache
                 .Entry(key)
                 .LoadOnMiss(
-                    () => Resources.Load<GameObject>($"{SPECIES_PREFABS_PATH}/{species}/{cropPhase}")
+                    () => Resources.Load<GameObject>($"{SPECIES_PREFABS_PATH}/{species}/Prefab")
                 );
             
             // TODO: Debug with and without this method call
@@ -152,9 +149,31 @@ namespace Assets.Classes.System
             return instance;
         }
 
+        public GameObject? MakeCropPhaseForFarmingMethod(CropFarmingMethod farmingMethod, CropPhase phase, Vector3 pos, Transform? parent)
+        {
+            string key = $"{farmingMethod}:{phase}";
+            string loadPath = $"{FARMING_METHOD_PREFABS_PATH}/{farmingMethod}/{phase}/Prefab";
+
+            GameObject prefab = _cropsCache
+                .Entry(key)
+                .LoadOnMiss
+                (
+                    () => Resources.Load<GameObject>(loadPath)
+                );
+            
+            GameObject instance = Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
+
+            if (instance != null)
+            {
+                instance.name = key;
+            }
+
+            return instance;
+        }
+
         public GameObject MakeCard(int id, Transform? parent)
         {
-            CardDescriptor cardDescriptor = Loader.GetCardDescriptor(id);
+            CardDescriptor cardDescriptor = GetCardDescriptorById(id);
             GameObject prefab = _cardsCache
                 .Entry(id.ToString())
                 .LoadOnMiss
@@ -184,7 +203,12 @@ namespace Assets.Classes.System
 
         public CropDescriptor GetCropDescriptorBySpeciesName(string speciesName)
         {
-            return Loader.GetCropDescriptor(speciesName);
+            return Loader.LoadCropDescriptor(speciesName);
+        }
+
+        public CardDescriptor GetCardDescriptorById(int cardId)
+        {
+            return Loader.LoadCardDescriptor(cardId);
         }
 
         private void AddSharedMaterials(string parentKey, GameObject prefab, List<string> materials, string loadPath)

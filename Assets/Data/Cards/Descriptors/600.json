@@ -1,0 +1,7 @@
+{
+    "Id": 600,
+    "Type": "Infrastructure",
+    "Name": "IrrigationPipe",
+    "Label": "Irrigation Pipe",
+    "Attribute": "IrrigationPipe"
+}

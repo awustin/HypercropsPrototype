@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System;
+using Newtonsoft.Json;
 
 public static class FileUtils
 {
@@ -19,12 +21,20 @@ public static class FileUtils
         return str[..^5];
     }
 
-    public static T ReadAssetJSON<T>(string assetsRelativePath) where T : class
+    public static T? ReadAssetJSON<T>(string assetsRelativePath) where T : class
     {
+        try
+        {
         string fullPath = PrependAssetsDir(assetsRelativePath);
         string jsonString = File.ReadAllText(fullPath);
 
-        return JsonUtility.FromJson<T>(jsonString);
+        return JsonConvert.DeserializeObject<T>(jsonString);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error reading or deserializing JSON from {assetsRelativePath}: {ex.Message}");
+            throw;
+        }
     }
 
     public static T ReadJSON<T>(string fullPath) where T : class

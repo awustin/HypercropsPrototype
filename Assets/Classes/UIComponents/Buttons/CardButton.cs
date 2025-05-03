@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Assets.Classes.Common.Enums;
-using Assets.Classes.System.Common;
+using Assets.Classes.System.CommonSerializable;
 using Assets.Classes.System;
 
 public class CardButton : UIElementBehaviour, IPointerClickHandler
