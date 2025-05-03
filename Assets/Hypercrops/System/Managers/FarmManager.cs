@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using Assets.Hypercrops.System.CommonSerializable;
-using Assets.Hypercrops.Common.Enums;
+using Assets.Hypercrops.Utils;
 
 namespace Assets.Hypercrops.System.Managers
 {

@@ -1,35 +1,38 @@
 using UnityEngine;
 
-public static class FarmUtils
+namespace Assets.Hypercrops.Utils
 {
-    public static Vector3 SnapPoint(Vector3 point)
+    public static class FarmUtils
     {
-        return new Vector3(
-            Mathf.Round(point.x / 0.5f) * 0.5f,
-            Mathf.Round(point.y / 0.5f) * 0.5f,
-            Mathf.Round(point.z / 0.5f) * 0.5f
-        );
-    }
-
-    public static bool IsPlantablePoint(Vector3 target, GameObject player, GameObject targetObject, float radius)
-    {
-        // TODO: Check available space and generate new position
-        // TODO: Do plantable checks. Add a check for when a location is already planted
-        if (target.y > 0.1 || !targetObject.CompareTag("Ground"))
+        public static Vector3 SnapPoint(Vector3 point)
         {
-            return false;
+            return new Vector3(
+                Mathf.Round(point.x / 0.5f) * 0.5f,
+                Mathf.Round(point.y / 0.5f) * 0.5f,
+                Mathf.Round(point.z / 0.5f) * 0.5f
+            );
         }
 
-        if (!VectorUtils.IsInSphere(target, player.transform.position, radius))
+        public static bool IsPlantablePoint(Vector3 target, GameObject player, GameObject targetObject, float radius)
         {
-            return false;
+            // TODO: Check available space and generate new position
+            // TODO: Do plantable checks. Add a check for when a location is already planted
+            if (target.y > 0.1 || !targetObject.CompareTag("Ground"))
+            {
+                return false;
+            }
+
+            if (!VectorUtils.IsInSphere(target, player.transform.position, radius))
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        return true;
-    }
-
-    public static string PositionToKey(Vector3 position)
-    {
-        return $"{position.x}-{position.y}-{position.z}";
+        public static string PositionToKey(Vector3 position)
+        {
+            return $"{position.x}-{position.y}-{position.z}";
+        }
     }
 }

@@ -1022,8 +1022,6 @@ MonoBehaviour:
   State: {fileID: 0}
   Cards: {fileID: 0}
   Factory: {fileID: 0}
-  CurrentGhost: {fileID: 0}
-  CurrentCropName: 
 --- !u!1 &862304439
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 
 using Assets.Hypercrops.Common.Enums;
+using Assets.Hypercrops.Utils;
 
 public class Card : MonoBehaviour, IEquatable<Card>
 {
@@ -66,10 +67,10 @@ public class Card : MonoBehaviour, IEquatable<Card>
         DeckId = value;
     }
 
-    public void SetOrder(int value)
+    public void SetOrder(int order)
     {
         // TODO: animate
-        Order = value;
+        Order = order;
         transform.localPosition = DeckUtils.MapOrderToPosition(Order);
     }
 
