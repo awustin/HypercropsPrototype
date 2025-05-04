@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using Assets.Hypercrops.System.Managers;
+using Assets.Hypercrops.Model.Crops;
 
 // TODO: In the future, crop death will not call Farm. Instead the action killing crop will be added to a "daily task" list
 namespace Assets.Hypercrops.Events.Handlers

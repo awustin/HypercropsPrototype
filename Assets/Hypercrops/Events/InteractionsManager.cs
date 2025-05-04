@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using Assets.Hypercrops.State;
+
 // TODO: Improve user interactions e.g. debounce
 // TODO: Rethink game modes manager
 public class InteractionsManager : MonoBehaviour

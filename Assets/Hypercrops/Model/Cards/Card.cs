@@ -5,103 +5,106 @@ using UnityEngine;
 using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.Utils;
 
-public class Card : MonoBehaviour, IEquatable<Card>
+namespace Assets.Hypercrops.Model.Cards
 {
-    public string Label;
-    public string CardName;
-    public int Id;
-    public int DeckId;
-    public CardType Type;
-    public CardStatus Status;
-    public int Order;
-    public int Number;
-
-    #nullable enable
-    public string? Attribute;
-    #nullable disable
-
-    void Start()
+    public class Card : MonoBehaviour, IEquatable<Card>
     {
-        RectTransform CanvasRT = transform.Find("CardCanvas").GetComponent<RectTransform>();
+        public string Label;
+        public string CardName;
+        public int Id;
+        public int DeckId;
+        public CardType Type;
+        public CardStatus Status;
+        public int Order;
+        public int Number;
 
-        CanvasRT.localScale = Vector3.one;
-        CanvasRT.sizeDelta = new Vector2(150, 200);
+        #nullable enable
+        public string? Attribute;
+        #nullable disable
 
-        // TODO: Card has to be drag and drop
-    }
+        void Start()
+        {
+            RectTransform CanvasRT = transform.Find("CardCanvas").GetComponent<RectTransform>();
 
-    public void InitialiseCard(
-        int id,
-        CardType type,
-        string cardName,
-        string label,
-        string prefabName
-    )
-    {
-        CardName = $"Card:{cardName}";
-        Id = id;
-        Type = type;
-        Label = label;
-        Attribute = prefabName;
-        Number = Id;
-        Status = CardStatus.FaceDown;
+            CanvasRT.localScale = Vector3.one;
+            CanvasRT.sizeDelta = new Vector2(150, 200);
 
-        SetName();
-        SetNumber();
-    }
+            // TODO: Card has to be drag and drop
+        }
 
-    public void TurnUpInHand(int order)
-    {
-        Status = CardStatus.TurnUp;
-        SetOrder(order);
-        Status = CardStatus.Idle;
-    }
+        public void InitialiseCard(
+            int id,
+            CardType type,
+            string cardName,
+            string label,
+            string prefabName
+        )
+        {
+            CardName = $"Card:{cardName}";
+            Id = id;
+            Type = type;
+            Label = label;
+            Attribute = prefabName;
+            Number = Id;
+            Status = CardStatus.FaceDown;
 
-    public void ChangePositionInHand(int order)
-    {
-        // TODO: animate and set idle on completion
-    }
+            SetName();
+            SetNumber();
+        }
 
-    public void SetDeckId(int value)
-    {
-        DeckId = value;
-    }
+        public void TurnUpInHand(int order)
+        {
+            Status = CardStatus.TurnUp;
+            SetOrder(order);
+            Status = CardStatus.Idle;
+        }
 
-    public void SetOrder(int order)
-    {
-        // TODO: animate
-        Order = order;
-        transform.localPosition = DeckUtils.MapOrderToPosition(Order);
-    }
+        public void ChangePositionInHand(int order)
+        {
+            // TODO: animate and set idle on completion
+        }
 
-    public bool Equals(Card other)
-    {
-        return DeckId == other.DeckId;
-    }
+        public void SetDeckId(int value)
+        {
+            DeckId = value;
+        }
 
-    public void Reset()
-    {
-        enabled = false;
-        name = null;
-        Id = 0;
-        Label = null;
-        Attribute = null;
-        Number = 0;
-        Status = CardStatus.FaceDown;
-        CardName = null;
-    }
+        public void SetOrder(int order)
+        {
+            // TODO: animate
+            Order = order;
+            transform.localPosition = DeckUtils.MapOrderToPosition(Order);
+        }
 
-    private void SetName()
-    {
-        TMP_Text NameLabel = transform.Find("CardCanvas/Traits/Name/Label").gameObject.GetComponent<TMP_Text>();
+        public bool Equals(Card other)
+        {
+            return DeckId == other.DeckId;
+        }
 
-        NameLabel.text = Label;
-    }
+        public void Reset()
+        {
+            enabled = false;
+            name = null;
+            Id = 0;
+            Label = null;
+            Attribute = null;
+            Number = 0;
+            Status = CardStatus.FaceDown;
+            CardName = null;
+        }
 
-    private void SetNumber()
-    {
-        TMP_Text NumberLabel = transform.Find("CardCanvas/Traits/Number/Label").gameObject.GetComponent<TMP_Text>();
+        private void SetName()
+        {
+            TMP_Text NameLabel = transform.Find("CardCanvas/Traits/Name/Label").gameObject.GetComponent<TMP_Text>();
 
-        NumberLabel.text = Number.ToString();
+            NameLabel.text = Label;
+        }
+
+        private void SetNumber()
+        {
+            TMP_Text NumberLabel = transform.Find("CardCanvas/Traits/Number/Label").gameObject.GetComponent<TMP_Text>();
+
+            NumberLabel.text = Number.ToString();
+        }
     }
 }

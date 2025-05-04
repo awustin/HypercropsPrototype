@@ -2,7 +2,10 @@ using UnityEngine;
 
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.System.CommonSerializable;
-using Assets.Hypercrops.System.Managers;
+using Assets.Hypercrops.State;
+using Assets.Hypercrops.Model.Crops;
+using Assets.Hypercrops.Model.Cards;
+using Assets.Hypercrops.Model.Ghosts;
 
 // TOOD: DONT destroy the ghost. Save it in a cache.
 // TODO: Add precision to plant position

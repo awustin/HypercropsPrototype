@@ -64,7 +64,6 @@ public class CropPhases : MonoBehaviour
             Factory.MakeCropPhaseForSpecies
             (
                 CropScript.Species,
-                Current,
                 new Vector3
                 (
                     transform.position.x,

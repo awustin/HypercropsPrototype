@@ -1,0 +1,34 @@
+digraph {
+  "PPv2URPConverters"[style=filled, fillcolor=gray];
+  "Assembly-CSharp";
+  "SaveSystem";
+  "Assembly-CSharp-Editor"[style=filled, fillcolor=gray];
+  "AppLayer";
+  "RemoteStorage";
+  "FakeBackend";
+  "LocalStorage";
+  "HypercropsUtilsAssembly";
+  "AssemblyGraphEditor"[style=filled, fillcolor=gray];
+
+  "Assembly-CSharp"->"AssemblyGraphEditor";
+  "Assembly-CSharp"->"PPv2URPConverters";
+  "Assembly-CSharp"->"SaveSystem";
+  "Assembly-CSharp"->"FakeBackend";
+  "Assembly-CSharp"->"AppLayer";
+  "Assembly-CSharp"->"RemoteStorage";
+  "Assembly-CSharp"->"LocalStorage";
+  "Assembly-CSharp"->"HypercropsUtilsAssembly";
+  "Assembly-CSharp-Editor"->"Assembly-CSharp";
+  "Assembly-CSharp-Editor"->"AssemblyGraphEditor";
+  "Assembly-CSharp-Editor"->"PPv2URPConverters";
+  "Assembly-CSharp-Editor"->"SaveSystem";
+  "Assembly-CSharp-Editor"->"FakeBackend";
+  "Assembly-CSharp-Editor"->"AppLayer";
+  "Assembly-CSharp-Editor"->"RemoteStorage";
+  "Assembly-CSharp-Editor"->"LocalStorage";
+  "Assembly-CSharp-Editor"->"HypercropsUtilsAssembly";
+  "AppLayer"->"FakeBackend";
+  "AppLayer"->"LocalStorage";
+  "AppLayer"->"SaveSystem";
+  "AppLayer"->"RemoteStorage";
+}

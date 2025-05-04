@@ -1,17 +1,18 @@
 using UnityEngine;
-using System;
+
+using Assets.Hypercrops.State;
 
 /*
-    IMPROVEMENTS:
+    TODO:
     - Add precision to movement
     - Rethink collision detection... yOffset?
     - Rethink occluded walkable areas (e.g. ground behind mountains)
 */
 public class GameEventOnWalk : MonoBehaviour
 {
-    [SerializeField] public float speed = 5f;
-    [SerializeField] public float stopPrecision = 0.2f;
-    [SerializeField] public float collisionPrecision = 0.1f;
+    public float speed = 5f;
+    public float stopPrecision = 0.2f;
+    public float collisionPrecision = 0.1f;
     private GameEventSender _eventSender;
     private Vector3 _target;
 

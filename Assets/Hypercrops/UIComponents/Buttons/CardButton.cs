@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.System;
+using Assets.Hypercrops.Model.Cards;
 
 public class CardButton : UIElementBehaviour, IPointerClickHandler
 {

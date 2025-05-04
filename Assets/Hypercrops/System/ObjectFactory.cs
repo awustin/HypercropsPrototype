@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.Model.Crops;
+using Assets.Hypercrops.Model.Cards;
 
+// TODO: Refactor all Make methods, so that there's only ONE MakeHypercropsObject that creates a given object
+// TODO: After that, separate Make methods and put them into their corresponding Model entity. That way this assembly won't depend on Model (avoid circular deps)
 // TODO: When a card is made, instead of modifying the prefab, I can just create a prefab for each card.
 namespace Assets.Hypercrops.System
 {
@@ -122,7 +125,7 @@ namespace Assets.Hypercrops.System
             return instance;
         }
 
-        public GameObject? MakeCropPhaseForSpecies(CropSpecies species, CropPhase cropPhase, Vector3 pos, Transform? parent)
+        public GameObject? MakeCropPhaseForSpecies(CropSpecies species, Vector3 pos, Transform? parent)
         {
             CropDescriptor cropDescriptor = GetCropDescriptorBySpeciesName(species.ToString());
             string key = $"{species}:Ready"; // Wheat:Ready
