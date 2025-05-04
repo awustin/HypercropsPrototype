@@ -1,0 +1,7 @@
+{
+    "Id": 601,
+    "Type": "Infrastructure",
+    "Name": "BioStorage",
+    "Label": "Bio Storage",
+    "Attribute": "BioStorage"
+}

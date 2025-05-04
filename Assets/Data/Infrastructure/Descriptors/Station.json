@@ -1,0 +1,11 @@
+{
+    "InteractionType": "PointerClick",
+    "Rotatable": true,
+    "Effect": {
+        "Name": "",
+        "Period": "",
+        "Repeat": "",
+        "Radius": ""
+    },
+    "OnClick": "StationAction"
+}

@@ -1,0 +1,11 @@
+{
+    "InteractionType": "Effector",
+    "Rotatable": true,
+    "Effect": {
+        "Name": "WaterCropsInRadius",
+        "Period": "Day",
+        "Repeat": "Once",
+        "Radius": ""
+    },
+    "OnClick": ""
+}

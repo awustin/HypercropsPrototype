@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Type
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 666429224585562965, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: Label
