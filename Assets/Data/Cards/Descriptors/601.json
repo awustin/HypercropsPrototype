@@ -1,6 +1,6 @@
 {
     "Id": 601,
-    "Type": "Infrastructure",
+    "Type": "Buildable",
     "Name": "BioStorage",
     "Label": "Bio Storage",
     "Attribute": "BioStorage"

@@ -4,7 +4,7 @@ namespace Assets.Hypercrops.Common.Enums
     {
         Unknown,
         Crop,
-        Infrastructure,
+        Buildable,
         Tech,
     }
 }

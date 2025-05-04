@@ -64,7 +64,7 @@ namespace Assets.Hypercrops.System
         void OnApplicationQuit()
         {
             // Reset prefabs
-            List<string> cardPrefabNames = new() { "Crop", "Infrastructure", "Tech" };
+            List<string> cardPrefabNames = new() { "Crop", "Buildable", "Tech" };
 
             cardPrefabNames.ForEach(cardName =>
             {

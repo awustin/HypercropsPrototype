@@ -1,6 +1,6 @@
 {
     "Id": 602,
-    "Type": "Infrastructure",
+    "Type": "Buildable",
     "Name": "Station",
     "Label": "Station",
     "Attribute": "Station"

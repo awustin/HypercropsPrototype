@@ -1,6 +1,6 @@
 {
     "Id": 600,
-    "Type": "Infrastructure",
+    "Type": "Buildable",
     "Name": "IrrigationPipe",
     "Label": "Irrigation Pipe",
     "Attribute": "IrrigationPipe"

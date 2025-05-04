@@ -31,7 +31,7 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
             return;
         }
 
-        if (type == CardType.Infrastructure)
+        if (type == CardType.Buildable)
         {
             // TODO: Start building mode
             return;
