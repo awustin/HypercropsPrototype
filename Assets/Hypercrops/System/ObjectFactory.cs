@@ -233,6 +233,11 @@ namespace Assets.Hypercrops.System
             return Loader.LoadCropDescriptor(speciesName);
         }
 
+        public BuildableDescriptor GetBuildableDescriptorByType(string type)
+        {
+            return Loader.LoadBuildableDescriptor(type);
+        }
+
         public CardDescriptor GetCardDescriptorById(int cardId)
         {
             return Loader.LoadCardDescriptor(cardId);

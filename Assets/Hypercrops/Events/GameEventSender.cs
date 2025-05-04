@@ -16,7 +16,7 @@ public class GameEventSender : MonoBehaviour
 
                 if (_instance == null)
                 {
-                    GameObject singletonObject = new GameObject("GameEventSender");
+                    GameObject singletonObject = new("GameEventSender");
                     _instance = singletonObject.AddComponent<GameEventSender>();
                 }
             }
@@ -25,10 +25,13 @@ public class GameEventSender : MonoBehaviour
         }
     }
     public event EventHandler<WalkEventArguments> WalkEvent;
-    public event Action TryPlantEvent;
+    public event Action TryPlantCrop;
+    public event Action TryPlaceBuilding;
     public event EventHandler<StartFarmModeArguments> StartFarmMode;
+    public event EventHandler<StartBuildModeArguments> StartBuildMode;
+    public event Action CancelFarmMode;
+    public event Action CancelBuildMode;
     public event Action AdvanceTimeEvent;
-    public event Action CancelFarmModeEvent;
     public event EventHandler<CropDeathArguments> CropDeathEvent;
     public event Action NewDayEvent;
 
@@ -37,9 +40,9 @@ public class GameEventSender : MonoBehaviour
         WalkEvent?.Invoke(this, new WalkEventArguments(target));
     }
 
-    public void BroadcastTryPlantEvent()
+    public void BroadcastTryPlantCrop()
     {
-        TryPlantEvent?.Invoke();
+        TryPlantCrop?.Invoke();
     }
 
     public void BroadcastStartFarmMode(Vector3 point, CropDescriptor cropDescriptor)
@@ -47,14 +50,23 @@ public class GameEventSender : MonoBehaviour
         StartFarmMode?.Invoke(this, new StartFarmModeArguments(point, cropDescriptor));
     }
 
+    public void BroadcastStartBuildMode(BuildableDescriptor descriptor)
+    {
+        StartBuildMode?.Invoke(this, new StartBuildModeArguments(descriptor));
+    }
+
+    public void BroadcastCancelFarmMode()
+    {
+        CancelFarmMode?.Invoke();
+    }
+    public void BroadcastCancelBuildMode()
+    {
+        CancelBuildMode?.Invoke();
+    }
+
     public void BroadcastAdvanceTimeEvent()
     {
         AdvanceTimeEvent?.Invoke();
-    }
-
-    public void BroadcastCancelFarmModeEvent()
-    {
-        CancelFarmModeEvent?.Invoke();
     }
 
     public void BroadcastCropDeathEvent(GameObject cropObject)

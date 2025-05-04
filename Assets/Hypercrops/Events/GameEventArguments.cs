@@ -17,12 +17,12 @@ public class WalkEventArguments : EventArgs
 public class StartFarmModeArguments : EventArgs
 {
     public Vector3 Point { get; set; }
-    public CropDescriptor CropDescripor { get; set; }
+    public CropDescriptor Descriptor { get; set; }
 
     public StartFarmModeArguments(Vector3 point, CropDescriptor cropDescriptor)
     {
         Point = point;
-        CropDescripor = cropDescriptor;
+        Descriptor = cropDescriptor;
     }
 }
 
@@ -33,5 +33,15 @@ public class CropDeathArguments : EventArgs
     public CropDeathArguments(GameObject crop)
     {
         Crop = crop;
+    }
+}
+
+public class StartBuildModeArguments : EventArgs
+{
+    public BuildableDescriptor Descriptor { get; set; }
+
+    public StartBuildModeArguments(BuildableDescriptor buildableDescriptor)
+    {
+        Descriptor = buildableDescriptor;
     }
 }

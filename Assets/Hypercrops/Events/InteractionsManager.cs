@@ -78,7 +78,7 @@ public class InteractionsManager : MonoBehaviour
         // If game plan is farming, try planting a seed
         if (State.IsFarmingGameMode())
         {
-            Sender.BroadcastTryPlantEvent();
+            Sender.BroadcastTryPlantCrop();
         }
     }
 
@@ -87,7 +87,7 @@ public class InteractionsManager : MonoBehaviour
         // If game plan is farming, cancel farm mode
         if (State.IsFarmingGameMode())
         {
-            Sender.BroadcastCancelFarmModeEvent();
+            Sender.BroadcastCancelFarmMode();
         }
     }
 

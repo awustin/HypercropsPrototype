@@ -28,12 +28,13 @@ public class DataLoader : MonoBehaviour
     }
 
     public string CropDescriptorsPath = "/Data/Crops/Descriptors";
+    public string BuildableDescriptorsPath = "/Data/Buildables/Descriptors";
     public string CardDescriptorsPath = "/Data/Cards/Descriptors";
     public string InitialDeckPath = "/Data/InitialDeck.json";
 
-    private readonly Dictionary<int, CardDescriptor> _cardDescriptorsLoaded = new();
     private DeckData _initialDeckData = new();
     private readonly ObjectCache<CropDescriptor> _cropDescriptorsCache = new();
+    private readonly ObjectCache<BuildableDescriptor> _buildableDescriptorsCache = new();
     private readonly ObjectCache<CardDescriptor> _cardDescriptorCache = new();
 
     void Awake()
@@ -55,6 +56,16 @@ public class DataLoader : MonoBehaviour
             .LoadOnMiss
             (
                 () => FileUtils.ReadAssetJSON<CropDescriptor>($"{CropDescriptorsPath}/{speciesName}.json")
+            );
+    }
+
+    public BuildableDescriptor LoadBuildableDescriptor(string buildingType)
+    {
+        return _buildableDescriptorsCache
+            .Entry(buildingType)
+            .LoadOnMiss
+            (
+                () => FileUtils.ReadAssetJSON<BuildableDescriptor>($"{BuildableDescriptorsPath}/{buildingType}.json")
             );
     }
 

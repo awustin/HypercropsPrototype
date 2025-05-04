@@ -34,7 +34,11 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
 
         if (type == CardType.Buildable)
         {
-            // TODO: Start building mode
+            string buildingType = CardScript.Attribute;
+
+            BuildableDescriptor descriptor = ObjectFactory.Instance.GetBuildableDescriptorByType(buildingType);
+            GameEventSender.Instance.BroadcastStartBuildMode(descriptor);
+
             return;
         }
         

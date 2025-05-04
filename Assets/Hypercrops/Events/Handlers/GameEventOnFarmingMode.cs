@@ -30,15 +30,15 @@ public class GameEventOnFarmingMode : MonoBehaviour
         Factory = ObjectFactory.Instance;
 
         Sender.StartFarmMode += OnStartFarmMode;
-        Sender.TryPlantEvent += OnTryPlantEvent;
-        Sender.CancelFarmModeEvent += OnCancelFarmMode;
+        Sender.TryPlantCrop += OnTryPlantCrop;
+        Sender.CancelFarmMode += OnCancelFarmMode;
     }
 
     void OnDisable()
     {
         Sender.StartFarmMode -= OnStartFarmMode;
-        Sender.TryPlantEvent -= OnTryPlantEvent;
-        Sender.CancelFarmModeEvent -= OnCancelFarmMode;
+        Sender.TryPlantCrop -= OnTryPlantCrop;
+        Sender.CancelFarmMode -= OnCancelFarmMode;
     }
 
     void Update()
@@ -51,13 +51,13 @@ public class GameEventOnFarmingMode : MonoBehaviour
 
     public void OnStartFarmMode(object sender, StartFarmModeArguments e)
     {
-        _currentCropDescriptor = e.CropDescripor;
+        _currentCropDescriptor = e.Descriptor;
         _currentGhost = Factory.MakeCropGhost(transform.position, CropSize.Normal, transform).GetComponent<CropGhost>();
 
         State.SetFarmingGameMode();
     }
 
-    public void OnTryPlantEvent()
+    public void OnTryPlantCrop()
     {
         State.SetDefaultGameMode();
 
