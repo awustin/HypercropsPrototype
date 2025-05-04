@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
@@ -39,10 +38,12 @@ namespace Assets.Hypercrops.System
         public readonly static string CROP_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop";
         public readonly static string SPECIES_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop/Species";
         public readonly static string FARMING_METHOD_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop/FarmingMethod";
+        public readonly static string BUILDABLE_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Buildable/Units";
 
         private ObjectCache<GameObject> _cropsCache;
         private ObjectCache<GameObject> _cardsCache;
         private ObjectCache<Material> _materialsCache;
+        private ObjectCache<GameObject> _buildablesCache;
 
         void Awake()
         {
@@ -58,6 +59,7 @@ namespace Assets.Hypercrops.System
                 _cropsCache = new();
                 _cardsCache = new();
                 _materialsCache = new();
+                _buildablesCache = new();
             }
         }
 
@@ -197,6 +199,28 @@ namespace Assets.Hypercrops.System
                 );
             GameObject instance = Instantiate(prefab, parent ? parent : transform);
             instance.name = instance.GetComponent<Card>().CardName;
+
+            return instance;
+        }
+
+        public GameObject? MakeBuildable(BuildableDescriptor descriptor, Vector3 pos, Transform? parent)
+        {
+            BuildableType type = descriptor.Type;
+
+            GameObject prefab = _buildablesCache
+                .Entry(type.ToString())
+                .LoadOnMiss
+                (
+                    () => Resources.Load<GameObject>($"{BUILDABLE_PREFABS_PATH}/{type}/Main")
+                );
+            
+            GameObject instance = Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
+            // TODO: Actions on load. Initialise script
+
+            if (instance != null)
+            {
+                instance.name = type.ToString();
+            }
 
             return instance;
         }
