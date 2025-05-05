@@ -149,6 +149,10 @@ PrefabInstance:
       value: Collider
       objectReference: {fileID: 0}
     - target: {fileID: 2453346164735454152, guid: d03e52246767346a795a30c45975518f, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453346164735454152, guid: d03e52246767346a795a30c45975518f, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}

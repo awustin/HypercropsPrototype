@@ -25,6 +25,10 @@ namespace Assets.Hypercrops.Model.Ghosts
         public Vector3 ActionPoint;
 
         private GameObject _currentVisual;
+        private readonly string _visualsPathInObject = "Visuals/Prefab";
+        private readonly string _colliderPathInObject = "GhostCollider/Collider";
+        private readonly string _green = "#00FF65";
+        private readonly string _red ="#FF5000";
         private readonly ObjectCache<GameObject> _ghostVisualsLookup = new ();
         
         // Trackers
@@ -67,6 +71,7 @@ namespace Assets.Hypercrops.Model.Ghosts
                             Factory.HypercropsInstance<T>(visualsKey, transform.position, transform);
 
                         instance.name = $"{typeof(T).Name}:{visualsKey}";
+                        instance.transform.Find(_colliderPathInObject).gameObject.layer = LayerMask.GetMask("Ignore Raycast");
                         return instance;
                     }
                 );
@@ -107,10 +112,9 @@ namespace Assets.Hypercrops.Model.Ghosts
                 return;
             }
 
-            MeshRenderer renderer = _currentVisual.transform.Find("Visuals/Prefab").GetComponent<MeshRenderer>();
-            string colorHex = IsAllowed ? "#00FF65" : "#FF5000";
+            MeshRenderer renderer = _currentVisual.transform.Find(_visualsPathInObject).GetComponent<MeshRenderer>();
 
-            if (ColorUtility.TryParseHtmlString(colorHex, out Color color))
+            if (ColorUtility.TryParseHtmlString(IsAllowed ? _green : _red, out Color color))
             {
                 color.a = 0.3f;
                 renderer.material.color = color;

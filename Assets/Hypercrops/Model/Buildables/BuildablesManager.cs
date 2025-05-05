@@ -1,5 +1,8 @@
 using UnityEngine;
 
+using Assets.Hypercrops.System;
+using Assets.Hypercrops.Model.Utils;
+
 namespace Assets.Hypercrops.Model.Buildables
 {
     public class BuildablesManager : MonoBehaviour
@@ -23,6 +26,10 @@ namespace Assets.Hypercrops.Model.Buildables
                 return _instance;
             }
         }
+        public GameObject Player;
+        public float BuildRadius = 5f;
+
+        private readonly ObjectCache<GameObject> _buildablesInSceneLookup = new ();
 
         void Awake()
         {
@@ -35,6 +42,23 @@ namespace Assets.Hypercrops.Model.Buildables
                 _instance = this;
                 name = "BuildablesManager";
             }
+        }
+
+        public bool IsBuildablePoint(Vector3 point)
+        {
+            if (_buildablesInSceneLookup.Entry(HypercropsModelUtils.VectorPositionToStringKey(point)).IsHit)
+            {
+                return false;
+            }
+
+            // Is contained in the plant radius from player
+            if (!VectorUtils.IsInSphere(point, Player.transform.position, BuildRadius))
+            {
+                return false;
+            }
+
+            return true;
+
         }
 
     }

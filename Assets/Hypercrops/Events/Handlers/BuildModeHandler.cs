@@ -16,14 +16,14 @@ namespace Assets.Hypercrops.Events.Handlers
         public GameObject GhostObject;
 
         private BuildableDescriptor _currentDescriptor;
-        private BuildableGhost _ghost;
+        private BuildableGhost _buildableGhost;
 
         void OnEnable()
         {
             Sender = GameEventSender.Instance;
             State = GameState.Instance;
             Factory = ObjectFactory.Instance;
-            _ghost = GhostObject.GetComponent<BuildableGhost>();
+            _buildableGhost = GhostObject.GetComponent<BuildableGhost>();
 
             if (Manager == null)
             {
@@ -49,7 +49,7 @@ namespace Assets.Hypercrops.Events.Handlers
         private void OnStartBuildMode(object sender, StartBuildModeArguments e)
         {
             _currentDescriptor = e.Descriptor;
-            _ghost.Activate(_currentDescriptor.LayoutType);
+            _buildableGhost.Activate(_currentDescriptor.LayoutType);
         }
     }
 }

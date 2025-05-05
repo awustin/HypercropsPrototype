@@ -477,6 +477,7 @@ MonoBehaviour:
   Factory: {fileID: 241729398}
   IsAllowed: 0
   ActionPoint: {x: 0, y: 0, z: 0}
+  Buildables: {fileID: 1819547861}
 --- !u!1 &241729396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,10 +1144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sender: {fileID: 0}
-  Farm: {fileID: 0}
+  Farm: {fileID: 357104756}
   State: {fileID: 0}
   Cards: {fileID: 0}
   Factory: {fileID: 0}
+  GhostObject: {fileID: 170192837}
 --- !u!114 &762817763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2265,6 +2267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e6378b8490b4903922ac3a47e4fab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 762817759}
+  BuildRadius: 5
 --- !u!1 &1931554408
 GameObject:
   m_ObjectHideFlags: 0

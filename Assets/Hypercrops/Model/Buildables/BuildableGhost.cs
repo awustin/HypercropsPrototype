@@ -23,8 +23,7 @@ namespace Assets.Hypercrops.Model.Buildables
 
         protected override bool IsPointActionable(Vector3 target)
         {
-            // TODO: use BuildablesManager to determine
-            return true;
+            return Buildables.IsBuildablePoint(target);
         }
     }
 }
