@@ -1,5 +1,5 @@
 {
-    "Name": "Station",
+    "Type": "Station",
     "InteractionType": "PointerClick",
     "LayoutType": "Small",
     "Rotatable": true,

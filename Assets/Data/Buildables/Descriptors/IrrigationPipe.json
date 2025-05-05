@@ -1,5 +1,5 @@
 {
-    "Name": "IrrigationPipe",
+    "Type": "IrrigationPipe",
     "InteractionType": "Effector",
     "LayoutType": "Small",
     "Rotatable": true,

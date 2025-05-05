@@ -45,6 +45,11 @@ public class GameEventSender : MonoBehaviour
         TryPlantCrop?.Invoke();
     }
 
+    public void BroadcastTryPlaceBuilding()
+    {
+        TryPlaceBuilding?.Invoke();
+    }
+
     public void BroadcastStartFarmMode(Vector3 point, CropDescriptor cropDescriptor)
     {
         StartFarmMode?.Invoke(this, new StartFarmModeArguments(point, cropDescriptor));

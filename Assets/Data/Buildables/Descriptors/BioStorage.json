@@ -1,5 +1,5 @@
 {
-    "Name": "BioStorage",
+    "Type": "BioStorage",
     "InteractionType": "PointerClick",
     "LayoutType": "Normal",
     "Rotatable": true,

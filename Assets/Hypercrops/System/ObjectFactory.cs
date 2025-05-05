@@ -83,12 +83,13 @@ namespace Assets.Hypercrops.System
 
         #nullable enable
 
-        public GameObject? HypercropsInstance<T>(string key, Vector3 pos, Transform? parent)
+        public GameObject? HypercropsInstance<T>(string prefabKey, Vector3 pos, Transform? parent)
         {
             return typeof(T).Name switch
             {
-                "BuildableGhost" => MakeBuildableGhost(key, new InstanceArguments(pos, parent)),
-                "CropGhost" => MakeCropGhost(key, new InstanceArguments(pos, parent)),
+                "BuildableGhost" => MakeBuildableGhost(prefabKey, new InstanceArguments(pos, parent)),
+                "CropGhost" => MakeCropGhost(prefabKey, new InstanceArguments(pos, parent)),
+                "Buildable" => MakeBuildable(prefabKey, new InstanceArguments(pos, parent)),
                 _ => null,
             };
         }
@@ -206,28 +207,6 @@ namespace Assets.Hypercrops.System
             return instance;
         }
 
-        public GameObject? MakeBuildable(BuildableDescriptor descriptor, Vector3 pos, Transform? parent)
-        {
-            BuildableType type = descriptor.Type;
-
-            GameObject prefab = _buildablesCache
-                .Entry(type.ToString())
-                .LoadOnMiss
-                (
-                    () => Resources.Load<GameObject>($"{BUILDABLE_PREFABS_PATH}/{type}/Main")
-                );
-            
-            GameObject instance = Instantiate(prefab, pos, Quaternion.identity, parent ? parent : transform);
-            // TODO: Actions on load. Initialise script
-
-            if (instance != null)
-            {
-                instance.name = type.ToString();
-            }
-
-            return instance;
-        }
-
         public CropDescriptor GetCropDescriptorBySpeciesName(string speciesName)
         {
             return Loader.LoadCropDescriptor(speciesName);
@@ -254,7 +233,7 @@ namespace Assets.Hypercrops.System
 
             return Instantiate(prefab, args.Position, Quaternion.identity, args.Parent);
         }
-
+        
         private GameObject MakeCropGhost(string size, InstanceArguments args)
         {
             GameObject prefab = _hypercropsPrefabsLookup
@@ -266,6 +245,19 @@ namespace Assets.Hypercrops.System
 
             return Instantiate(prefab, args.Position, Quaternion.identity, args.Parent);
         }
+
+        public GameObject? MakeBuildable(string buildableType, InstanceArguments args)
+        {
+            GameObject prefab = _buildablesCache
+                .Entry(buildableType)
+                .LoadOnMiss
+                (
+                    () => Resources.Load<GameObject>($"{BUILDABLE_PREFABS_PATH}/{buildableType}/Main")
+                );
+            
+            return Instantiate(prefab, args.Position, Quaternion.identity, args.Parent);
+        }
+        
         private void AddSharedMaterials(string parentKey, GameObject prefab, List<string> materials, string loadPath)
         {
             // Materials are found in the path provided

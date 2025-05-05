@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class Buildable : MonoBehaviour
+namespace Assets.Hypercrops.Model.Buildables
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class Buildable : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Initialise()
+        {
+            // TODO: Implement class
+        }
     }
 }

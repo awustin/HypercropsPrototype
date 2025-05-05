@@ -79,12 +79,19 @@ public class InteractionsManager : MonoBehaviour
         if (State.IsFarmingGameMode())
         {
             Sender.BroadcastTryPlantCrop();
+            return;
+        }
+
+        // If game plan is building, try placing a buildable
+        if (State.IsBuildingGameMode())
+        {
+            Sender.BroadcastTryPlaceBuilding();
+            return;
         }
     }
 
     private void StartCancel()
     {
-        // If game plan is farming, cancel farm mode
         if (State.IsFarmingGameMode())
         {
             Sender.BroadcastCancelFarmMode();

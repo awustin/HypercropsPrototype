@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Assets.Hypercrops.System;
+using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.Model.Utils;
 
 namespace Assets.Hypercrops.Model.Buildables
@@ -26,8 +27,10 @@ namespace Assets.Hypercrops.Model.Buildables
                 return _instance;
             }
         }
+        public ObjectFactory Factory;
         public GameObject Player;
         public float BuildRadius = 5f;
+        public GameObject BuildableMap;
 
         private readonly ObjectCache<GameObject> _buildablesInSceneLookup = new ();
 
@@ -41,6 +44,11 @@ namespace Assets.Hypercrops.Model.Buildables
             {
                 _instance = this;
                 name = "BuildablesManager";
+
+                if (Factory == null)
+                {
+                    Factory = ObjectFactory.Instance;     
+                }
             }
         }
 
@@ -61,5 +69,20 @@ namespace Assets.Hypercrops.Model.Buildables
 
         }
 
+        public void PlaceBuildable(Vector3 point, BuildableDescriptor descriptor)
+        {
+            // TODO: Redefine key for buildables. Does it make sense to keep a dictionary?
+            GameObject instance = _buildablesInSceneLookup
+                .Entry(HypercropsModelUtils.VectorPositionToStringKey(point))
+                .LoadOnMiss
+                (
+                    () => Factory.HypercropsInstance<Buildable>(descriptor.Type.ToString(), point, BuildableMap.transform)
+                );
+            
+            instance.name = descriptor.Type.ToString();
+            Buildable behaviour = instance.GetComponent<Buildable>();
+
+            behaviour.Initialise();
+        }
     }
 }
