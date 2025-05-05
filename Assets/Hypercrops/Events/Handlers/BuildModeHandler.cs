@@ -31,11 +31,13 @@ namespace Assets.Hypercrops.Events.Handlers
             }
 
             Sender.StartBuildMode += OnStartBuildMode;
+            Sender.CancelBuildMode += OnCancelBuildMode;
         }
 
         void OnDisable()
         {
             Sender.StartBuildMode -= OnStartBuildMode;
+            Sender.CancelBuildMode -= OnCancelBuildMode;
         }
 
         void Update()
@@ -50,6 +52,25 @@ namespace Assets.Hypercrops.Events.Handlers
         {
             _currentDescriptor = e.Descriptor;
             _buildableGhost.Activate(_currentDescriptor.LayoutType);
+
+            State.SetBuildingGameMode();
+        }
+
+        private void OnCancelBuildMode()
+        {
+            if (State.IsBuildingGameMode())
+            {
+                // TODO: Discard ghost
+                State.SetLastCardSelected(null);
+                State.SetDefaultGameMode();
+                Clear();
+            }
+        }
+
+        private void Clear()
+        {
+            _currentDescriptor = null;
+            _buildableGhost.Deactivate();
         }
     }
 }

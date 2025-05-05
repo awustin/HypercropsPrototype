@@ -89,6 +89,10 @@ public class InteractionsManager : MonoBehaviour
         {
             Sender.BroadcastCancelFarmMode();
         }
+        else if (State.IsBuildingGameMode())
+        {
+            Sender.BroadcastCancelBuildMode();
+        }
     }
 
     private bool IsOutsideViewport(Vector2 point)
