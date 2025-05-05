@@ -54,9 +54,10 @@ namespace Assets.Hypercrops.Model.Crops
             }
         }
 
-        public bool IsPlantablePoint(Vector3 target, GameObject targetObject)
+        public bool IsPlantablePoint(Vector3 target)
         {
-            if (_plantedCropsLookup.Entry(HypercropsModelUtils.PositionToKey(target)).IsHit)
+            Debug.Log($"target:{target}");
+            if (_plantedCropsLookup.Entry(HypercropsModelUtils.CropPositionToKey(target)).IsHit)
             {
                 return false;
             }
@@ -74,7 +75,7 @@ namespace Assets.Hypercrops.Model.Crops
         {
             // TODO: Redefine key for crops. Does it make sense to keep a dictionary?
             // I could just use the children list and use a custom Equals method in Crop to find the one I need
-            string key = HypercropsModelUtils.PositionToKey(position);
+            string key = HypercropsModelUtils.CropPositionToKey(position);
 
             GameObject currentCrop = _plantedCropsLookup
                 .Entry(key)
@@ -96,7 +97,7 @@ namespace Assets.Hypercrops.Model.Crops
 
         public void KillCrop(GameObject cropTarget)
         {
-            string key = HypercropsModelUtils.PositionToKey(cropTarget.transform.position);
+            string key = HypercropsModelUtils.CropPositionToKey(cropTarget.transform.position);
 
             GameObject removed = _plantedCropsLookup.Entry(key).Delete();
             Destroy(removed);

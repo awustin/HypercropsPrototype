@@ -13,9 +13,9 @@ namespace Assets.Hypercrops.Model.Utils
             );
         }
 
-        public static string PositionToKey(Vector3 position)
+        public static string CropPositionToKey(Vector3 position)
         {
-            return $"{position.x}-{position.y}-{position.z}";
+            return $"{position.x},{position.y},{position.z}";
         }
     }
 }

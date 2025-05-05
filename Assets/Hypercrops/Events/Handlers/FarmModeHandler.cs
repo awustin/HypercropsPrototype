@@ -10,15 +10,16 @@ using Assets.Hypercrops.Model.Ghosts;
 // TOOD: DONT destroy the ghost. Save it in a cache.
 // TODO: Add precision to plant position
 // TODO: Add collision detection between ghosts, crops and the rest of the objects
-public class GameEventOnFarmingMode : MonoBehaviour
+public class FarmModeHandler : MonoBehaviour
 {
     public GameEventSender Sender;
     public FarmManager Farm;
     public GameState State;
     public CardsManager Cards;
     public ObjectFactory Factory;
+    public GameObject GhostObject;
 
-    private CropGhost _currentGhost;
+    private CropGhost _cropGhost;
     private CropDescriptor _currentCropDescriptor;
 
     void OnEnable()
@@ -28,6 +29,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
         Farm = FarmManager.Instance;
         Cards = CardsManager.Instance;
         Factory = ObjectFactory.Instance;
+        _cropGhost = GhostObject.GetComponent<CropGhost>();
 
         Sender.StartFarmMode += OnStartFarmMode;
         Sender.TryPlantCrop += OnTryPlantCrop;
@@ -52,7 +54,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
     public void OnStartFarmMode(object sender, StartFarmModeArguments e)
     {
         _currentCropDescriptor = e.Descriptor;
-        _currentGhost = Factory.MakeCropGhost(transform.position, CropSize.Normal, transform).GetComponent<CropGhost>();
+        _cropGhost.Activate(CropSize.Normal);
 
         State.SetFarmingGameMode();
     }
@@ -61,9 +63,9 @@ public class GameEventOnFarmingMode : MonoBehaviour
     {
         State.SetDefaultGameMode();
 
-        if (_currentGhost.IsAllowed && _currentCropDescriptor != null)
+        if (_cropGhost.IsAllowed && _currentCropDescriptor != null)
         {
-            Farm.StartCrop(_currentCropDescriptor, _currentGhost.ActionPoint);
+            Farm.StartCrop(_currentCropDescriptor, _cropGhost.ActionPoint);
             Cards.DiscardLastUsed();
         }
         else
@@ -87,12 +89,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
 
     private void Clear()
     {
-        if (_currentGhost != null)
-        {
-            Destroy(_currentGhost.gameObject);
-        }
-
         _currentCropDescriptor = null;
-        _currentGhost = null;
+        _cropGhost.Deactivate();
     }
 }

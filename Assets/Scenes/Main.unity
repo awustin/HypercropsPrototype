@@ -275,6 +275,67 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6248820853482347742, guid: 6c791812c740f40a79ffb49ffa25e6df, type: 3}
   m_PrefabInstance: {fileID: 164852114}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &170192837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 170192838}
+  - component: {fileID: 170192839}
+  m_Layer: 0
+  m_Name: CropGhost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &170192838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170192837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1931554409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &170192839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170192837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646f753551ab54c609050fbcab5abf00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScreenPointAction:
+    m_Name: Screen Point
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4dfe0c3f-0159-4075-8378-a6430c9f5b3c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  MainCamera: {fileID: 1540445579}
+  ActionLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  Factory: {fileID: 241729398}
+  IsAllowed: 0
+  ActionPoint: {x: 0, y: 0, z: 0}
+  Farm: {fileID: 357104756}
 --- !u!1 &177233558
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +428,7 @@ GameObject:
   - component: {fileID: 211309847}
   - component: {fileID: 211309848}
   m_Layer: 0
-  m_Name: Ghost
+  m_Name: BuildableGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,12 +442,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211309846}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 862304440}
+  m_Father: {fileID: 1251745623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &211309848
 MonoBehaviour:
@@ -400,7 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7598723d1e404ab0b804d95b6d91332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Factory: {fileID: 241729398}
   ScreenPointAction:
     m_Name: Screen Point
     m_Type: 0
@@ -411,13 +471,12 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   MainCamera: {fileID: 1540445579}
-  BuildableLayer:
+  ActionLayer:
     serializedVersion: 2
     m_Bits: 1
-  Player: {fileID: 762817759}
+  Factory: {fileID: 241729398}
   IsAllowed: 0
   ActionPoint: {x: 0, y: 0, z: 0}
-  PlantRadius: 10
 --- !u!1 &241729396
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +605,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 862304440}
+  m_Father: {fileID: 1931554409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &357104756
 MonoBehaviour:
@@ -1134,11 +1193,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 357104755}
   - {fileID: 39209837}
   - {fileID: 1192012424}
   - {fileID: 1251745623}
-  - {fileID: 211309847}
+  - {fileID: 1931554409}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &961976205
@@ -1362,6 +1420,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1819547860}
+  - {fileID: 211309847}
   m_Father: {fileID: 862304440}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1269058859
@@ -2206,6 +2265,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e6378b8490b4903922ac3a47e4fab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1931554408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931554409}
+  m_Layer: 0
+  m_Name: Crops
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1931554409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931554408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 357104755}
+  - {fileID: 170192838}
+  m_Father: {fileID: 862304440}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1948343763
 GameObject:
   m_ObjectHideFlags: 0
