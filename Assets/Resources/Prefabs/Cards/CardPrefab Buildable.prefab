@@ -90,11 +90,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3092013353329827500, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_text
-      value: 600
+      value: 601
       objectReference: {fileID: 0}
     - target: {fileID: 3161402023115747825, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_text
-      value: Irrigation Pipe
+      value: Bio Storage
       objectReference: {fileID: 0}
     - target: {fileID: 6248820853482347742, guid: cc732f87dba5a4af4ae33530433ee716, type: 3}
       propertyPath: m_Name

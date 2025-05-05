@@ -2,7 +2,7 @@ using UnityEngine;
 
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.System.CommonSerializable;
-using Assets.Hypercrops.Utils;
+using Assets.Hypercrops.Model.Utils;
 
 namespace Assets.Hypercrops.Model.Crops
 {
@@ -30,8 +30,10 @@ namespace Assets.Hypercrops.Model.Crops
 
         [HideInInspector] public GameObject CurrentCrop;
         [HideInInspector] public ObjectFactory Factory;
+        public GameObject Player;
+        public float PlantRadius = 10f;
 
-        private readonly ObjectCache<GameObject> _plantedCache = new();
+        private readonly ObjectCache<GameObject> _plantedCropsLookup = new();
 
         void Awake()
         {
@@ -44,16 +46,37 @@ namespace Assets.Hypercrops.Model.Crops
                 _instance = this;
                 name = "FarmManager";
                 Factory = ObjectFactory.Instance;
+
+                if (Player == null)
+                {
+                    Player = GameObject.Find("Player");
+                }
             }
+        }
+
+        public bool IsPlantablePoint(Vector3 target, GameObject targetObject)
+        {
+            if (_plantedCropsLookup.Entry(HypercropsModelUtils.PositionToKey(target)).IsHit)
+            {
+                return false;
+            }
+
+            // Is contained in the plant radius from player
+            if (!VectorUtils.IsInSphere(target, Player.transform.position, PlantRadius))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void StartCrop(CropDescriptor cropDescriptor, Vector3 position)
         {
             // TODO: Redefine key for crops. Does it make sense to keep a dictionary?
             // I could just use the children list and use a custom Equals method in Crop to find the one I need
-            string key = FarmUtils.PositionToKey(position);
+            string key = HypercropsModelUtils.PositionToKey(position);
 
-            GameObject currentCrop = _plantedCache
+            GameObject currentCrop = _plantedCropsLookup
                 .Entry(key)
                 .LoadOnMiss
                 (
@@ -71,16 +94,11 @@ namespace Assets.Hypercrops.Model.Crops
             CurrentCrop = null;
         }
 
-        public bool IsPlantInPosition(Vector3 position)
-        {
-            return _plantedCache.Entry(FarmUtils.PositionToKey(position)).IsHit;
-        }
-
         public void KillCrop(GameObject cropTarget)
         {
-            string key = FarmUtils.PositionToKey(cropTarget.transform.position);
+            string key = HypercropsModelUtils.PositionToKey(cropTarget.transform.position);
 
-            GameObject removed = _plantedCache.Entry(key).Delete();
+            GameObject removed = _plantedCropsLookup.Entry(key).Delete();
             Destroy(removed);
         }
     }

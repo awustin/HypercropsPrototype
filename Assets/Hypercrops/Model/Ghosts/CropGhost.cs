@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using Assets.Hypercrops.Model.Crops;
-using Assets.Hypercrops.Utils;
+using Assets.Hypercrops.Model.Utils;
 
 namespace Assets.Hypercrops.Model.Ghosts
 {
@@ -10,13 +10,11 @@ namespace Assets.Hypercrops.Model.Ghosts
     {
         public InputAction ScreenPointAction;
         public Camera MainCamera;
-        public LayerMask FarmableLayer;
-        public GameObject Player;
+        public LayerMask ActionLayer;
         public FarmManager Farm;
         public GameObject Visuals;
         public bool IsAllowed;
-        public Vector3 PlantPoint;
-        public float PlantRadius = 10f;
+        public Vector3 ActionPoint;
         
         // Trackers
         private bool _isAllowedTracker;
@@ -27,8 +25,7 @@ namespace Assets.Hypercrops.Model.Ghosts
             Farm = GameObject.Find("FarmManager").GetComponent<FarmManager>();
             MainCamera = Camera.main;
             ScreenPointAction = InputSystem.actions.FindActionMap("Player").FindAction("ScreenPoint");
-            FarmableLayer = LayerMask.GetMask("Default");
-            Player = GameObject.Find("Player");
+            ActionLayer = LayerMask.GetMask("Default");
 
             SetGhostColor();
         }
@@ -67,39 +64,40 @@ namespace Assets.Hypercrops.Model.Ghosts
             }
         }
 
-        private void FollowPointer()
+        protected void FollowPointer()
         {
             Vector2 screenPoint = ScreenPointAction.ReadValue<Vector2>();
             Vector2 viewportPoint = MainCamera.ScreenToViewportPoint(screenPoint);
             Ray ray = MainCamera.ViewportPointToRay(viewportPoint);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100, FarmableLayer))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100, ActionLayer))
             {
-                Vector3 snapped = FarmUtils.SnapPoint(hit.point);
-                SetPosition(snapped);
+                Vector3 snapped = HypercropsModelUtils.SnapPoint(hit.point);
+                GameObject targetObject = hit.collider.gameObject;
 
-                if (!IsPlantableAtPosition(snapped, hit.collider.gameObject))
+                transform.position = snapped;
+
+                if
+                (
+                    snapped.y <= 0.1 &&
+                    targetObject.CompareTag("Ground") &&
+                    IsPointActionable(snapped, targetObject)
+                )
                 {
-                    IsAllowed = false;
+                    IsAllowed = true;
+                    ActionPoint = snapped;
 
                     return;
                 }
 
-                IsAllowed = true;
-                PlantPoint = snapped;
+                IsAllowed = false;
             }
         }
 
-        private void SetPosition(Vector3 pos)
+        #nullable enable
+        protected virtual bool IsPointActionable(Vector3 target, GameObject? raycastHitObject)
         {
-            transform.position = pos;
+            return Farm.IsPlantablePoint(target, raycastHitObject);
         }
-
-        private bool IsPlantableAtPosition(Vector3 pos, GameObject target)
-        {
-            return !Farm.IsPlantInPosition(pos) &&
-                FarmUtils.IsPlantablePoint(pos, Player, target, PlantRadius);
-        }
-
     }
 }

@@ -7,7 +7,7 @@ using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.Model.Crops;
 using Assets.Hypercrops.Model.Cards;
 
-// TODO: Refactor all Make methods, so that there's only ONE MakeHypercropsObject that creates a given object
+// TODO: Refactor all Make methods, so that there's only ONE HypercropsInstance method that creates a given object
 // TODO: After that, separate Make methods and put them into their corresponding Model entity. That way this assembly won't depend on Model (avoid circular deps)
 // TODO: When a card is made, instead of modifying the prefab, I can just create a prefab for each card.
 namespace Assets.Hypercrops.System
@@ -42,11 +42,13 @@ namespace Assets.Hypercrops.System
         public readonly static string SPECIES_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop/Species";
         public readonly static string FARMING_METHOD_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Crop/FarmingMethod";
         public readonly static string BUILDABLE_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Buildable/Units";
+        public readonly static string BUILDABLE_GHOST_PREFABS_PATH = $"{BASE_PREFAB_PATH}/Buildable/Layouts";
 
         private ObjectCache<GameObject> _cropsCache;
         private ObjectCache<GameObject> _cardsCache;
         private ObjectCache<Material> _materialsCache;
-        private ObjectCache<GameObject> _buildablesCache;
+        private readonly ObjectCache<GameObject> _buildablesCache = new();
+        private readonly ObjectCache<GameObject> _hypercropsPrefabsLookup = new();
 
         void Awake()
         {
@@ -62,7 +64,6 @@ namespace Assets.Hypercrops.System
                 _cropsCache = new();
                 _cardsCache = new();
                 _materialsCache = new();
-                _buildablesCache = new();
             }
         }
 
@@ -81,6 +82,16 @@ namespace Assets.Hypercrops.System
         }
 
         #nullable enable
+
+        public GameObject? HypercropsInstance<T>(string key, Vector3 pos, Transform? parent)
+        {
+            return typeof(T).Name switch
+            {
+                "BuildableGhost" => MakeBuildableGhost(key, new InstanceArguments(pos, parent)),
+                _ => null,
+            };
+        }
+
         public GameObject MakeCropGhost(Vector3 pos, CropSize? size, Transform? parent)
         {
             GameObject prefab = _cropsCache
@@ -228,6 +239,18 @@ namespace Assets.Hypercrops.System
             return instance;
         }
 
+        public GameObject MakeBuildableGhost(string layoutType, InstanceArguments args)
+        {
+            GameObject prefab = _hypercropsPrefabsLookup
+                .Entry($"BuildableGhost{layoutType}")
+                .LoadOnMiss
+                (
+                    () => Resources.Load<GameObject>($"{BUILDABLE_GHOST_PREFABS_PATH}/{layoutType}/Ghost")
+                );
+
+            return Instantiate(prefab, args.Position, Quaternion.identity, args.Parent);
+        }
+
         public CropDescriptor GetCropDescriptorBySpeciesName(string speciesName)
         {
             return Loader.LoadCropDescriptor(speciesName);
@@ -268,6 +291,18 @@ namespace Assets.Hypercrops.System
 
             renderer.sharedMaterials = materialsToAdd.ToArray();
             renderer.shadowCastingMode = ShadowCastingMode.Off;
+        }
+    }
+
+    public struct InstanceArguments
+    {
+        public Vector3 Position;
+        public Transform? Parent;
+
+        public InstanceArguments(Vector3 position, Transform? parent)
+        {
+            Position = position;
+            Parent = parent ? parent : ObjectFactory.Instance.transform;
         }
     }
 }

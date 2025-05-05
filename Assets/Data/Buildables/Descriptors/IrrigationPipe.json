@@ -1,11 +1,12 @@
 {
     "Name": "IrrigationPipe",
     "InteractionType": "Effector",
+    "LayoutType": "Small",
     "Rotatable": true,
     "Effect": {
         "Name": "WaterCropsInRadius",
         "Period": "Day",
-        "Radius": ""
+        "Radius": 3
     },
     "OnClick": ""
 }

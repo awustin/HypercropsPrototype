@@ -1,11 +1,12 @@
 {
     "Name": "BioStorage",
     "InteractionType": "PointerClick",
+    "LayoutType": "Normal",
     "Rotatable": true,
     "Effect": {
         "Name": "",
-        "Period": "",
-        "Radius": ""
+        "Period": "None",
+        "Radius": 0
     },
     "OnClick": "StoreProduction"
 }

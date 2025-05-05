@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Assets.Hypercrops.System.CommonSerializable
 {
@@ -8,14 +9,19 @@ namespace Assets.Hypercrops.System.CommonSerializable
     {
         [
             JsonProperty("Type"),
-            JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))
+            JsonConverter(typeof(StringEnumConverter))
         ]
         public BuildableType Type;
         [
             JsonProperty("InteractionType"),
-            JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))
+            JsonConverter(typeof(StringEnumConverter))
         ]
         public BuildableInteractionType InteractionType;
+        [
+            JsonProperty("LayoutType"),
+            JsonConverter(typeof(StringEnumConverter))
+        ]
+        public BuildableLayoutType LayoutType;
         public bool Rotatable;
         public BuildableEffect Effect;
         public string OnClick;
@@ -24,6 +30,7 @@ namespace Assets.Hypercrops.System.CommonSerializable
         (
             BuildableType type,
             BuildableInteractionType interactionType,
+            BuildableLayoutType layoutType,
             bool rotatable,
             BuildableEffect effect,
             string onClick
@@ -31,6 +38,7 @@ namespace Assets.Hypercrops.System.CommonSerializable
         {
             Type = type;
             InteractionType = interactionType;
+            LayoutType = layoutType;
             Rotatable = rotatable;
             Effect = effect;
             OnClick = onClick;
@@ -48,7 +56,7 @@ namespace Assets.Hypercrops.System.CommonSerializable
         public string Name;
         [
             JsonProperty("Period"),
-            JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))
+            JsonConverter(typeof(StringEnumConverter))
         ]
         public BuildableEffectPeriod Period;
         public float Radius;

@@ -63,7 +63,7 @@ public class GameEventOnFarmingMode : MonoBehaviour
 
         if (_currentGhost.IsAllowed && _currentCropDescriptor != null)
         {
-            Farm.StartCrop(_currentCropDescriptor, _currentGhost.PlantPoint);
+            Farm.StartCrop(_currentCropDescriptor, _currentGhost.ActionPoint);
             Cards.DiscardLastUsed();
         }
         else

@@ -1,11 +1,12 @@
 {
     "Name": "Station",
     "InteractionType": "PointerClick",
+    "LayoutType": "Small",
     "Rotatable": true,
     "Effect": {
         "Name": "",
-        "Period": "",
-        "Radius": ""
+        "Period": "None",
+        "Radius": 0
     },
     "OnClick": "StationAction"
 }
