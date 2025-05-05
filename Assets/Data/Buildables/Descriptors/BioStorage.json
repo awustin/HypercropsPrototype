@@ -8,5 +8,6 @@
         "Period": "None",
         "Radius": 0
     },
-    "OnClick": "StoreProduction"
+    "OnClick": "StoreProduction",
+    "Description": "You can store the harvest and preserve it until the collection event"
 }

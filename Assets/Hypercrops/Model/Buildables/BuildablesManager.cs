@@ -3,6 +3,7 @@ using UnityEngine;
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.Model.Utils;
+using Unity.VisualScripting;
 
 namespace Assets.Hypercrops.Model.Buildables
 {
@@ -72,17 +73,31 @@ namespace Assets.Hypercrops.Model.Buildables
         public void PlaceBuildable(Vector3 point, BuildableDescriptor descriptor)
         {
             // TODO: Redefine key for buildables. Does it make sense to keep a dictionary?
-            GameObject instance = _buildablesInSceneLookup
+            _buildablesInSceneLookup
                 .Entry(HypercropsModelUtils.VectorPositionToStringKey(point))
                 .LoadOnMiss
                 (
-                    () => Factory.HypercropsInstance<Buildable>(descriptor.Type.ToString(), point, BuildableMap.transform)
-                );
-            
-            instance.name = descriptor.Type.ToString();
-            Buildable behaviour = instance.GetComponent<Buildable>();
+                    () =>
+                    {
+                        GameObject instanced = Factory.HypercropsInstance<Buildable>
+                        (
+                            descriptor.Type.ToString(),
+                            point,
+                            BuildableMap.transform
+                        );
 
-            behaviour.Initialise();
+                        instanced.name = descriptor.Type.ToString();
+                        Buildable behaviour = instanced.GetComponent<Buildable>();
+
+                        behaviour.Initialise(
+                            descriptor.Type,
+                            descriptor.InteractionType,
+                            descriptor.Description
+                        );
+
+                        return instanced;
+                    }
+                );
         }
     }
 }

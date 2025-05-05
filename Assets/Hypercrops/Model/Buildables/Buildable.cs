@@ -4,9 +4,15 @@ namespace Assets.Hypercrops.Model.Buildables
 {
     public class Buildable : MonoBehaviour
     {
-        public void Initialise()
+        public BuildableType Type;
+        public BuildableInteractionType InteractionType;
+        public string Description;
+
+        public void Initialise(BuildableType type, BuildableInteractionType interactionType, string description)
         {
-            // TODO: Implement class
+            Type = type;
+            InteractionType = interactionType;
+            Description = description;
         }
     }
 }

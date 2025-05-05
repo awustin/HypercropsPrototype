@@ -25,6 +25,7 @@ namespace Assets.Hypercrops.System.CommonSerializable
         public bool Rotatable;
         public BuildableEffect Effect;
         public string OnClick;
+        public string Description;
 
         public BuildableDescriptor
         (

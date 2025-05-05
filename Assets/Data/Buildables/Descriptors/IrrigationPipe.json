@@ -8,5 +8,6 @@
         "Period": "Day",
         "Radius": 3
     },
-    "OnClick": ""
+    "OnClick": "",
+    "Description": "Waters the crops daily"
 }

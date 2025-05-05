@@ -8,5 +8,6 @@
         "Period": "None",
         "Radius": 0
     },
-    "OnClick": "StationAction"
+    "OnClick": "StationAction",
+    "Description": "Where are we?"
 }
