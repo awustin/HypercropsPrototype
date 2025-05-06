@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using Assets.Hypercrops.Common;
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.Model.Utils;
 

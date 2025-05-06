@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Assets.Hypercrops.System
+namespace Assets.Hypercrops.Common
 {
     public class ObjectCache<T>
     {

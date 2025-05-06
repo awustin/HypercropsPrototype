@@ -3,7 +3,7 @@ using UnityEngine;
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.Model.Utils;
-using Unity.VisualScripting;
+using Assets.Hypercrops.Common;
 
 namespace Assets.Hypercrops.Model.Buildables
 {

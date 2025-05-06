@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 
+using Assets.Hypercrops.Common;
 using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.Model.Crops;
