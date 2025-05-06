@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 using Assets.Hypercrops.Common;
-using Assets.Hypercrops.System.CommonSerializable;
+using Assets.Hypercrops.Common.Serializables;
 using Assets.Hypercrops.Utils;
 
 namespace Assets.Hypercrops.System

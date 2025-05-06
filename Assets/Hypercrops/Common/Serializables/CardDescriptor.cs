@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 using Assets.Hypercrops.Common.Enums;
 
-namespace Assets.Hypercrops.System.CommonSerializable
+namespace Assets.Hypercrops.Common.Serializables
 {
     [Serializable]
     public class CardDescriptor

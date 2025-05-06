@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Assets.Hypercrops.System.CommonSerializable
+namespace Assets.Hypercrops.Common.Serializables
 {
     [Serializable]
     public class PrefabCommonDescriptor

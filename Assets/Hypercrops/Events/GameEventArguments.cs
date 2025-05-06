@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-using Assets.Hypercrops.System.CommonSerializable;
+using Assets.Hypercrops.Common.Serializables;
 
 public class WalkEventArguments : EventArgs
 {

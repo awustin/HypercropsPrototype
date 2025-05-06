@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using Assets.Hypercrops.System;
-using Assets.Hypercrops.System.CommonSerializable;
+using Assets.Hypercrops.Common.Serializables;
 using Assets.Hypercrops.Model.Utils;
 using Assets.Hypercrops.Common;
 
