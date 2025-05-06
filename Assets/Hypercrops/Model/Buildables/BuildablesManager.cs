@@ -88,10 +88,15 @@ namespace Assets.Hypercrops.Model.Buildables
 
                         instanced.name = descriptor.Type.ToString();
                         Buildable behaviour = instanced.GetComponent<Buildable>();
+                        BuildableEffect effectBehaviour = instanced.GetComponent<BuildableEffect>();
 
-                        behaviour.Initialise(
-                            descriptor.Type,
-                            descriptor.Description
+                        behaviour.Initialise(descriptor.Type, descriptor.Description);
+                        effectBehaviour.Initialise(
+                            descriptor.Effect.Type,
+                            descriptor.Effect.Name,
+                            descriptor.Effect.Period,
+                            descriptor.Effect.Radius,
+                            descriptor.Effect.Description
                         );
 
                         return instanced;

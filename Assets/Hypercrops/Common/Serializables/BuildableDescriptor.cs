@@ -19,7 +19,7 @@ namespace Assets.Hypercrops.Common.Serializables
             JsonConverter(typeof(StringEnumConverter))
         ]
         public BuildableLayoutType LayoutType;
-        public BuildableEffect Effect;
+        public BuildableEffectDescriptor Effect;
         public string Description;
 
         public BuildableDescriptor
@@ -27,7 +27,7 @@ namespace Assets.Hypercrops.Common.Serializables
             BuildableType type,
             BuildableLayoutType layoutType,
             bool rotatable,
-            BuildableEffect effect,
+            BuildableEffectDescriptor effect,
             string onClick
         )
         {
@@ -43,7 +43,7 @@ namespace Assets.Hypercrops.Common.Serializables
     }
 
     [Serializable]
-    public class BuildableEffect
+    public class BuildableEffectDescriptor
     {
         [
             JsonProperty("Type"),
@@ -57,13 +57,22 @@ namespace Assets.Hypercrops.Common.Serializables
         ]
         public BuildableEffectPeriod Period;
         public float Radius;
+        public string Description;
 
-        public BuildableEffect(BuildableEffectType type, string name, BuildableEffectPeriod period, float radius)
+        public BuildableEffectDescriptor
+        (
+            BuildableEffectType type,
+            string name,
+            BuildableEffectPeriod period,
+            float radius,
+            string description
+        )
         {
             Type = type;
             Name = name;
             Period = period;
             Radius = radius;
+            Description = description;
         }
 
         public override string ToString()
