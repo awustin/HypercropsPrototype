@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+using Assets.Hypercrops.Common;
 using Assets.Hypercrops.System;
 
 namespace Assets.Hypercrops.Model.Cards

@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-using Assets.Hypercrops.Common;
 using Assets.Hypercrops.Common.Serializables;
 using Assets.Hypercrops.Utils;
 
-namespace Assets.Hypercrops.System
+namespace Assets.Hypercrops.Common
 {
     public class DataLoader : MonoBehaviour
     {
@@ -20,7 +19,7 @@ namespace Assets.Hypercrops.System
 
                     if (_instance == null)
                     {
-                        GameObject singletonObject = new GameObject("DataLoader");
+                        GameObject singletonObject = new("DataLoader");
                         _instance = singletonObject.AddComponent<DataLoader>();
                     }
                 }
