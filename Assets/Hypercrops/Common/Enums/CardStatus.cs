@@ -1,8 +1,11 @@
-public enum CardStatus
+namespace Assets.Hypercrops.Common.Enums
 {
-    FaceDown,
-    TurnUp,
-    Move,
-    Idle,
-    Discard,
+    public enum CardStatus
+    {
+        FaceDown,
+        TurnUp,
+        Move,
+        Idle,
+        Discard,
+    }
 }

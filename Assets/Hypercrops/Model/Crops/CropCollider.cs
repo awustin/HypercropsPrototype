@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Assets.Hypercrops.Common.Enums;
+
 public class CropCollider : MonoBehaviour
 {
     // TODO: Implement collider functionality. Try capsule collider based on CropSize.

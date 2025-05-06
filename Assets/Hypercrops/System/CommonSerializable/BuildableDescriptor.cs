@@ -2,6 +2,8 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
+using Assets.Hypercrops.Common.Enums;
+
 namespace Assets.Hypercrops.System.CommonSerializable
 {
     [Serializable]

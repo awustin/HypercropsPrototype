@@ -1,6 +1,9 @@
-public enum WorldTimeScale
+namespace Assets.Hypercrops.Common.Enums
 {
-    Normal = 1,
-    Fast = 100,
-    Fastest = 500,
+    public enum WorldTimeScale
+    {
+        Normal = 1,
+        Fast = 100,
+        Fastest = 500,
+    }
 }

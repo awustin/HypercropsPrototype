@@ -1,6 +1,9 @@
-public enum BuildableLayoutType
+namespace Assets.Hypercrops.Common.Enums
 {
-    Unknown,
-    Normal,
-    Large,
+    public enum BuildableLayoutType
+    {
+        Unknown,
+        Normal,
+        Large,
+    }
 }

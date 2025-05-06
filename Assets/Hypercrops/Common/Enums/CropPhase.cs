@@ -1,7 +1,10 @@
-public enum CropPhase
+namespace Assets.Hypercrops.Common.Enums
 {
-    Seed,
-    Growing,
-    Ready,
-    Dead
+    public enum CropPhase
+    {
+        Seed,
+        Growing,
+        Ready,
+        Dead
+    }
 }

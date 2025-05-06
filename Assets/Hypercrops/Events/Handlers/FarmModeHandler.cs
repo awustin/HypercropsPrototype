@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.System.CommonSerializable;
 using Assets.Hypercrops.State;

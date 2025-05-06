@@ -1,8 +1,11 @@
-public enum BuildableEffectPeriod
+namespace Assets.Hypercrops.Common.Enums
 {
-    None,
-    Day,
-    Year,
-    Level,
-    Unlimited,
+    public enum BuildableEffectPeriod
+    {
+        None,
+        Day,
+        Year,
+        Level,
+        Unlimited,
+    }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 
+using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.State;
 
 namespace Assets.Hypercrops.Model.WorldTime

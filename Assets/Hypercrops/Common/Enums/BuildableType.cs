@@ -1,7 +1,10 @@
-public enum BuildableType
+namespace Assets.Hypercrops.Common.Enums
 {
-    Unknown,
-    Station,
-    IrrigationPipe,
-    BioStorage
+    public enum BuildableType
+    {
+        Unknown,
+        Station,
+        IrrigationPipe,
+        BioStorage
+    }
 }

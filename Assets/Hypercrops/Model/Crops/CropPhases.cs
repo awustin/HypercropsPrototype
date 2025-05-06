@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.Model.Crops;
 using Assets.Hypercrops.System;
 

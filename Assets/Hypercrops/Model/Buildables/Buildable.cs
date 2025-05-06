@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Assets.Hypercrops.Common.Enums;
+
 namespace Assets.Hypercrops.Model.Buildables
 {
     public class Buildable : MonoBehaviour

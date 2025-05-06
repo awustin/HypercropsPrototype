@@ -1,6 +1,9 @@
-public enum BuildableInteractionType
+namespace Assets.Hypercrops.Common.Enums
 {
-    Unknown,
-    PointerClick,
-    Effector,
+    public enum BuildableInteractionType
+    {
+        Unknown,
+        PointerClick,
+        Effector,
+    }
 }

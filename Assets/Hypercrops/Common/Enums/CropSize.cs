@@ -1,5 +1,8 @@
-public enum CropSize
+namespace Assets.Hypercrops.Common.Enums
 {
-    Normal = 3,
-    Large = 5,
+    public enum CropSize
+    {
+        Normal = 3,
+        Large = 5,
+    }
 }
