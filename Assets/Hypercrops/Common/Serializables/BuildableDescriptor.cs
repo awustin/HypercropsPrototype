@@ -15,24 +15,16 @@ namespace Assets.Hypercrops.Common.Serializables
         ]
         public BuildableType Type;
         [
-            JsonProperty("InteractionType"),
-            JsonConverter(typeof(StringEnumConverter))
-        ]
-        public BuildableInteractionType InteractionType;
-        [
             JsonProperty("LayoutType"),
             JsonConverter(typeof(StringEnumConverter))
         ]
         public BuildableLayoutType LayoutType;
-        public bool Rotatable;
         public BuildableEffect Effect;
-        public string OnClick;
         public string Description;
 
         public BuildableDescriptor
         (
             BuildableType type,
-            BuildableInteractionType interactionType,
             BuildableLayoutType layoutType,
             bool rotatable,
             BuildableEffect effect,
@@ -40,22 +32,24 @@ namespace Assets.Hypercrops.Common.Serializables
         )
         {
             Type = type;
-            InteractionType = interactionType;
             LayoutType = layoutType;
-            Rotatable = rotatable;
             Effect = effect;
-            OnClick = onClick;
         }
         
         override public string ToString()
         {
-            return $"Descriptor for {Type}\n\nRotatable: {Rotatable}\nInteraction type: {InteractionType}\n{Effect}";
+            return $"Descriptor for {Type}\n\nLayout type: {LayoutType}\n{Effect}";
         }
     }
 
     [Serializable]
     public class BuildableEffect
     {
+        [
+            JsonProperty("Type"),
+            JsonConverter(typeof(StringEnumConverter))
+        ]
+        public BuildableEffectType Type;
         public string Name;
         [
             JsonProperty("Period"),
@@ -64,8 +58,9 @@ namespace Assets.Hypercrops.Common.Serializables
         public BuildableEffectPeriod Period;
         public float Radius;
 
-        public BuildableEffect(string name, BuildableEffectPeriod period, float radius)
+        public BuildableEffect(BuildableEffectType type, string name, BuildableEffectPeriod period, float radius)
         {
+            Type = type;
             Name = name;
             Period = period;
             Radius = radius;
@@ -73,7 +68,7 @@ namespace Assets.Hypercrops.Common.Serializables
 
         public override string ToString()
         {
-            return $"Effect name: {Name}\nPeriod: {Period}";
+            return $"Effect name: {Name}\nEffect type: {Type}\nPeriod: {Period}";
         }
     }
 }

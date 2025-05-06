@@ -91,7 +91,6 @@ namespace Assets.Hypercrops.Model.Buildables
 
                         behaviour.Initialise(
                             descriptor.Type,
-                            descriptor.InteractionType,
                             descriptor.Description
                         );
 

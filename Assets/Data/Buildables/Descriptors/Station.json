@@ -1,13 +1,13 @@
 {
     "Type": "Station",
-    "InteractionType": "PointerClick",
     "LayoutType": "Small",
-    "Rotatable": true,
     "Effect": {
+        "Type": "None",
         "Name": "",
         "Period": "None",
-        "Radius": 0
+        "Radius": 0,
+        "Description": ""
     },
-    "OnClick": "StationAction",
+    "Updatable": false,
     "Description": "Where are we?"
 }

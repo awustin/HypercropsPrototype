@@ -1,13 +1,13 @@
 {
     "Type": "BioStorage",
-    "InteractionType": "PointerClick",
     "LayoutType": "Normal",
-    "Rotatable": true,
     "Effect": {
-        "Name": "",
+        "Type": "EnableFeature",
+        "Name": "CollectHarvest",
         "Period": "None",
-        "Radius": 0
+        "Radius": 0,
+        "Description": "You will be able to collect points from harvest"
     },
-    "OnClick": "StoreProduction",
-    "Description": "You can store the harvest and preserve it until the collection event"
+    "Updatable": true,
+    "Description": "Freezers can buy us some time"
 }

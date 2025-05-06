@@ -1,13 +1,13 @@
 {
     "Type": "IrrigationPipe",
-    "InteractionType": "Effector",
     "LayoutType": "Small",
-    "Rotatable": true,
     "Effect": {
+        "Type": "PerformAction",
         "Name": "WaterCropsInRadius",
         "Period": "Day",
-        "Radius": 3
+        "Radius": 3,
+        "Description": "Water the crops automatically within a radius"
     },
-    "OnClick": "",
-    "Description": "Waters the crops daily"
+    "Updatable": true,
+    "Description": "Water your crops"
 }
