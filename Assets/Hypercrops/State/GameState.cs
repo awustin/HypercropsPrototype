@@ -6,6 +6,7 @@ namespace Assets.Hypercrops.State
     public class GameState : ScriptableObject
     {
         // TODO: Divide project in NAMESPACES
+        // TODO: Keep a list of game features that are activated with buildables
         private static GameState _instance;
         public static GameState Instance
         {

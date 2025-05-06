@@ -4,6 +4,7 @@ using Assets.Hypercrops.Common.Enums;
 
 namespace Assets.Hypercrops.Model.Buildables
 {
+    // TODO: Make a "task runner" to subscribe PerformAction effects and another one for "enabled features" for EnableFeature effects
     public class BuildableEffect : MonoBehaviour
     {
         public BuildableEffectType Type;
