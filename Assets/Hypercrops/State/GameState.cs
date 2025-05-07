@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Hypercrops.State
@@ -32,6 +33,7 @@ namespace Assets.Hypercrops.State
         public int MinuteInWorld;
         public int DayInWorld;
         public int YearInWorld;
+        public List<string> LevelFeatures = new();
 
         void Awake()
         {
@@ -129,6 +131,28 @@ namespace Assets.Hypercrops.State
         public void SetYearInWorld(int year)
         {
             YearInWorld = year;
+        }
+
+        public void AddLevelFeature(string feature)
+        {
+            if (!LevelFeatures.Contains(feature))
+            {
+                LevelFeatures.Add(feature);
+            }
+        }
+
+        public void RemoveLevelFeature(string feature)
+        {
+            if (LevelFeatures.Contains(feature))
+            {
+                LevelFeatures.Remove(feature);
+            }
+
+        }
+
+        public void ClearLevelFeatures()
+        {
+            LevelFeatures.Clear();
         }
     }
 }

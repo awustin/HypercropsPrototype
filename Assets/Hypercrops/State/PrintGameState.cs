@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -14,6 +15,7 @@ namespace Assets.Hypercrops.State
         public string Time;
         public int DayInWorld;
         public int YearInWorld;
+        public List<string> LevelFeatures;
 
         void Start()
         {
@@ -30,6 +32,7 @@ namespace Assets.Hypercrops.State
             Time = $"{State.HourInWorld:D2}:{State.MinuteInWorld:D2}";
             DayInWorld = State.DayInWorld;
             YearInWorld = State.YearInWorld;
+            LevelFeatures = State.LevelFeatures;
         }
     }
 }
