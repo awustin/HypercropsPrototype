@@ -1,8 +1,9 @@
 using UnityEngine;
 
 using Assets.Hypercrops.State;
+using Assets.Hypercrops.Events;
 
-namespace Assets.Hypercrops.Events.Handlers
+namespace Assets.Hypercrops.Handlers
 {
     /*
         TODO:

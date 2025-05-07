@@ -2,11 +2,12 @@ using UnityEngine;
 
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.Common.Serializables;
+using Assets.Hypercrops.Events;
 using Assets.Hypercrops.State;
 using Assets.Hypercrops.Model.Buildables;
 using Assets.Hypercrops.Model.Cards;
 
-namespace Assets.Hypercrops.Events.Handlers
+namespace Assets.Hypercrops.Handlers
 {
     public class BuildModeHandler : MonoBehaviour
     {

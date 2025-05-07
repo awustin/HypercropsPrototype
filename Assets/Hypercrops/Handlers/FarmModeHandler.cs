@@ -1,14 +1,15 @@
 using UnityEngine;
 
 using Assets.Hypercrops.Common.Enums;
-using Assets.Hypercrops.System;
 using Assets.Hypercrops.Common.Serializables;
+using Assets.Hypercrops.System;
+using Assets.Hypercrops.Events;
 using Assets.Hypercrops.State;
 using Assets.Hypercrops.Model.Crops;
 using Assets.Hypercrops.Model.Cards;
 using Assets.Hypercrops.Model.Ghosts;
 
-namespace Assets.Hypercrops.Events.Handlers
+namespace Assets.Hypercrops.Handlers
 {
     // TOOD: DONT destroy the ghost. Save it in a cache.
     // TODO: Add precision to plant position
