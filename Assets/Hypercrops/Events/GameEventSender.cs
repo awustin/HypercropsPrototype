@@ -36,6 +36,7 @@ namespace Assets.Hypercrops.Events
         public event Action AdvanceTimeEvent;
         public event EventHandler<CropDeathArguments> CropDeathEvent;
         public event Action NewDayEvent;
+        public event EventHandler<EnableFeatureArguments> EnableFeature;
 
         public void BroadcastWalkEvent(Vector3 target)
         {
@@ -84,6 +85,11 @@ namespace Assets.Hypercrops.Events
         public void BroadcastNewDayEvent()
         {
             NewDayEvent?.Invoke();
+        }
+
+        public void BroadcastEnableFeature(string featureName)
+        {
+            EnableFeature?.Invoke(this, new EnableFeatureArguments(featureName));
         }
 
         void Awake()

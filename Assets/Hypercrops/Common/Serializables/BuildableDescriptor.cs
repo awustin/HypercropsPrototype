@@ -50,6 +50,11 @@ namespace Assets.Hypercrops.Common.Serializables
             JsonConverter(typeof(StringEnumConverter))
         ]
         public BuildableEffectType Type;
+        [
+            JsonProperty("LevelFeature"),
+            JsonConverter(typeof(StringEnumConverter))
+        ]
+        public LevelFeatureType LevelFeature;
         public string Name;
         [
             JsonProperty("Period"),
@@ -62,6 +67,7 @@ namespace Assets.Hypercrops.Common.Serializables
         public BuildableEffectDescriptor
         (
             BuildableEffectType type,
+            LevelFeatureType levelFeature,
             string name,
             BuildableEffectPeriod period,
             float radius,
@@ -69,6 +75,7 @@ namespace Assets.Hypercrops.Common.Serializables
         )
         {
             Type = type;
+            LevelFeature = levelFeature;
             Name = name;
             Period = period;
             Radius = radius;
@@ -77,7 +84,7 @@ namespace Assets.Hypercrops.Common.Serializables
 
         public override string ToString()
         {
-            return $"Effect name: {Name}\nEffect type: {Type}\nPeriod: {Period}";
+            return $"Effect name: {Name}\nEffect type: {Type}\nLevel feature: {LevelFeature}\nPeriod: {Period}";
         }
     }
 }

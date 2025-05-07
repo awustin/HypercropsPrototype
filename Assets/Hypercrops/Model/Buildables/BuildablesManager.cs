@@ -93,6 +93,7 @@ namespace Assets.Hypercrops.Model.Buildables
                         behaviour.Initialise(descriptor.Type, descriptor.Description);
                         effectBehaviour.Initialise(
                             descriptor.Effect.Type,
+                            descriptor.Effect.LevelFeature,
                             descriptor.Effect.Name,
                             descriptor.Effect.Period,
                             descriptor.Effect.Radius,

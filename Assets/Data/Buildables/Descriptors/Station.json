@@ -3,6 +3,7 @@
     "LayoutType": "Small",
     "Effect": {
         "Type": "None",
+        "LevelFeature": "None",
         "Name": "",
         "Period": "None",
         "Radius": 0,

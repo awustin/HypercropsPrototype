@@ -3,6 +3,7 @@
     "LayoutType": "Normal",
     "Effect": {
         "Type": "EnableFeature",
+        "LevelFeature": "CollectHarvest",
         "Name": "CollectHarvest",
         "Period": "None",
         "Radius": 0,

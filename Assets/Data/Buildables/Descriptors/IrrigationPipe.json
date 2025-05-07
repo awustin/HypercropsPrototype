@@ -3,6 +3,7 @@
     "LayoutType": "Small",
     "Effect": {
         "Type": "PerformAction",
+        "LevelFeature": "None",
         "Name": "WaterCropsInRadius",
         "Period": "Day",
         "Radius": 3,

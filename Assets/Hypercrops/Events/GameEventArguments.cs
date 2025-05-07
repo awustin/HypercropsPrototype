@@ -47,4 +47,14 @@ namespace Assets.Hypercrops.Events
             Descriptor = buildableDescriptor;
         }
     }
+
+    public class EnableFeatureArguments : EventArgs
+    {
+        public string FeatureType;
+
+        public EnableFeatureArguments(string featureType)
+        {
+            FeatureType = featureType;
+        }
+    }
 }

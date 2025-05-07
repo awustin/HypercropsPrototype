@@ -2,7 +2,7 @@ namespace Assets.Hypercrops.Common.Enums
 {
     public enum LevelFeatureType
     {
-        Unknown,
+        None,
         WaterCrops,
         CollectHarvest,
     }
