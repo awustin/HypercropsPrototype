@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Assets.Hypercrops.Common.Enums;
+using Assets.Hypercrops.Events;
 
 // TODO: Add dead phase to crop
 // TODO: Add on click to make it interactable

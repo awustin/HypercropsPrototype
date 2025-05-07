@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.Common.Serializables;
+using Assets.Hypercrops.Events;
 using Assets.Hypercrops.System;
 using Assets.Hypercrops.Model.Cards;
 

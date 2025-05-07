@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Assets.Hypercrops.Events;
+
 public class CropHealth : MonoBehaviour
 {
     public const float FactorScale = 1000f;
