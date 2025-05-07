@@ -5,8 +5,7 @@ namespace Assets.Hypercrops.State
     [CreateAssetMenu(fileName = "GameState", menuName = "Scriptable Objects/GameState")]
     public class GameState : ScriptableObject
     {
-        // TODO: Divide project in NAMESPACES
-        // TODO: Keep a list of game features that are activated with buildables
+        // TODO: Divide rest of the project in NAMESPACES
         private static GameState _instance;
         public static GameState Instance
         {

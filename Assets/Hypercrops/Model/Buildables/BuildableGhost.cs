@@ -5,8 +5,6 @@ using Assets.Hypercrops.Common.Enums;
 
 namespace Assets.Hypercrops.Model.Buildables
 {
-    // TODO: Never destroy
-    // TODO: Import BuildablesManager
     public class BuildableGhost : Ghost
     {
         public BuildablesManager Buildables;
