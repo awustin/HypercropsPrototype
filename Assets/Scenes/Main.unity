@@ -384,6 +384,7 @@ MonoBehaviour:
   BuildableDescriptorsPath: /Data/Buildables/Descriptors
   CardDescriptorsPath: /Data/Cards/Descriptors
   InitialDeckPath: Data/InitialDeck.json
+  LevelFeaturesPath: /Data/LevelFeatures/InitialLevelFeatures.json
 --- !u!1 &202109801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1263,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1931554409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &873029853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873029854}
+  m_Layer: 0
+  m_Name: LevelFeatures
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &873029854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873029853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1076461580}
+  m_Father: {fileID: 983377403}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &961976205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1465,7 @@ Transform:
   - {fileID: 1251745623}
   - {fileID: 1931554409}
   - {fileID: 792423623}
+  - {fileID: 873029854}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1008109317 stripped
@@ -1439,6 +1473,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4687118564364291748, guid: 5ceecb8692b5c40e8a038db31c0648cf, type: 3}
   m_PrefabInstance: {fileID: 3109971277470027824}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1076461579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076461580}
+  - component: {fileID: 1076461581}
+  m_Layer: 0
+  m_Name: LevelFeaturesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1076461580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076461579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873029854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1076461581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076461579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c794a1670047549d21d9610888268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Loader: {fileID: 0}
 --- !u!1 &1192012423
 GameObject:
   m_ObjectHideFlags: 0

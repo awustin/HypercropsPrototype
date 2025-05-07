@@ -1,20 +1,34 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-using FType = Assets.Hypercrops.Common.Enums.LevelFeatureType;
+using Assets.Hypercrops.Common;
+using LFType = Assets.Hypercrops.Common.Enums.LevelFeatureType;
 
 namespace Assets.Hypercrops.Model.LevelFeatures
 {
     public class LevelFeaturesManager : MonoBehaviour
     {
-
-        private Dictionary<FType, LevelFeature> _features = new ();
+        public DataLoader Loader;
+        private readonly Dictionary<LFType, LevelFeature> _features = new ();
 
         void Start()
         {
-            LevelFeature lf = new (FType.CollectHarvest, false);
-        
-            _features.Add(FType.CollectHarvest, lf);
+            Loader = DataLoader.Instance;
+            Initialise();
+        }
+
+        public void Initialise()
+        {
+            if (_features.Count == 0)
+            {
+                foreach (var entry in Loader.LoadLevelFeatureDescriptors())
+                {
+                    Enum.TryParse(entry.Key, out LFType type);
+
+                    _features.Add(type, new (type, entry.Value));
+                }
+            }
         }
     }
 }

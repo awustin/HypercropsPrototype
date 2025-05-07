@@ -5,7 +5,6 @@ namespace Assets.Hypercrops.Model.LevelFeatures
     public class LevelFeature
     {
         public bool IsEnabled = false;
-
         public LevelFeatureType Type
         {
             get { return _type; }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 
 using Assets.Hypercrops.Common.Serializables;
 using Assets.Hypercrops.Utils;
@@ -32,11 +32,13 @@ namespace Assets.Hypercrops.Common
         public string BuildableDescriptorsPath = "/Data/Buildables/Descriptors";
         public string CardDescriptorsPath = "/Data/Cards/Descriptors";
         public string InitialDeckPath = "/Data/InitialDeck.json";
+        public string LevelFeaturesPath = "/Data/LevelFeatures/InitialLevelFeatures.json";
 
-        private DeckData _initialDeckData = new();
         private readonly ObjectCache<CropDescriptor> _cropDescriptorsCache = new();
         private readonly ObjectCache<BuildableDescriptor> _buildableDescriptorsCache = new();
         private readonly ObjectCache<CardDescriptor> _cardDescriptorCache = new();
+        private DeckData _initialDeckData = new();
+        private Dictionary<string, bool> _levelFeatures = new();
 
         void Awake()
         {
@@ -89,6 +91,17 @@ namespace Assets.Hypercrops.Common
             }
 
             return _initialDeckData.cardWeights;
+        }
+
+        public Dictionary<string, bool> LoadLevelFeatureDescriptors()
+        {
+            if (_levelFeatures.Count == 0)
+            {
+                _levelFeatures =
+                    FileUtils.ReadAssetJSON<Dictionary<string, bool>>(LevelFeaturesPath);
+            }
+
+            return _levelFeatures;
         }
     }
 }
