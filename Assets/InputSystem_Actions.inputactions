@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Plant",
+                    "name": "RestartScene",
                     "type": "Button",
                     "id": "42231368-23a3-4d0f-92ef-11dc7d81197b",
                     "expectedControlType": "",
@@ -351,11 +351,11 @@
                 {
                     "name": "",
                     "id": "86d7f9ab-71af-4311-b312-5c6e2635648f",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Plant",
+                    "action": "RestartScene",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Hypercrops.Scene
+namespace Assets.Hypercrops.Scene.Tasks
 {
     public class TaskManager : MonoBehaviour
     {

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 using Assets.Hypercrops.State;
 using Assets.Hypercrops.Events;
+using Assets.Hypercrops.Scene;
 
 // TODO: Improve user interactions e.g. debounce
 // TODO: Rethink game modes manager
@@ -13,9 +14,11 @@ public class InteractionsManager : MonoBehaviour
     [HideInInspector] public Camera MainCamera;
     [HideInInspector] public LayerMask DefaultLayer;
     [HideInInspector] public GameEventSender Sender;
+    public GameSceneManager Scene;
     private InputAction _interact;
     private InputAction _screenPoint;
     private InputAction _cancel;
+    private InputAction _restartScene;
     private readonly List<InputAction> _buttonActions = new();
 
     void Start()
@@ -24,18 +27,28 @@ public class InteractionsManager : MonoBehaviour
         MainCamera = Camera.main;
         DefaultLayer = LayerMask.GetMask("Default");
         Sender = GameEventSender.Instance;
+        Scene = GameSceneManager.Instance;
         _interact = InputSystem.actions.FindActionMap("Player").FindAction("Interact");
         _screenPoint = InputSystem.actions.FindActionMap("Player").FindAction("ScreenPoint");
         _cancel = InputSystem.actions.FindActionMap("Player").FindAction("Cancel");
+        _restartScene = InputSystem.actions.FindActionMap("Player").FindAction("RestartScene");
 
         _buttonActions.Add(_interact);
         _buttonActions.Add(_cancel);
+        _buttonActions.Add(_restartScene);
     }
 
     void Update()
     {
         if (NoActions())
         {
+            return;
+        }
+
+        if (IsRestartSceneAction())
+        {
+            Scene.SetSceneData("Restarted by player");
+            Scene.RestartScene();
             return;
         }
 
@@ -127,5 +140,10 @@ public class InteractionsManager : MonoBehaviour
     private bool IsCancelAction()
     {
         return _cancel.WasPressedThisFrame();
+    }
+
+    private bool IsRestartSceneAction()
+    {
+        return _restartScene.WasPressedThisFrame();
     }
 }
