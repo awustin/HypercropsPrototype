@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using Assets.Hypercrops.Events;
+
 namespace Assets.Hypercrops.Scene
 {
     public class GameSceneManager : MonoBehaviour
@@ -11,6 +13,7 @@ namespace Assets.Hypercrops.Scene
         public Color FadeColor = Color.black;
         public string SceneData = "TestData";
         public static GameSceneManager Instance { get; private set; }
+        public GameEventSender Sender;
 
         void Awake()
         {
@@ -28,8 +31,26 @@ namespace Assets.Hypercrops.Scene
             FadePanel.GetComponent<UnityEngine.UI.Image>().color = new Color(FadeColor.r, FadeColor.g, FadeColor.b, 0f);
         }
 
+        void OnEnable()
+        {
+            Sender = GameEventSender.Instance;
+
+            Sender.RestartScene += RestartScene;
+        }
+
+        void OnDisable()
+        {
+            Sender.RestartScene -= RestartScene;
+        }
+
+
+        public void SetSceneData(string value)
+        {
+            SceneData = value;
+        }
+
         // Called to load the same scene again
-        public void RestartScene()
+        private void RestartScene()
         {
             StartCoroutine(FadeOutAndRestart());
         }
@@ -62,11 +83,6 @@ namespace Assets.Hypercrops.Scene
 
             // Scene restarts are handled now.
             // Data will be restored during the `Start()` method in objects that persist.
-        }
-
-        public void SetSceneData(string value)
-        {
-            SceneData = value;
-        }
+        } 
     }
 }

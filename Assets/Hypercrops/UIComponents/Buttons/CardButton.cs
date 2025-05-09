@@ -28,7 +28,7 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
             string speciesName = CardScript.Attribute;
 
             CropDescriptor cropDescriptor = ObjectFactory.Instance.GetCropDescriptorBySpeciesName(speciesName);
-            GameEventSender.Instance.BroadcastStartFarmMode(new Vector3(0, 0, 0), cropDescriptor);
+            GameEventSender.Instance.BroadcastEvent("StartFarmMode", new Vector3(0, 0, 0), cropDescriptor);
 
             return;
         }
@@ -38,7 +38,7 @@ public class CardButton : UIElementBehaviour, IPointerClickHandler
             string buildingType = CardScript.Attribute;
 
             BuildableDescriptor descriptor = ObjectFactory.Instance.GetBuildableDescriptorByType(buildingType);
-            GameEventSender.Instance.BroadcastStartBuildMode(descriptor);
+            GameEventSender.Instance.BroadcastEvent("StartBuildMode", descriptor);
 
             return;
         }

@@ -61,7 +61,7 @@ public class CropHealth : MonoBehaviour
 
     public void StartCropDeath()
     {
-        Sender.BroadcastCropDeathEvent(gameObject);
+        Sender.BroadcastEvent("CropDeath", gameObject);
     }
 
     private void TrackVariables()

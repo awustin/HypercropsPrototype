@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Linq;
 using System;
 
 using Assets.Hypercrops.Common.Serializables;
+using System.Collections.Generic;
 
 namespace Assets.Hypercrops.Events
 {
@@ -37,60 +39,8 @@ namespace Assets.Hypercrops.Events
         public event EventHandler<CropDeathArguments> CropDeathEvent;
         public event Action NewDayEvent;
         public event EventHandler<EnableFeatureArguments> EnableFeature;
-
-        public void BroadcastWalkEvent(Vector3 target)
-        {
-            WalkEvent?.Invoke(this, new WalkEventArguments(target));
-        }
-
-        public void BroadcastTryPlantCrop()
-        {
-            TryPlantCrop?.Invoke();
-        }
-
-        public void BroadcastTryPlaceBuilding()
-        {
-            TryPlaceBuilding?.Invoke();
-        }
-
-        public void BroadcastStartFarmMode(Vector3 point, CropDescriptor cropDescriptor)
-        {
-            StartFarmMode?.Invoke(this, new StartFarmModeArguments(point, cropDescriptor));
-        }
-
-        public void BroadcastStartBuildMode(BuildableDescriptor descriptor)
-        {
-            StartBuildMode?.Invoke(this, new StartBuildModeArguments(descriptor));
-        }
-
-        public void BroadcastCancelFarmMode()
-        {
-            CancelFarmMode?.Invoke();
-        }
-        public void BroadcastCancelBuildMode()
-        {
-            CancelBuildMode?.Invoke();
-        }
-
-        public void BroadcastAdvanceTimeEvent()
-        {
-            AdvanceTimeEvent?.Invoke();
-        }
-
-        public void BroadcastCropDeathEvent(GameObject cropObject)
-        {
-            CropDeathEvent?.Invoke(this, new CropDeathArguments(cropObject));
-        }
-
-        public void BroadcastNewDayEvent()
-        {
-            NewDayEvent?.Invoke();
-        }
-
-        public void BroadcastEnableFeature(string featureName)
-        {
-            EnableFeature?.Invoke(this, new EnableFeatureArguments(featureName));
-        }
+        public event Action RestartScene;
+        public event Action EndScene;
 
         void Awake()
         {
@@ -101,6 +51,76 @@ namespace Assets.Hypercrops.Events
             else
             {
                 _instance = this;
+            }
+        }
+
+        public void BroadcastEvent(string eventName, params object[] arguments)
+        {
+            List<object> args = arguments.ToList();
+            IterativeValidator validator = new(args);
+
+            switch (eventName)
+            {
+                case "WalkEvent":
+                    if (validator.N(1).T(out Vector3 target).IsValid())
+                        WalkEvent?.Invoke(this, new WalkEventArguments(target));
+                    break;
+
+                case "TryPlantCrop":
+                    TryPlantCrop?.Invoke();
+                    break;
+
+                case "TryPlaceBuilding":
+                    TryPlaceBuilding?.Invoke();
+                    break;
+
+                case "StartFarmMode":
+                    if (validator.N(2).T(out Vector3 point).T(out CropDescriptor cropDescriptor).IsValid())
+                        StartFarmMode?.Invoke(this, new StartFarmModeArguments(point, cropDescriptor));
+                    break;
+
+                case "StartBuildMode":
+                    if (validator.N(1).T(out BuildableDescriptor descriptor).IsValid())
+                        StartBuildMode?.Invoke(this, new StartBuildModeArguments(descriptor));
+                    break;
+
+                case "CancelFarmMode":
+                    CancelFarmMode?.Invoke();
+                    break;
+
+                case "CancelBuildMode":
+                    CancelBuildMode?.Invoke();
+                    break;
+
+                case "AdvanceTimeEvent":
+                    AdvanceTimeEvent?.Invoke();
+                    break;
+
+                case "CropDeath":
+                    if (validator.N(1).T(out GameObject cropObject).IsValid())
+                        CropDeathEvent?.Invoke(this, new CropDeathArguments(cropObject));
+                    break;
+
+                case "NewDay":
+                    NewDayEvent?.Invoke();
+                    break;
+
+                case "EnableFeature":
+                    if (validator.N(1).T(out string featureName).IsValid())
+                        EnableFeature?.Invoke(this, new EnableFeatureArguments(featureName));
+                    break;
+
+                case "RestartScene":
+                    RestartScene?.Invoke();
+                    break;
+
+                case "EndScene":
+                    EndScene?.Invoke();
+                    break;
+
+                default:
+                    Debug.LogWarning($"Unknown event: {eventName}");
+                    break;
             }
         }
     }

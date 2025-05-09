@@ -94,7 +94,7 @@ namespace Assets.Hypercrops.Model.WorldTime
             State.SetDayInWorld(Day);
             _isDayTick = false;
 
-            Sender.BroadcastNewDayEvent();
+            Sender.BroadcastEvent("NewDay");
         }
 
         public void TriggerNewYear()

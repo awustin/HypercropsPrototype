@@ -7,6 +7,6 @@ public class AdvanceTimeButton : UIElementBehaviour, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData data)
     {
-        GameEventSender.Instance.BroadcastAdvanceTimeEvent();
+        GameEventSender.Instance.BroadcastEvent("AdvanceTimeEvent");
     }
 }

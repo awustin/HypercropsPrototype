@@ -45,7 +45,7 @@ namespace Assets.Hypercrops.Model.Buildables
         {
             if (Type == BuildableEffectType.EnableFeature && LevelFeature != LevelFeatureType.None)
             {
-                Sender.BroadcastEnableFeature(LevelFeature.ToString());
+                Sender.BroadcastEvent("EnableFeature", LevelFeature.ToString());
             }
         }
     }

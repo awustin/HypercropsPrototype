@@ -1,3 +1,16 @@
 {
-	"name": "SceneAssembly"
+    "name": "SceneAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d46de9d526d15464095010188b5ed61b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
