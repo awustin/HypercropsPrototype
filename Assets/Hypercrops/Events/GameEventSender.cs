@@ -7,24 +7,14 @@ using System.Collections.Generic;
 
 namespace Assets.Hypercrops.Events
 {
-    public class GameEventSender : MonoBehaviour
+    [CreateAssetMenu(fileName = "GameEvents", menuName = "Scriptable Objects/GameEventSender")]
+    public class GameEventSender : ScriptableObject
     {
-        private static GameEventSender _instance;
         public static GameEventSender Instance
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = FindFirstObjectByType<GameEventSender>();
-
-                    if (_instance == null)
-                    {
-                        GameObject singletonObject = new("GameEventSender");
-                        _instance = singletonObject.AddComponent<GameEventSender>();
-                    }
-                }
-
+                Instantiate();
                 return _instance;
             }
         }
@@ -42,16 +32,11 @@ namespace Assets.Hypercrops.Events
         public event Action RestartScene;
         public event Action EndScene;
 
+        private static GameEventSender _instance;
+
         void Awake()
         {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                _instance = this;
-            }
+            name = "Game Event Sender Singleton";
         }
 
         public void BroadcastEvent(string eventName, params object[] arguments)
@@ -122,6 +107,16 @@ namespace Assets.Hypercrops.Events
                     Debug.LogWarning($"Unknown event: {eventName}");
                     break;
             }
+        }
+
+        private static void Instantiate()
+        {
+            if (_instance != null)
+            {
+                return;
+            }
+
+            _instance = CreateInstance<GameEventSender>();
         }
     }
 }

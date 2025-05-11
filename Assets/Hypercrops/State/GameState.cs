@@ -17,7 +17,7 @@ namespace Assets.Hypercrops.State
                 if (_instance == null)
                 {
                     _instance = CreateInstance<GameState>();
-                    DontDestroyOnLoad(_instance);
+                    // DontDestroyOnLoad(_instance);
                 }
 
                 return _instance;
@@ -34,6 +34,8 @@ namespace Assets.Hypercrops.State
         public int DayInWorld;
         public int YearInWorld;
         public List<string> LevelFeatures = new();
+        public List<float> CropsPoints = new();
+        public List<float> BioStoragePoints = new();
 
         void Awake()
         {

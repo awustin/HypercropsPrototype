@@ -9,6 +9,7 @@ TagManager:
   - UICamera
   - SeedCard
   - Button
+  - SceneTransition
   layers:
   - Default
   - TransparentFX

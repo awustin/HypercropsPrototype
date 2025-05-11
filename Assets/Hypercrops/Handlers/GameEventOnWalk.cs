@@ -16,7 +16,7 @@ namespace Assets.Hypercrops.Handlers
         public float speed = 5f;
         public float stopPrecision = 0.2f;
         public float collisionPrecision = 0.1f;
-        private GameEventSender _eventSender;
+        public GameEventSender Sender;
         private Vector3 _target;
 
         private void OnWalkEvent(object sender, WalkEventArguments e)
@@ -66,21 +66,14 @@ namespace Assets.Hypercrops.Handlers
 
         void OnEnable()
         {
-            _eventSender = GameEventSender.Instance;
+            Sender = GameEventSender.Instance;
 
-            if (_eventSender != null)
-            {
-                _eventSender.WalkEvent += OnWalkEvent;
-            }
-            else
-            {
-                Debug.LogWarning("No GameEventSender detected");
-            }
+            Sender.WalkEvent += OnWalkEvent;
         }
 
         void OnDisable()
         {
-            _eventSender.WalkEvent -= OnWalkEvent;
+            Sender.WalkEvent -= OnWalkEvent;
         }
 
         private void StopWalking(bool snap = false)
