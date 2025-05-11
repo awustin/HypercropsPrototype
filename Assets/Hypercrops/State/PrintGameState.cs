@@ -16,6 +16,8 @@ namespace Assets.Hypercrops.State
         public int DayInWorld;
         public int YearInWorld;
         public List<string> LevelFeatures;
+        public List<float> CropsPoints;
+        public List<float> BioStoragePoints;
 
         void Start()
         {
@@ -33,6 +35,8 @@ namespace Assets.Hypercrops.State
             DayInWorld = State.DayInWorld;
             YearInWorld = State.YearInWorld;
             LevelFeatures = State.LevelFeatures;
+            CropsPoints = State.CropsPoints;
+            BioStoragePoints = State.BioStoragePoints;
         }
     }
 }

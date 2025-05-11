@@ -72,6 +72,7 @@ namespace Assets.Hypercrops.Scene
         private void EndScene()
         {
             // TODO: Implement - tasks that run at the end, scene data storage, score calculation, clean dead crops, damage buildings, etc
+            Score.CollectPoints();
         }
 
         private IEnumerator ReloadMain()

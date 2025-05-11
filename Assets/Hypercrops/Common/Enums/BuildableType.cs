@@ -5,6 +5,7 @@ namespace Assets.Hypercrops.Common.Enums
         Unknown,
         Station,
         IrrigationPipe,
-        BioStorage
+        BioStorage,
+        Harvester,
     }
 }

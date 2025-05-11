@@ -8,6 +8,7 @@ public class CropPhases : MonoBehaviour
 {
     public ObjectFactory Factory;
     public Crop CropScript;
+    public CropHealth Health;
     public CropPhase Current = CropPhase.Seed;
     public GameObject PhaseVisuals;
 
@@ -26,7 +27,12 @@ public class CropPhases : MonoBehaviour
 
     public void NextPhase()
     {
-        if (Current == CropPhase.Ready)
+        if
+        (
+            Current == CropPhase.Ready ||
+            Current == CropPhase.Dead ||
+            Current == CropPhase.Harvested
+        )
         {
             return;
         }
@@ -39,12 +45,22 @@ public class CropPhases : MonoBehaviour
         return Current == CropPhase.Ready;
     }
 
+    public void SetHarvested()
+    {
+        Current = CropPhase.Harvested;
+    }
+
     private void TrackVariables()
     {
         if (_currentTracker != Current)
         {
             _currentTracker = Current;
             UpdateVisuals();
+
+            if (Current == CropPhase.Ready)
+            {
+                Health.SetReadyDamageFactor();
+            }
         }
     }
 

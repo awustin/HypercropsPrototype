@@ -5,6 +5,7 @@ namespace Assets.Hypercrops.Common.Enums
         Seed,
         Growing,
         Ready,
-        Dead
+        Dead,
+        Harvested,
     }
 }

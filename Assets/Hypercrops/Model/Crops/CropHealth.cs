@@ -16,6 +16,7 @@ public class CropHealth : MonoBehaviour
 
     private float _damageFactor;
     private float _waterFactor;
+
     // Trackers
     private DamageSpeed _damageSpeedTracker;
     private bool _isWateredTracker;
@@ -64,6 +65,11 @@ public class CropHealth : MonoBehaviour
         Sender.BroadcastEvent("CropDeath", gameObject);
     }
 
+    public void SetReadyDamageFactor()
+    {
+        DamageSpeedFactor = DamageSpeed.Minimal;
+    }
+
     private void TrackVariables()
     {
         if (_damageSpeedTracker != DamageSpeedFactor)
@@ -79,7 +85,7 @@ public class CropHealth : MonoBehaviour
         }
     }
 
-    private void SetDamageFactor()
+    public void SetDamageFactor()
     {
         _damageFactor = (float) DamageSpeedFactor / FactorScale;
     }

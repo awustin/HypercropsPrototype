@@ -32,6 +32,37 @@ Transform:
   - {fileID: 6189871788327386416}
   m_Father: {fileID: 8542091609324593636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &640624240569187059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1359294527656253273}
+  m_Layer: 0
+  m_Name: Harvested
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1359294527656253273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640624240569187059}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.125, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2677057593011282286}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838997342711380446
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +304,7 @@ Transform:
   - {fileID: 1410893064835088063}
   - {fileID: 4389464883010783363}
   - {fileID: 6931409621949376454}
+  - {fileID: 1359294527656253273}
   - {fileID: 3985351068371254478}
   m_Father: {fileID: 8542091609324593636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -328,11 +360,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sender: {fileID: 0}
-  Factory: {fileID: 0}
+  State: {fileID: 0}
   Health: {fileID: -6527080098393642581}
   Collider: {fileID: 9071854694014031600}
   Phases: {fileID: 2390726584557335559}
-  CropName: 
+  Species: 0
+  FarmingMethod: 0
   Size: 3
 --- !u!114 &-6527080098393642581
 MonoBehaviour:
@@ -378,6 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Factory: {fileID: 0}
   CropScript: {fileID: 7189626490953672930}
+  Health: {fileID: -6527080098393642581}
   Current: 0
   PhaseVisuals: {fileID: 7582044159114674112}
 --- !u!114 &4085149932812387667

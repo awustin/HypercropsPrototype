@@ -31,13 +31,9 @@ namespace Assets.Hypercrops.Events
         public event EventHandler<EnableFeatureArguments> EnableFeature;
         public event Action RestartScene;
         public event Action EndScene;
+        public event Action ProduceHarvestPoints;
 
         private static GameEventSender _instance;
-
-        void Awake()
-        {
-            name = "Game Event Sender Singleton";
-        }
 
         public void BroadcastEvent(string eventName, params object[] arguments)
         {
@@ -101,6 +97,10 @@ namespace Assets.Hypercrops.Events
 
                 case "EndScene":
                     EndScene?.Invoke();
+                    break;
+
+                case "ProduceHarvestPoints":
+                    ProduceHarvestPoints?.Invoke();
                     break;
 
                 default:

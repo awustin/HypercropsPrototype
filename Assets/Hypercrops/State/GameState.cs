@@ -17,7 +17,6 @@ namespace Assets.Hypercrops.State
                 if (_instance == null)
                 {
                     _instance = CreateInstance<GameState>();
-                    // DontDestroyOnLoad(_instance);
                 }
 
                 return _instance;

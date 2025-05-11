@@ -3,6 +3,7 @@ using UnityEngine;
 using LF = Assets.Hypercrops.Common.Enums.LevelFeatureType;
 using Assets.Hypercrops.Scene.LevelFeatures;
 using Assets.Hypercrops.State;
+using Assets.Hypercrops.Events;
 
 namespace Assets.Hypercrops.Scene
 {
@@ -19,6 +20,7 @@ namespace Assets.Hypercrops.Scene
         public float ScoreProduction;
         public LevelFeaturesManager LevelFeatures;
         public GameState State;
+        public GameEventSender Sender;
 
         private static ScoreManager _instance;
 
@@ -29,6 +31,9 @@ namespace Assets.Hypercrops.Scene
 
             if (State == null)
                 State = GameState.Instance;
+            
+            if (Sender == null)
+                Sender = GameEventSender.Instance;
 
             ScoreProduction = 0f;
         }
@@ -40,8 +45,13 @@ namespace Assets.Hypercrops.Scene
 
             if (LevelFeatures.IsEnabled(LF.CollectHarvest))
             {
-                // Calculate BioStorage factor from ALL BioStorages
-                // Calculate the sum of all production (species production x health) and multiply by BioStorages factor
+                // TODO: Calculate BioStorage factor from ALL BioStorages
+                // TODO: Aggregate BioStorage points
+
+                Sender.BroadcastEvent("ProduceHarvestPoints");
+                // TODO: Aggregate harvest points
+
+                // TODO: harvest * biostorage factor
             }
         }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 
 using Assets.Hypercrops.Common.Enums;
 using Assets.Hypercrops.Events;
+using Assets.Hypercrops.State;
 
 // TODO: Add dead phase to crop
 // TODO: Add on click to make it interactable
@@ -9,7 +10,8 @@ namespace Assets.Hypercrops.Model.Crops
 {
     public class Crop : MonoBehaviour
     {
-        [HideInInspector] public GameEventSender Sender;
+        public GameEventSender Sender;
+        public GameState State;
         public CropHealth Health;
         public CropCollider Collider;
         public CropPhases Phases;
@@ -22,12 +24,14 @@ namespace Assets.Hypercrops.Model.Crops
             Sender = GameEventSender.Instance;
             Sender.AdvanceTimeEvent += OnAdvanceTimeEvent;
             Sender.NewDayEvent += OnNewDay;
+            Sender.ProduceHarvestPoints += OnProduceHarvestPoints;
         }
 
         void OnDisable()
         {
             Sender.AdvanceTimeEvent -= OnAdvanceTimeEvent;
             Sender.NewDayEvent -= OnNewDay;
+            Sender.ProduceHarvestPoints -= OnProduceHarvestPoints;
         }
 
         public void Initialise
@@ -37,6 +41,7 @@ namespace Assets.Hypercrops.Model.Crops
             CropSize size
         )
         {
+            State = GameState.Instance;
             Species = species;
             FarmingMethod = farmingMethod;
             Size = size;
@@ -68,6 +73,15 @@ namespace Assets.Hypercrops.Model.Crops
         {
             IncrementCropPhase();
             Health.IsWatered = false;
+        }
+
+        private void OnProduceHarvestPoints()
+        {
+            if (Phases.Current == CropPhase.Ready)
+            {
+                State.CropsPoints.Add((float) Species * Health.Life);
+                Phases.SetHarvested();
+            }
         }
     }
 }
