@@ -1,0 +1,12 @@
+{
+    "Id": 100,
+    "Type": "Crop",
+    "Rarity": "Common",
+    "Name": "Pseudowheat",
+    "Label": "Pseudo-Wheat",
+    "MapEntityName": "Pseudowheat",
+    "InvokationRule1": null,
+    "InvokationRule2": null,
+    "InvokationRule3": null,
+    "InvokationRule4": null
+}

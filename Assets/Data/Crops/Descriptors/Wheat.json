@@ -1,0 +1,9 @@
+{
+    "Species": "Wheat",
+    "FarmingMethod": "Normal",
+    "Size": "Normal",
+    "ReadyPrefab": {
+        "MeshCollider": "",
+        "Materials": []
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "Id": 602,
+    "Type": "Buildable",
+    "Rarity": "Common",
+    "Name": "Station",
+    "Label": "Station",
+    "MapEntityName": "Station",
+    "InvokationRule1": null,
+    "InvokationRule2": null,
+    "InvokationRule3": null,
+    "InvokationRule4": null
+}

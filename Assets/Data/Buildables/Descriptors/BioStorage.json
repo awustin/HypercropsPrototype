@@ -1,0 +1,14 @@
+{
+    "Type": "BioStorage",
+    "LayoutType": "Normal",
+    "Effect": {
+        "Type": "EnableFeature",
+        "LevelFeature": "CollectHarvest",
+        "Name": "CollectHarvest",
+        "Period": "None",
+        "Radius": 0,
+        "Description": "You will be able to collect points from harvest"
+    },
+    "Updatable": true,
+    "Description": "Freezers can buy us some time"
+}

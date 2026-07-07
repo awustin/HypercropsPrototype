@@ -1,0 +1,12 @@
+{
+    "Id": 101,
+    "Type": "Crop",
+    "Rarity": "Common",
+    "Name": "Cerealoid",
+    "Label": "Cerealoid",
+    "MapEntityName": "Cerealoid",
+    "InvokationRule1": "CropCommon",
+    "InvokationRule2": null,
+    "InvokationRule3": null,
+    "InvokationRule4": null
+}

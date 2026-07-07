@@ -1,0 +1,12 @@
+{
+    "Id": 601,
+    "Type": "Buildable",
+    "Rarity": "Common",
+    "Name": "BioStorage",
+    "Label": "Bio Storage",
+    "MapEntityName": "BioStorage",
+    "InvokationRule1": "CropCommon",
+    "InvokationRule2": "CropCommon",
+    "InvokationRule3": null,
+    "InvokationRule4": null
+}

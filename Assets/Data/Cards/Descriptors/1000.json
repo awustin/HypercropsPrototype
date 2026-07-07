@@ -1,0 +1,12 @@
+{
+    "Id": 1000,
+    "Type": "Tech",
+    "Rarity": "Common",
+    "Name": "Mutagenerator",
+    "Label": "Mutagenerator",
+    "MapEntityName": null,
+    "InvokationRule1": "CropCommon",
+    "InvokationRule2": "CropCommon",
+    "InvokationRule3": null,
+    "InvokationRule4": null
+}

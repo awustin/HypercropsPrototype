@@ -1,0 +1,20 @@
+{
+    "cardWeights": [
+        {
+            "id": 100,
+            "weight": 1
+        },
+        {
+            "id": 101,
+            "weight": 1
+        },
+        {
+            "id": 601,
+            "weight": 1
+        },
+        {
+            "id": 1000,
+            "weight": 0.2
+        }
+    ]
+}

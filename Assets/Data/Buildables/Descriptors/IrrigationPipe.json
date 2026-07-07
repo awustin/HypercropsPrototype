@@ -1,0 +1,14 @@
+{
+    "Type": "IrrigationPipe",
+    "LayoutType": "Small",
+    "Effect": {
+        "Type": "PerformAction",
+        "LevelFeature": "None",
+        "Name": "WaterCropsInRadius",
+        "Period": "Day",
+        "Radius": 3,
+        "Description": "Water the crops automatically within a radius"
+    },
+    "Updatable": true,
+    "Description": "Water your crops"
+}

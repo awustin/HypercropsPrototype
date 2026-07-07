@@ -1,0 +1,12 @@
+{
+    "Id": 600,
+    "Type": "Buildable",
+    "Rarity": "Common",
+    "Name": "IrrigationPipe",
+    "Label": "Irrigation Pipe",
+    "MapEntityName": "IrrigationPipe",
+    "InvokationRule1": "CropCommon",
+    "InvokationRule2": null,
+    "InvokationRule3": null,
+    "InvokationRule4": null
+}

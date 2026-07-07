@@ -1,0 +1,146 @@
+using UnityEngine;
+using System.Linq;
+using System;
+
+using Assets.Hypercrops.Common.Serializables;
+using System.Collections.Generic;
+
+namespace Assets.Hypercrops.Events
+{
+    [CreateAssetMenu(fileName = "GameEvents", menuName = "Scriptable Objects/GameEventSender")]
+    public class GameEventSender : ScriptableObject
+    {
+        public static GameEventSender Instance
+        {
+            get
+            {
+                Instantiate();
+                return _instance;
+            }
+        }
+
+        public event Action StartCardStage;
+        public event EventHandler<CardArgument> SelectCard;
+        public event EventHandler<CardArgument> DeselectCard;
+        public event Action InvokeCard;
+        public event Action StartFieldStage;
+
+        public event EventHandler<WalkEventArguments> WalkEvent;
+        public event Action TryPlantCrop;
+        public event Action TryPlaceBuilding;
+        public event EventHandler<StartFarmModeArguments> StartFarmMode;
+        public event EventHandler<StartBuildModeArguments> StartBuildMode;
+        public event Action CancelFarmMode;
+        public event Action CancelBuildMode;
+        public event Action AdvanceTimeEvent;
+        public event EventHandler<CropDeathArguments> CropDeathEvent;
+        public event Action NewDayEvent;
+        public event EventHandler<EnableFeatureArguments> EnableFeature;
+        public event Action RestartScene;
+        public event Action EndScene;
+        public event Action ProduceHarvestPoints;
+
+        private static GameEventSender _instance;
+
+        public void BroadcastEvent(string eventName, params object[] arguments)
+        {
+            List<object> args = arguments.ToList();
+            IterativeValidator validator = new(args);
+
+            switch (eventName)
+            {
+                case "StartCardStage":
+                    StartCardStage?.Invoke();
+                    break;
+                case "SelectCard":
+                    if (validator.N(1).T(out GameObject card).IsValid())
+                        SelectCard?.Invoke(this, new CardArgument(card));
+                    break;
+                case "DeselectCard":
+                    if (validator.N(1).T(out GameObject deselectedCard).IsValid())
+                        DeselectCard?.Invoke(this, new CardArgument(deselectedCard));
+                    break;
+                case "InvokeCard":
+                        InvokeCard?.Invoke();
+                    break;
+                case "WalkEvent":
+                    if (validator.N(1).T(out Vector3 target).IsValid())
+                        WalkEvent?.Invoke(this, new WalkEventArguments(target));
+                    break;
+                case "StartFieldStage":
+                    StartFieldStage?.Invoke();
+                    break;
+
+                case "TryPlantCrop":
+                    TryPlantCrop?.Invoke();
+                    break;
+
+                case "TryPlaceBuilding":
+                    TryPlaceBuilding?.Invoke();
+                    break;
+
+                case "StartFarmMode":
+                    if (validator.N(2).T(out Vector3 point).T(out CropDescriptor cropDescriptor).IsValid())
+                        StartFarmMode?.Invoke(this, new StartFarmModeArguments(point, cropDescriptor));
+                    break;
+
+                case "StartBuildMode":
+                    if (validator.N(1).T(out BuildableDescriptor descriptor).IsValid())
+                        StartBuildMode?.Invoke(this, new StartBuildModeArguments(descriptor));
+                    break;
+
+                case "CancelFarmMode":
+                    CancelFarmMode?.Invoke();
+                    break;
+
+                case "CancelBuildMode":
+                    CancelBuildMode?.Invoke();
+                    break;
+
+                case "AdvanceTimeEvent":
+                    AdvanceTimeEvent?.Invoke();
+                    break;
+
+                case "CropDeath":
+                    if (validator.N(1).T(out GameObject cropObject).IsValid())
+                        CropDeathEvent?.Invoke(this, new CropDeathArguments(cropObject));
+                    break;
+
+                case "NewDay":
+                    NewDayEvent?.Invoke();
+                    break;
+
+                case "EnableFeature":
+                    if (validator.N(1).T(out string featureName).IsValid())
+                        EnableFeature?.Invoke(this, new EnableFeatureArguments(featureName));
+                    break;
+
+                case "RestartScene":
+                    RestartScene?.Invoke();
+                    break;
+
+                case "EndScene":
+                    EndScene?.Invoke();
+                    break;
+
+                case "ProduceHarvestPoints":
+                    ProduceHarvestPoints?.Invoke();
+                    break;
+
+                default:
+                    Debug.LogWarning($"Unknown event: {eventName}");
+                    break;
+            }
+        }
+
+        private static void Instantiate()
+        {
+            if (_instance != null)
+            {
+                return;
+            }
+
+            _instance = CreateInstance<GameEventSender>();
+        }
+    }
+}
